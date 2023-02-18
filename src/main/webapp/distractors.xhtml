@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+    	<div style="width:50%; margin: 10% auto 10% auto;">
+    
+	        <h:form>
+	            
+	            <p:growl autoUpdate="true"/>
+	            
+	            <div id="distractorsPanel">
+	            	<p:tabView>
+	            		<p:tab title="Quadratische Gleichungen">
+	            			<p:panel>
+					            <h:panelGrid columns="11" class="flex align-items-center justify-content-center">
+					            	<h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorAqe" value="#{quadraticEquationsDistractorsBean.leftNominatorA}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorAqe" value="#{quadraticEquationsDistractorsBean.leftDenominatorA}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x²+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorBqe" value="#{quadraticEquationsDistractorsBean.leftNominatorB}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorBqe" value="#{quadraticEquationsDistractorsBean.leftDenominatorB}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorCqe" value="#{quadraticEquationsDistractorsBean.leftNominatorC}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorCqe" value="#{quadraticEquationsDistractorsBean.leftDenominatorC}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+		
+									<h:outputText value=" = "/>
+						            
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorAqe" value="#{quadraticEquationsDistractorsBean.rightNominatorA}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorAqe" value="#{quadraticEquationsDistractorsBean.rightDenominatorA}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x²+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorBqe" value="#{quadraticEquationsDistractorsBean.rightNominatorB}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorBqe" value="#{quadraticEquationsDistractorsBean.rightDenominatorB}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorCqe" value="#{quadraticEquationsDistractorsBean.rightNominatorC}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorCqe" value="#{quadraticEquationsDistractorsBean.rightDenominatorC}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+					            </h:panelGrid>
+			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticEquationsDistractorsBean.generateDistractors}"/>
+			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
+			                    	<p:dataList value="#{quadraticEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Fehlerbasiert
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{quadraticEquationsDistractorsBean.distractorsBasedOnWrongParameters}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf falschen Parameter
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{quadraticEquationsDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf Ergebnismanipulation
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+			                    </h:panelGrid>
+			              
+			                </p:panel>
+	            		</p:tab>
+	            		
+	            		<p:tab title="Quadratische Ungleichungen">
+	            			<p:panel>
+					            <h:panelGrid columns="11" class="flex align-items-center justify-content-center">
+					            	<h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorAqi" value="#{quadraticInequalitiesDistractorsBean.leftNominatorA}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorAqi" value="#{quadraticInequalitiesDistractorsBean.leftDenominatorA}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x²+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorBqi" value="#{quadraticInequalitiesDistractorsBean.leftNominatorB}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorBqi" value="#{quadraticInequalitiesDistractorsBean.leftDenominatorB}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="leftNominatorCqi" value="#{quadraticInequalitiesDistractorsBean.leftNominatorC}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="leftDenominatorCqi" value="#{quadraticInequalitiesDistractorsBean.leftDenominatorC}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+		
+									<p:selectOneMenu id="labeled" value="#{quadraticInequalitiesDistractorsBean.chosenSign}">
+					                    <f:selectItems value="#{quadraticInequalitiesDistractorsBean.signs}"/>
+					                </p:selectOneMenu>
+						            
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorAqi" value="#{quadraticInequalitiesDistractorsBean.rightNominatorA}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorAqi" value="#{quadraticInequalitiesDistractorsBean.rightDenominatorA}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x²+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorBqi" value="#{quadraticInequalitiesDistractorsBean.rightNominatorB}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorBqi" value="#{quadraticInequalitiesDistractorsBean.rightDenominatorB}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+						            <h:outputText value="x+ "/>
+						            <h:panelGrid rows="2">
+					                	<p:inputNumber id="rightNominatorCqi" value="#{quadraticInequalitiesDistractorsBean.rightNominatorC}" required="true" inputStyle="width:40px"/>
+					         			<p:inputNumber id="rightDenominatorCqi" value="#{quadraticInequalitiesDistractorsBean.rightDenominatorC}" required="true" inputStyle="width:40px"/>
+						            </h:panelGrid>
+					            </h:panelGrid>
+			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticInequalitiesDistractorsBean.generateDistractors}"/>
+			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
+			                    	<p:dataList value="#{quadraticInequalitiesDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Fehlerbasiert
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{quadraticInequalitiesDistractorsBean.distractorsBasedOnWrongParameters}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf falschen Parameter
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{quadraticInequalitiesDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf Ergebnismanipulation
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+			                    </h:panelGrid>
+			              
+			                </p:panel>
+	            		</p:tab>
+
+						<p:tab title="Systeme von zwei Gleichungen">
+	            			<p:panel>
+					            <h:panelGrid columns="6" class="flex align-items-center justify-content-center">
+					                <p:inputNumber id="x1" value="#{systemOfEquationsDistractorsBean.x_1}" required="true" inputStyle="width:40px"/>
+						            <h:outputText value="x+ "/>
+					                <p:inputNumber id="y1" value="#{systemOfEquationsDistractorsBean.y_1}" required="true" inputStyle="width:40px"/>
+						            <h:outputText value="y+ "/>
+					                <p:inputNumber id="free1" value="#{systemOfEquationsDistractorsBean.free_1}" required="true" inputStyle="width:40px"/>
+		
+									<h:outputText value=" = 0"/>
+						            
+						            <p:inputNumber id="x2" value="#{systemOfEquationsDistractorsBean.x_2}" required="true" inputStyle="width:40px"/>
+						            <h:outputText value="x+ "/>
+					                <p:inputNumber id="y2" value="#{systemOfEquationsDistractorsBean.y_2}" required="true" inputStyle="width:40px"/>
+						            <h:outputText value="y+ "/>
+					                <p:inputNumber id="free2" value="#{systemOfEquationsDistractorsBean.free_2}" required="true" inputStyle="width:40px"/>
+					                <h:outputText value=" = 0"/>
+					            </h:panelGrid>
+			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{systemOfEquationsDistractorsBean.generateDistractors}"/>
+			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
+			                    	<p:dataList value="#{systemOfEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Fehlerbasiert
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{systemOfEquationsDistractorsBean.distractorsBasedOnWrongParameters}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf falschen Parameter
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{systemOfEquationsDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Basiert auf Ergebnismanipulation
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+			                    </h:panelGrid>
+			              
+			                </p:panel>
+	            		</p:tab>
+	            	</p:tabView>
+	                
+	            </div>
+	        </h:form>
+        </div>
+    </h:body>
+</html>

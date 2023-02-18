@@ -1,0 +1,8 @@
+package com.distractors.generation.errorBased.quadraticEquations;
+
+public interface QuadraticEquationSolutionService {
+
+	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters);
+	public QuadraticEquationRoots solveIncorrectly(StandardQuadraticEquationParameters equationParameters);
+
+}

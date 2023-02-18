@@ -1,0 +1,5 @@
+package com.distractors.generation.errorBased.quadraticInequalities;
+
+public record QuadraticInequalityDistractors(QuadraticInequalitySolution correctSolution, QuadraticInequalitySolution distractor_1, QuadraticInequalitySolution distractor_2, QuadraticInequalitySolution distractor_3) {
+
+}
