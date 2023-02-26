@@ -1,0 +1,11 @@
+package com.distractors.generation.quadraticEquations.errorBased;
+
+import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
+
+public interface QuadraticEquationSolutionService {
+
+	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters);
+	public QuadraticEquationRoots solveWithChosenError(StandardQuadraticEquationParameters equationParameters, QuadraticEquationErrorType errorType);
+
+}

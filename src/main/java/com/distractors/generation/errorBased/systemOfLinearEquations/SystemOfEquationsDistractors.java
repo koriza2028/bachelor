@@ -1,5 +1,0 @@
-package com.distractors.generation.errorBased.systemOfLinearEquations;
-
-public record SystemOfEquationsDistractors(SystemOfEquationsSolution correctSolution, SystemOfEquationsSolution distractor_1, SystemOfEquationsSolution distractor_2, SystemOfEquationsSolution distractor_3) {
-
-}

@@ -52,7 +52,7 @@
 						            </h:panelGrid>
 					            </h:panelGrid>
 			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticEquationsDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
+			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
 			                    	<p:dataList value="#{quadraticEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert
@@ -68,6 +68,12 @@
 								    <p:dataList value="#{quadraticEquationsDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Basiert auf Ergebnismanipulation
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{quadraticEquationsDistractorsBean.randomDistractors}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Random
 								        </f:facet>
 								        #{distractor}
 								    </p:dataList>
@@ -114,7 +120,7 @@
 						            </h:panelGrid>
 					            </h:panelGrid>
 			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticInequalitiesDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
+			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
 			                    	<p:dataList value="#{quadraticInequalitiesDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert
@@ -133,6 +139,12 @@
 								        </f:facet>
 								        #{distractor}
 								    </p:dataList>
+								    <p:dataList value="#{quadraticInequalitiesDistractorsBean.randomDistractors}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Random
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
 			                    </h:panelGrid>
 			              
 			                </p:panel>
@@ -141,38 +153,44 @@
 						<p:tab title="Systeme von zwei Gleichungen">
 	            			<p:panel>
 					            <h:panelGrid columns="6" class="flex align-items-center justify-content-center">
-					                <p:inputNumber id="x1" value="#{systemOfEquationsDistractorsBean.x_1}" required="true" inputStyle="width:40px"/>
+					                <p:inputNumber id="x1" value="#{systemOfTwoEquationsDistractorsBean.x_1}" required="true" inputStyle="width:40px"/>
 						            <h:outputText value="x+ "/>
-					                <p:inputNumber id="y1" value="#{systemOfEquationsDistractorsBean.y_1}" required="true" inputStyle="width:40px"/>
+					                <p:inputNumber id="y1" value="#{systemOfTwoEquationsDistractorsBean.y_1}" required="true" inputStyle="width:40px"/>
 						            <h:outputText value="y+ "/>
-					                <p:inputNumber id="free1" value="#{systemOfEquationsDistractorsBean.free_1}" required="true" inputStyle="width:40px"/>
+					                <p:inputNumber id="free1" value="#{systemOfTwoEquationsDistractorsBean.free_1}" required="true" inputStyle="width:40px"/>
 		
 									<h:outputText value=" = 0"/>
 						            
-						            <p:inputNumber id="x2" value="#{systemOfEquationsDistractorsBean.x_2}" required="true" inputStyle="width:40px"/>
+						            <p:inputNumber id="x2" value="#{systemOfTwoEquationsDistractorsBean.x_2}" required="true" inputStyle="width:40px"/>
 						            <h:outputText value="x+ "/>
-					                <p:inputNumber id="y2" value="#{systemOfEquationsDistractorsBean.y_2}" required="true" inputStyle="width:40px"/>
+					                <p:inputNumber id="y2" value="#{systemOfTwoEquationsDistractorsBean.y_2}" required="true" inputStyle="width:40px"/>
 						            <h:outputText value="y+ "/>
-					                <p:inputNumber id="free2" value="#{systemOfEquationsDistractorsBean.free_2}" required="true" inputStyle="width:40px"/>
+					                <p:inputNumber id="free2" value="#{systemOfTwoEquationsDistractorsBean.free_2}" required="true" inputStyle="width:40px"/>
 					                <h:outputText value=" = 0"/>
 					            </h:panelGrid>
-			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{systemOfEquationsDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="3" class="flex align-content-between justify-content-between" style="width: 800px">
-			                    	<p:dataList value="#{systemOfEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
+			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{systemOfTwoEquationsDistractorsBean.generateDistractors}"/>
+			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
+			                    	<p:dataList value="#{systemOfTwoEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert
 								        </f:facet>
 								        #{distractor}
 								    </p:dataList>
-								    <p:dataList value="#{systemOfEquationsDistractorsBean.distractorsBasedOnWrongParameters}" var="distractor" type="ordered">
+								    <p:dataList value="#{systemOfTwoEquationsDistractorsBean.distractorsBasedOnWrongParameters}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Basiert auf falschen Parameter
 								        </f:facet>
 								        #{distractor}
 								    </p:dataList>
-								    <p:dataList value="#{systemOfEquationsDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
+								    <p:dataList value="#{systemOfTwoEquationsDistractorsBean.distractorsBasedOnResultManipulation}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Basiert auf Ergebnismanipulation
+								        </f:facet>
+								        #{distractor}
+								    </p:dataList>
+								    <p:dataList value="#{systemOfTwoEquationsDistractorsBean.randomDistractors}" var="distractor" type="ordered">
+								        <f:facet name="header">
+								            Random
 								        </f:facet>
 								        #{distractor}
 								    </p:dataList>
