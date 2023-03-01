@@ -2,9 +2,12 @@ package com.distractors.generation.systemsOfTwoEquations;
 
 import com.distractors.generation.general.maths.Fraction;
 
-public record SystemOfTwoEquationsSolution(Fraction x, Fraction y) {
+public interface SystemOfTwoEquationsSolution {
 
-	public boolean equals(SystemOfTwoEquationsSolution other) {
+	Fraction x();
+	Fraction y();
+
+	public default boolean equals(SystemOfTwoEquationsSolution other) {
 		return (this.x_1Equals(other.x()) && this.x_2Equals(other.y()));
 	}
 
@@ -24,13 +27,13 @@ public record SystemOfTwoEquationsSolution(Fraction x, Fraction y) {
 		} else return false;
 	}
 
-	public String toString() {
+	public default String convertToString() {
 		final var stringBuilder = new StringBuilder();
-		if (x != null) {
-			stringBuilder.append("x = " + x);
+		if (x() != null) {
+			stringBuilder.append("x = " + x().toString());
 		}
-		if (y != null) {
-			stringBuilder.append("y = " + y);
+		if (y() != null) {
+			stringBuilder.append("y = " + y().toString());
 		}
 		return stringBuilder.toString();
 	}

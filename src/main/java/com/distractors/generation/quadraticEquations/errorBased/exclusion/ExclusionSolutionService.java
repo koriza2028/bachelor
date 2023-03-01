@@ -5,7 +5,8 @@ import com.distractors.generation.general.linearEquations.StandardLinearEquation
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SymbolicNumberBuilder;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
@@ -19,7 +20,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 	private LinearEquationSolutionService simpleEquationSolutionService = new LinearEquationSolutionService();
 
 	@Override
-	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
+	public QuadraticEquationCorrectSolution solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
@@ -34,7 +35,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 			final var builder_2 = new SymbolicNumberBuilder();
 			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
 
-			return new QuadraticEquationRoots(x_1, x_2, true);
+			return new QuadraticEquationCorrectSolution(x_1, x_2);
 		} else {
 			throw new IllegalStateException("The equation cannot be solved by exclusion method.");
 		}
@@ -42,7 +43,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 	}
 
 	@Override
-	public QuadraticEquationRoots solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
+	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
 			final QuadraticEquationErrorType randomError) {
 		switch (randomError) {
 		case IGNORE_C_NOT_ZERO:
@@ -54,7 +55,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 		}
 	}
 
-	private QuadraticEquationRoots solveIgnoringCIsNotZero(StandardQuadraticEquationParameters equationParameters) throws IllegalStateException {
+	private QuadraticEquationDistractor solveIgnoringCIsNotZero(StandardQuadraticEquationParameters equationParameters) throws IllegalStateException {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
@@ -69,13 +70,13 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 			final var builder_2 = new SymbolicNumberBuilder();
 			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
 
-			return new QuadraticEquationRoots(x_1, x_2, false);
+			return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.IGNORE_C_NOT_ZERO);
 		} else {
 			throw new IllegalStateException("The equation could be solved by exclusion method.");
 		}
 	}
 
-	private QuadraticEquationRoots solveWithWrongSimpleEquationSolution(StandardQuadraticEquationParameters equationParameters) throws IllegalStateException {
+	private QuadraticEquationDistractor solveWithWrongSimpleEquationSolution(StandardQuadraticEquationParameters equationParameters) throws IllegalStateException {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
@@ -88,7 +89,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 			final var builder_2 = new SymbolicNumberBuilder();
 			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
 
-			return new QuadraticEquationRoots(x_1, x_2, false);
+			return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.WRONG_SIMPLE_EQUATION_SOLUTION);
 		} else {
 			throw new IllegalStateException("The equation cannot be solved by exclusion method.");
 		}

@@ -3,7 +3,8 @@ package com.distractors.generation.quadraticEquations.errorBased.pq;
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
@@ -15,7 +16,7 @@ import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquatio
 public class PqSolutionService implements QuadraticEquationSolutionService {
 
 	@Override
-	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
+	public QuadraticEquationCorrectSolution solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
@@ -28,7 +29,7 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 	}
 
 	@Override
-	public QuadraticEquationRoots solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
+	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
 			final QuadraticEquationErrorType randomError) {
 		switch (randomError) {
 			case IGNORE_NORMAL_FORM:
@@ -40,7 +41,7 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 		}
 	}
 
-	private QuadraticEquationRoots solveExtractingRootAdditively(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveExtractingRootAdditively(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
@@ -57,10 +58,10 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 		final var x_1 = new SymbolicNumberFraction(x_1Number);
 		final var x_2 = new SymbolicNumberFraction(x_2Number);
 
-		return new QuadraticEquationRoots(x_1, x_2, false);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.EXTRACT_ROOT_ADDITIVELY_PQ);
 	}
 
-	private QuadraticEquationRoots solveWithPQFormula(Fraction p, Fraction q) {
+	private QuadraticEquationCorrectSolution solveWithPQFormula(Fraction p, Fraction q) {
 		final var pDividedByTwo = p.divideBy(Fraction.TWO);
 		final var root = new SquareRoot(pDividedByTwo.multiplyBy(pDividedByTwo).substract(q));
 		final var x_1Number = pDividedByTwo.multiplyBy(-1).add(root);
@@ -69,17 +70,17 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 		final var x_1 = new SymbolicNumberFraction(x_1Number);
 		final var x_2 = new SymbolicNumberFraction(x_2Number);
 
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	private QuadraticEquationRoots solveIgnoringNormalForm(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveIgnoringNormalForm(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var p = equationParameters.b();
 		final var q = equationParameters.c();
 
 		if (a.toDouble() != 1) {
 			final var roots = this.solveWithPQFormula(p, q);
-			return new QuadraticEquationRoots(roots.x_1(), roots.x_2(), false);
+			return new QuadraticEquationDistractor(roots.x_1(), roots.x_2(), QuadraticEquationErrorType.IGNORE_NORMAL_FORM);
 		} else {
 			throw new IllegalStateException("The equation is in normal form");
 		}

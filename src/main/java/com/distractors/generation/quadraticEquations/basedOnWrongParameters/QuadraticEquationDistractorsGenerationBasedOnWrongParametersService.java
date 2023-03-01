@@ -1,26 +1,26 @@
 package com.distractors.generation.quadraticEquations.basedOnWrongParameters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.distractors.generation.general.maths.Fraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationDistractors;
+import com.distractors.generation.quadraticEquations.QuadraticEquationAnswers;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.QuadraticEquationLeftSideParameters;
 import com.distractors.generation.quadraticEquations.QuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.QuadraticEquationRightSideParameters;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 
 public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService {
 
 	final AbcSolutionService abc = new AbcSolutionService();
 
-	public QuadraticEquationDistractors generateDistractors(QuadraticEquationParameters quadraticEquationParameters) {
+	public QuadraticEquationAnswers generateDistractors(QuadraticEquationParameters quadraticEquationParameters) {
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 	
 		final var abc = new AbcSolutionService();
 		final var correctSolution = abc.solveCorrectly(standardQuadraticEquationParameters);
-		var distractors = new ArrayList<QuadraticEquationRoots> ();
+		var distractors = new ArrayList<QuadraticEquationSolution> ();
 		distractors.add(correctSolution);
 
 		final var distractor_1 = this.generateDifferentDistractor(quadraticEquationParameters, distractors);
@@ -29,27 +29,27 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(quadraticEquationParameters, distractors);
 
-		return new QuadraticEquationDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
-	private boolean isDistractorInvalid(QuadraticEquationRoots possibleDistractor, List<QuadraticEquationRoots> distractors) {
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private QuadraticEquationRoots generateDifferentDistractor(final QuadraticEquationParameters quadraticEquationParameters, List<QuadraticEquationRoots> distractors) {
-		QuadraticEquationRoots distractor;
+	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationParameters quadraticEquationParameters, ArrayList<QuadraticEquationSolution> distractors) {
+		QuadraticEquationDistractor distractor;
 		do {
 			distractor = this.generateDistractor(quadraticEquationParameters);
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
 
-	private QuadraticEquationRoots generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {
 		final var randomError = QuadraticEquationParametersChangeType.randomError();
 		return generateDistractorWithChosenParametersChangeType(quadraticEquationParameters, randomError);
 	}
 
-	public QuadraticEquationRoots generateDistractorWithChosenParametersChangeType(
+	public QuadraticEquationDistractor generateDistractorWithChosenParametersChangeType(
 			QuadraticEquationParameters quadraticEquationParameters,
 			final QuadraticEquationParametersChangeType chosenParametersChangeType) {
 		switch (chosenParametersChangeType) {
@@ -68,10 +68,10 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		}
 	}
 
-	private QuadraticEquationRoots generateDistractorReversingOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorReversingOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
 		final var randomParameter = QuadraticEquationParametersType.randomParameter(quadraticEquationParameters);
 		final var newQuadraticEquationParameters = this.reverseOneParameter(quadraticEquationParameters, randomParameter);
-		return solveCorrectly(newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.REVERSE_ONE_PARAMETER, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationParameters reverseOneParameter(QuadraticEquationParameters quadraticEquationParameters, QuadraticEquationParametersType randomParameter) {
@@ -108,15 +108,15 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		}
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingRightSideParameters(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorNegatingRightSideParameters(QuadraticEquationParameters quadraticEquationParameters) {
 		final var newQuadraticEquationParameters = this.negateRightSideParameters(quadraticEquationParameters);
-		return solveCorrectly(newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.NEGATE_RIGHT_SIDE_PARAMETERS, newQuadraticEquationParameters);
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorNegatingOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
 		final var randomParameter = QuadraticEquationParametersType.randomParameter(quadraticEquationParameters);
 		final var newQuadraticEquationParameters = this.negateOneParameter(quadraticEquationParameters, randomParameter);
-		return solveCorrectly(newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.NEGATE_ONE_PARAMETER, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationParameters negateOneParameter(QuadraticEquationParameters quadraticEquationParameters, QuadraticEquationParametersType parameterToNegate) {
@@ -153,15 +153,16 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		}
 	}
 
-	private QuadraticEquationRoots solveCorrectly(final QuadraticEquationParameters newQuadraticEquationParameters) {
+	private QuadraticEquationDistractor solveCorrectly(final QuadraticEquationParametersChangeType parametersChangeType, final QuadraticEquationParameters newQuadraticEquationParameters) {
 		final var standardQuadraticEquationParameters = newQuadraticEquationParameters.toStandard();
 		
-		return abc.solveCorrectly(standardQuadraticEquationParameters);
+		final var solution = abc.solveCorrectly(standardQuadraticEquationParameters);
+		return new QuadraticEquationDistractor(solution.x_1(), solution.x_2(), parametersChangeType);
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingLeftSideParameters(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorNegatingLeftSideParameters(QuadraticEquationParameters quadraticEquationParameters) {
 		final var newQuadraticEquationParameters = this.negateLeftSideParameters(quadraticEquationParameters);
-		return solveCorrectly(newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.NEGATE_LEFT_SIDE_PARAMETERS, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationParameters negateLeftSideParameters(QuadraticEquationParameters quadraticEquationParameters) {
@@ -186,10 +187,10 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		return new QuadraticEquationParameters(leftSide, negatedRightSide);
 	}
 
-	private QuadraticEquationRoots generateDistractorIgnoringOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorIgnoringOneParameter(QuadraticEquationParameters quadraticEquationParameters) {
 		final var randomParameter = QuadraticEquationParametersType.randomParameter(quadraticEquationParameters);
 		final var newQuadraticEquationParameters = this.ignoreParameter(quadraticEquationParameters, randomParameter);
-		return solveCorrectly(newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.IGNORE_ONE_PARAMETER, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationParameters ignoreParameter(QuadraticEquationParameters quadraticEquationParameters, QuadraticEquationParametersType parameterToIgnore) {

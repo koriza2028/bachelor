@@ -10,7 +10,8 @@ import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SymbolicNumberBuilder;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.general.services.GcdFindingService;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
@@ -22,7 +23,7 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 	private LinearEquationSolutionService simpleEquationSolutionService = new LinearEquationSolutionService();
 
 	@Override
-	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
+	public QuadraticEquationCorrectSolution solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
 		final var aFraction = equationParameters.a();
 		final var bFraction = equationParameters.b();
 		final var cFraction = equationParameters.c();
@@ -58,14 +59,14 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 			final var x_1 = new SymbolicNumberFraction(builder_1.withFractionPart(x_1Fraction).build());
 			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
 
-			return new QuadraticEquationRoots(x_1, x_2, true);
+			return new QuadraticEquationCorrectSolution(x_1, x_2);
 		} else {
 			throw new IllegalStateException("The Equation cannot be solved by factoring");
 		}
 
 	}
 
-	private QuadraticEquationRoots solveFactoringASumOfSquaresIncorrectlyWithTwoSameRoots(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveFactoringASumOfSquaresIncorrectlyWithTwoSameRoots(StandardQuadraticEquationParameters equationParameters) {
 		final var simpleEquationParameter = this.factorToASimpleEquation(equationParameters);
 
 		final var x_1SquareRoot = this.simpleEquationSolutionService.solve(simpleEquationParameter);
@@ -73,7 +74,7 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 		final var x_1 = new SymbolicNumberFraction(builder.withRoot(x_1SquareRoot).build());
 		final var x_2 = x_1;
 
-		return new QuadraticEquationRoots(x_1, x_2, false);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.FACTORING_A_SUM_OF_SQUARE);
 	}
 
 	private StandardLinearEquationSquareRootParameters factorToASimpleEquation(StandardQuadraticEquationParameters equationParameters) {
@@ -99,7 +100,7 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 	}
 
 	@Override
-	public QuadraticEquationRoots solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
+	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
 			QuadraticEquationErrorType errorType) {
 		return this.solveFactoringASumOfSquaresIncorrectlyWithTwoSameRoots(equationParameters);
 	}

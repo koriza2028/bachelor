@@ -4,7 +4,8 @@ import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SymbolicNumberBuilder;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 
 public class QuadraticEquationTestParametersGenerator {
@@ -16,7 +17,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationRoots generateCorrectSolutionForAbc() {
+	public QuadraticEquationSolution generateCorrectSolutionForAbc() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-4).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(2).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -25,10 +26,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(2).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateDivideByCSolutionForAbc() {
+	public QuadraticEquationSolution generateDivideByCSolutionForAbc() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-2).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -37,10 +38,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(5).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateMovePlusMinusSolutionForAbc() {
+	public QuadraticEquationSolution generateMovePlusMinusSolutionForAbc() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-1).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -49,10 +50,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateUseBQuadratSolutionForAbc() {
+	public QuadraticEquationSolution generateUseBQuadratSolutionForAbc() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(11).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -61,10 +62,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateNoMinusBeforeBSolutionForAbc() {
+	public QuadraticEquationSolution generateNoMinusBeforeBSolutionForAbc() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -73,10 +74,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateDivideDiscriminantByTwoSolutionForAbc() {
+	public QuadraticEquationSolution generateDivideDiscriminantByTwoSolutionForAbc() {
 		final var root = new SquareRoot(Fraction.TWO, Fraction.THREE);
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(4).withRoot(root).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(2).build();
@@ -86,10 +87,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(2).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateExtractRootAdditivelySolutionForAbc() {
+	public QuadraticEquationSolution generateExtractRootAdditivelySolutionForAbc() {
 		final var root = new SquareRoot(Fraction.FIVE, Fraction.ONE);
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(4).withRoot(root).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
@@ -99,7 +100,7 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
 	public StandardQuadraticEquationParameters generateStandardQuadraticEquationParametersForExclusion() {
@@ -109,7 +110,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationRoots generateCorrectSolutionForExclusion() {
+	public QuadraticEquationSolution generateCorrectSolutionForExclusion() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(0).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -118,10 +119,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateWrongSimpleEquationSolutionForExclusion() {
+	public QuadraticEquationSolution generateWrongSimpleEquationSolutionForExclusion() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(0).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -130,10 +131,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateIgnoreCNotZeroSolutionForExclusion() {
+	public QuadraticEquationSolution generateIgnoreCNotZeroSolutionForExclusion() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(0).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -142,7 +143,7 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
 	public StandardQuadraticEquationParameters generateStandardQuadraticEquationParametersForExtraction() {
@@ -152,7 +153,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationRoots generateCorrectSolutionForExtraction() {
+	public QuadraticEquationSolution generateCorrectSolutionForExtraction() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(3).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -161,10 +162,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateSolveAdditivelyInsteadOfMultiplicativelySolutionForExtraction() {
+	public QuadraticEquationSolution generateSolveAdditivelyInsteadOfMultiplicativelySolutionForExtraction() {
 		final var root = new SquareRoot(new Fraction(8, 1), Fraction.ONE);
 		final var x_1Nominator = new SymbolicNumberBuilder().withRoot(root).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
@@ -174,7 +175,7 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
 	public StandardQuadraticEquationParameters generateStandardQuadraticEquationParametersForFactoring() {
@@ -184,7 +185,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationRoots generateCorrectSolutionForFactoring() {
+	public QuadraticEquationSolution generateCorrectSolutionForFactoring() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-2).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -193,7 +194,7 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
 	public StandardQuadraticEquationParameters generateStandardQuadraticEquationParametersForPq() {
@@ -217,7 +218,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationRoots generateCorrectSolutionForPq() {
+	public QuadraticEquationSolution generateCorrectSolutionForPq() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-1).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -226,10 +227,10 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 
-	public QuadraticEquationRoots generateExtractRootAdditivelyInsteadOfMultiplicativelySolutionForPq() {
+	public QuadraticEquationSolution generateExtractRootAdditivelyInsteadOfMultiplicativelySolutionForPq() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(-1).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
@@ -238,6 +239,6 @@ public class QuadraticEquationTestParametersGenerator {
 		final var x_2Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		
-		return new QuadraticEquationRoots(x_1, x_2, true);
+		return new QuadraticEquationCorrectSolution(x_1, x_2);
 	}
 }

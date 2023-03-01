@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.distractors.generation.general.QuadraticEquationTestParametersGenerator;
+import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.extraction.RootExtractionSolutionService;
 
 public class RootExtractionSolutionServiceTest {
@@ -31,7 +32,7 @@ public class RootExtractionSolutionServiceTest {
 		final var correctSolution = this.testParametersGenerator.generateSolveAdditivelyInsteadOfMultiplicativelySolutionForExtraction();
 
 		// when
-		final var extractionCorrectSolution = rootExtraction.solveIncorrectly(testParameters);
+		final var extractionCorrectSolution = rootExtraction.solveWithChosenError(testParameters, QuadraticEquationErrorType.SOLVE_ADDITIVELY_INSTEAD_OF_MULTIPLICATIVELY);
 
 		// then
 		Assertions.assertTrue(extractionCorrectSolution.equals(correctSolution));

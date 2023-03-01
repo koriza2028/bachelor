@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractors;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsSolutionThroughXService;
 
@@ -13,7 +13,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 	final SystemOfEquationsSolutionThroughXService solutionThroughXService = new SystemOfEquationsSolutionThroughXService();
 
-	public SystemOfTwoEquationsDistractors generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 		final var correctSolution = solutionThroughXService.solveCorrectly(systemOfLinearEquations);
 
 		var distractors = new ArrayList<SystemOfTwoEquationsSolution> ();
@@ -25,7 +25,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(systemOfLinearEquations, distractors);
 
-		return new SystemOfTwoEquationsDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new SystemOfTwoEquationsAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
 	private boolean isDistractorInvalid(SystemOfTwoEquationsSolution possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {

@@ -6,7 +6,8 @@ import java.util.List;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 import com.distractors.generation.quadraticInequalities.InequalitySign;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractors;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractor;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityNonNumericalSolution;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityRange;
@@ -17,7 +18,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 	private AbcSolutionService abc = new AbcSolutionService();
 	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
 
-	public QuadraticInequalityDistractors generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
+	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var standardQuadraticInequalityParameters = quadraticInequalityParameters.toStandard();
 		final var standardQuadraticEquationParameters = standardQuadraticInequalityParameters.equationParameters();
 		
@@ -33,7 +34,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(correctSolution, distractors);
 
-		return new QuadraticInequalityDistractors(correctSolution, distractor_1, distractor_2, distractor_3);	
+		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);	
 	}
 
 	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
@@ -63,21 +64,21 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 
 		switch (randomManipulationType) {
 			case R_WITHOUT_X_1:
-				return QuadraticInequalitySolution.createRExceptZeroDistractor(x_1);
+				return QuadraticInequalityDistractor.createRExceptZeroDistractor(x_1, randomManipulationType);
 			case R_WITHOUT_X_2:
-				return QuadraticInequalitySolution.createRExceptZeroDistractor(x_2);
-			case MAX_TO_MIN:
+				return QuadraticInequalityDistractor.createRExceptZeroDistractor(x_2, randomManipulationType);
+			case SWITCH_ROOTS:
 				return generateSwitchedRootsResult(x_1, x_2, sign_1, sign_2, nonNumericalSolution);
 			case X_1:
-				return QuadraticInequalitySolution.createOnlyZeroDistractor(x_1);
+				return QuadraticInequalityDistractor.createOnlyZeroDistractor(x_1, randomManipulationType);
 			case X_2:
-				return QuadraticInequalitySolution.createOnlyZeroDistractor(x_2);
+				return QuadraticInequalityDistractor.createOnlyZeroDistractor(x_2, randomManipulationType);
 			case EMPTY_SET:
-				return QuadraticInequalitySolution.createEmptySetDistractor();
+				return QuadraticInequalityDistractor.createEmptySetDistractor(randomManipulationType);
 			case FORGET_TO_INCLUDE_OR_EXCLUDE_ZEROES:
 				return generateForgetingInclusionOrExclusionResult(x_1, x_2, sign_1, sign_2, nonNumericalSolution);
 			case R:
-				return QuadraticInequalitySolution.createRDistractor();
+				return QuadraticInequalityDistractor.createRDistractor(randomManipulationType);
 			case SWITCH_INEQUALITY_SIGNS:
 				return generateSwitchedInequalitySignsResult(x_1, x_2, sign_1, sign_2, nonNumericalSolution);
 			default:
@@ -90,7 +91,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 			final QuadraticInequalityNonNumericalSolution nonNumericalSolution) {
 		final var range_1 = new QuadraticInequalityRange(x_1, sign_2);
 		final var range_2 = new QuadraticInequalityRange(x_2, sign_1);
-		return QuadraticInequalitySolution.createDistractor(nonNumericalSolution, range_1, range_2);
+		return QuadraticInequalityDistractor.createNormalDistractor(nonNumericalSolution, range_1, range_2, QuadraticInequalityResultManipulationType.SWITCH_INEQUALITY_SIGNS);
 	}
 
 	private QuadraticInequalitySolution generateForgetingInclusionOrExclusionResult(final SymbolicNumberFraction x_1,
@@ -101,7 +102,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 		final var newSign_2 = this.changeSign(sign_2);
 		final var range_1 = new QuadraticInequalityRange(x_1, newSign_1);
 		final var range_2 = new QuadraticInequalityRange(x_2, newSign_2);
-		return QuadraticInequalitySolution.createDistractor(nonNumericalSolution, range_1, range_2);
+		return QuadraticInequalityDistractor.createNormalDistractor(nonNumericalSolution, range_1, range_2, QuadraticInequalityResultManipulationType.FORGET_TO_INCLUDE_OR_EXCLUDE_ZEROES);
 	}
 
 	private QuadraticInequalitySolution generateSwitchedRootsResult(final SymbolicNumberFraction x_1,
@@ -109,7 +110,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 			final QuadraticInequalityNonNumericalSolution nonNumericalSolution) {
 		final var range_1 = new QuadraticInequalityRange(x_2.multiplyBy(-1), sign_1);
 		final var range_2 = new QuadraticInequalityRange(x_1.multiplyBy(-1), sign_2);
-		return QuadraticInequalitySolution.createDistractor(nonNumericalSolution, range_1, range_2);
+		return QuadraticInequalityDistractor.createNormalDistractor(nonNumericalSolution, range_1, range_2, QuadraticInequalityResultManipulationType.SWITCH_ROOTS);
 	}
 
 	private InequalitySign changeSign(InequalitySign sign_1) {

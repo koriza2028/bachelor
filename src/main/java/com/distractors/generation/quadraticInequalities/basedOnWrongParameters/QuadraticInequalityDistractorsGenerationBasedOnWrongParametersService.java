@@ -7,7 +7,7 @@ import com.distractors.generation.quadraticEquations.QuadraticEquationParameters
 import com.distractors.generation.quadraticEquations.basedOnWrongParameters.QuadraticEquationDistractorsGenerationBasedOnWrongParametersService;
 import com.distractors.generation.quadraticEquations.basedOnWrongParameters.QuadraticEquationParametersChangeType;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractors;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolution;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolutionMapper;
@@ -18,7 +18,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnWrongParametersServi
 	private QuadraticEquationDistractorsGenerationBasedOnWrongParametersService quadraticEquationsDistractorsGenerationService = new QuadraticEquationDistractorsGenerationBasedOnWrongParametersService();
 	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
 
-	public QuadraticInequalityDistractors generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
+	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var quadraticEquationParameters = quadraticInequalityParameters.equationParameters();
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 		final var standardQuadraticInequalityParameters = quadraticInequalityParameters.toStandard();
@@ -35,7 +35,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnWrongParametersServi
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(quadraticEquationParameters, standardQuadraticInequalityParameters, distractors);
 
-		return new QuadraticInequalityDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
 	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {

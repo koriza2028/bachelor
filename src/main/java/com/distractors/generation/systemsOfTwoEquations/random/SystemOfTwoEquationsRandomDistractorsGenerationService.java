@@ -5,14 +5,16 @@ import java.util.List;
 
 import com.distractors.generation.general.services.RandomGenerator;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractors;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsSolutionThroughYService;
 
 public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 	private RandomGenerator random = new RandomGenerator();
 
-	public SystemOfTwoEquationsDistractors generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 		
 		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);
@@ -25,14 +27,14 @@ public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(correctSolution, distractors);
 
-		return new SystemOfTwoEquationsDistractors(correctSolution, distractor_1, distractor_2, distractor_3);	
+		return new SystemOfTwoEquationsAnswers(correctSolution, distractor_1, distractor_2, distractor_3);	
 	}
 
 	private boolean isDistractorInvalid(SystemOfTwoEquationsSolution possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private SystemOfTwoEquationsSolution generateDifferentDistractor(final SystemOfTwoEquationsSolution correctSolution, List<SystemOfTwoEquationsSolution> distractors) {
+	private SystemOfTwoEquationsSolution generateDifferentDistractor(final SystemOfTwoEquationsCorrectSolution correctSolution, List<SystemOfTwoEquationsSolution> distractors) {
 		SystemOfTwoEquationsSolution distractor;
 		do {
 			distractor = this.generateDistractor(correctSolution);
@@ -40,10 +42,10 @@ public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 		return distractor;
 	}
 
-	private SystemOfTwoEquationsSolution generateDistractor(SystemOfTwoEquationsSolution solution) {
+	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquationsCorrectSolution solution) {
 		final var x = random.generateRandomFraction(solution);
 		final var y = random.generateRandomFraction(solution);
-		return new SystemOfTwoEquationsSolution(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y);
 	}
 
 }

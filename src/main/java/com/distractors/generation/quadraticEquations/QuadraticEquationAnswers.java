@@ -1,0 +1,4 @@
+package com.distractors.generation.quadraticEquations;
+
+public record QuadraticEquationAnswers(QuadraticEquationCorrectSolution correctSolution, QuadraticEquationDistractor distractor_1, QuadraticEquationDistractor distractor_2, QuadraticEquationDistractor distractor_3) {
+}

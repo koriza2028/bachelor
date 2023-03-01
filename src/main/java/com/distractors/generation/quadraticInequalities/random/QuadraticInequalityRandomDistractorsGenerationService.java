@@ -3,10 +3,11 @@ package com.distractors.generation.quadraticInequalities.random;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 import com.distractors.generation.quadraticEquations.random.QuadraticEquationRandomDistractorsGenerationService;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractors;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractor;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityNonNumericalSolution;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolution;
@@ -18,7 +19,7 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 	private QuadraticEquationRandomDistractorsGenerationService quadraticEquationsDistractorsGenerationService = new QuadraticEquationRandomDistractorsGenerationService();
 	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
 
-	public QuadraticInequalityDistractors generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
+	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var quadraticEquationParameters = quadraticInequalityParameters.equationParameters();
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 		final var standardQuadraticInequalityParameters = quadraticInequalityParameters.toStandard();
@@ -36,14 +37,14 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters, distractors);
 
-		return new QuadraticInequalityDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
 	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private QuadraticInequalitySolution generateDifferentDistractor(QuadraticEquationRoots quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, ArrayList<QuadraticInequalitySolution> distractors) {
+	private QuadraticInequalitySolution generateDifferentDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, ArrayList<QuadraticInequalitySolution> distractors) {
 		QuadraticInequalitySolution distractor;
 		do {
 			distractor = this.generateDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
@@ -51,7 +52,7 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		return distractor;
 	}
 
-	private QuadraticInequalitySolution generateDistractor(QuadraticEquationRoots quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var randomSolutionType = QuadraticInequalityNonNumericalSolution.randomType();
 
 		return generateDistractorWithChosenSolutionType(quadraticEquationCorrectSolution,
@@ -59,18 +60,18 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 	}
 
 	private QuadraticInequalitySolution generateDistractorWithChosenSolutionType(
-			QuadraticEquationRoots quadraticEquationCorrectSolution,
+			QuadraticEquationSolution quadraticEquationCorrectSolution,
 			StandardQuadraticInequalityParameters standardQuadraticInequalityParameters,
 			final QuadraticInequalityNonNumericalSolution randomSolutionType) {
 		switch(randomSolutionType) {
 			case EMPTY_SET:
-				return QuadraticInequalitySolution.createEmptySetDistractor();
+				return QuadraticInequalityDistractor.createEmptySetDistractor();
 			case NORMAL:
 				return this.generateNormalDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 			case ONLY_ZERO:
 				return this.generateOnlyZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 			case R:
-				return QuadraticInequalitySolution.createRDistractor();
+				return QuadraticInequalityDistractor.createRDistractor();
 			case R_EXCEPT_ZERO:
 				return this.generateRExceptZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters); 
 			default:
@@ -78,18 +79,18 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		}
 	}
 
-	private QuadraticInequalitySolution generateNormalDistractor(QuadraticEquationRoots quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateNormalDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var quadraticEquationDistractor = quadraticEquationsDistractorsGenerationService.generateDistractor(quadraticEquationCorrectSolution);
 		return solutionMapper.findQuadraticInequalitySolution(quadraticEquationDistractor, standardQuadraticInequalityParameters);
 	}
 
-	private QuadraticInequalitySolution generateOnlyZeroDistractor(QuadraticEquationRoots quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateOnlyZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var onlyZero = quadraticEquationsDistractorsGenerationService.generateX_1(quadraticEquationCorrectSolution);
-		return QuadraticInequalitySolution.createOnlyZeroDistractor(onlyZero);
+		return QuadraticInequalityDistractor.createOnlyZeroDistractor(onlyZero);
 	}
 
-	private QuadraticInequalitySolution generateRExceptZeroDistractor(QuadraticEquationRoots quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateRExceptZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var exceptedZero = quadraticEquationsDistractorsGenerationService.generateX_1(quadraticEquationCorrectSolution);
-		return QuadraticInequalitySolution.createRExceptZeroDistractor(exceptedZero);
+		return QuadraticInequalityDistractor.createRExceptZeroDistractor(exceptedZero);
 	}
 }

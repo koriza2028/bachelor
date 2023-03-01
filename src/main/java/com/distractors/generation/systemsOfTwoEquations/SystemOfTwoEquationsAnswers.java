@@ -1,0 +1,5 @@
+package com.distractors.generation.systemsOfTwoEquations;
+
+public record SystemOfTwoEquationsAnswers(SystemOfTwoEquationsSolution correctSolution, SystemOfTwoEquationsSolution distractor_1, SystemOfTwoEquationsSolution distractor_2, SystemOfTwoEquationsSolution distractor_3) {
+
+}

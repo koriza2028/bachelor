@@ -3,7 +3,8 @@ package com.distractors.generation.quadraticEquations.errorBased.abc;
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SquareRoots;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
@@ -11,7 +12,7 @@ import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquatio
 public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 	@Override
-	public QuadraticEquationRoots solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
+	public QuadraticEquationCorrectSolution solveCorrectly(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
@@ -21,17 +22,17 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 				final var rootOfDiscriminant = new SquareRoot(discriminant, new Fraction(1, 1));
 				final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 				final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-				return QuadraticEquationRoots.createCorrectSolution(x_1, x_2);
+				return new QuadraticEquationCorrectSolution(x_1, x_2);
 			} catch (IllegalArgumentException e) {
-				return QuadraticEquationRoots.createCorrectSolution(null, null);
+				return new QuadraticEquationCorrectSolution(null, null);
 			}
 		} else {
-			return QuadraticEquationRoots.createCorrectSolution(null, null);
+			return new QuadraticEquationCorrectSolution(null, null);
 		}
 	}
 
 	@Override
-	public QuadraticEquationRoots solveWithChosenError(StandardQuadraticEquationParameters equationParameters, final QuadraticEquationErrorType error) {
+	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters, final QuadraticEquationErrorType error) {
 		switch (error) {
 			case DIVIDE_BY_C:
 				return this.solveDividingByC(equationParameters);
@@ -50,17 +51,17 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		}
 	}
 
-	private QuadraticEquationRoots solveExtractingRootAdditively(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveExtractingRootAdditively(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
 		final var rootOfDiscriminant = this.extractRootOfDiscriminantAdditively(equationParameters);
 		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.EXTRACT_ROOT_ADDITIVELY_ABC);
 	}
 
-	private QuadraticEquationRoots solveDividingByC(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveDividingByC(StandardQuadraticEquationParameters equationParameters) {
 		final var b = equationParameters.b();
 		final var c = equationParameters.c();
 
@@ -68,10 +69,10 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
 		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(c);
 		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(c);
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.DIVIDE_BY_C);
 	}
 
-	private QuadraticEquationRoots solveWithWrongDiscriminant(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveWithWrongDiscriminant(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
@@ -79,10 +80,10 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
 		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.EXTRACT_ROOT_ADDITIVELY_ABC);
 	} 
 
-	private QuadraticEquationRoots solveMovingPlusMinus(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveMovingPlusMinus(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
@@ -90,10 +91,10 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
 		final var x_1 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 		final var x_2 = (b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));;
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.MOVE_PLUS_MINUS);
 	}
 
-	private QuadraticEquationRoots solveWithNoMinusBeforeB(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveWithNoMinusBeforeB(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
@@ -101,10 +102,10 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var rootOfDiscriminant = new SquareRoot(discriminant);
 		final var x_1 = (b.add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 		final var x_2 = (b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.NO_MINUS_BEFORE_B);
 	}
 
-	private QuadraticEquationRoots solveWithBQuadrat(StandardQuadraticEquationParameters equationParameters) {
+	private QuadraticEquationDistractor solveWithBQuadrat(StandardQuadraticEquationParameters equationParameters) {
 		final var a = equationParameters.a();
 		final var b = equationParameters.b();
 
@@ -112,7 +113,7 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var rootOfDiscriminant = new SquareRoot(discriminant);
 		final var x_1 = (b.multiplyBy(b).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
 		final var x_2 = (b.multiplyBy(b).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.USE_B_QUADRAT);
 	}
 
 	private SquareRoots extractRootOfDiscriminantAdditively(StandardQuadraticEquationParameters equationParameters) {

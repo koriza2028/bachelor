@@ -1,24 +1,25 @@
 package com.distractors.generation.quadraticEquations.basedOnResultManipulation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationDistractors;
+import com.distractors.generation.quadraticEquations.QuadraticEquationAnswers;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.QuadraticEquationParameters;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 
 public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationService {
 
 	final AbcSolutionService abc = new AbcSolutionService();
 
-	public QuadraticEquationDistractors generateDistractors(QuadraticEquationParameters quadraticEquationParameters) {
+	public QuadraticEquationAnswers generateDistractors(QuadraticEquationParameters quadraticEquationParameters) {
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 	
 		final var abc = new AbcSolutionService();
 		final var correctSolution = abc.solveCorrectly(standardQuadraticEquationParameters);
-		var distractors = new ArrayList<QuadraticEquationRoots> ();
+		var distractors = new ArrayList<QuadraticEquationSolution> ();
 		distractors.add(correctSolution);
 
 		final var distractor_1 = this.generateDifferentDistractor(correctSolution, distractors);
@@ -27,28 +28,28 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(correctSolution, distractors);
 
-		return new QuadraticEquationDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
-	private boolean isDistractorInvalid(QuadraticEquationRoots possibleDistractor, List<QuadraticEquationRoots> distractors) {
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private QuadraticEquationRoots generateDifferentDistractor(final QuadraticEquationRoots correctSolution, List<QuadraticEquationRoots> distractors) {
-		QuadraticEquationRoots distractor;
+	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationCorrectSolution correctSolution, ArrayList<QuadraticEquationSolution> distractors) {
+		QuadraticEquationDistractor distractor;
 		do {
 			distractor = this.generateDistractor(correctSolution);
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
 
-	private QuadraticEquationRoots generateDistractor(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractor(QuadraticEquationCorrectSolution correctSolution) {
 		final var randomResultManipulationType = QuadraticEquationResultManipulationType.randomManipulationType();
 
 		return generateDistractorWithResultManipulationType(correctSolution, randomResultManipulationType);
 	}
 
-	public QuadraticEquationRoots generateDistractorWithResultManipulationType(QuadraticEquationRoots correctSolution, final QuadraticEquationResultManipulationType resultManipulationType) {
+	public QuadraticEquationDistractor generateDistractorWithResultManipulationType(QuadraticEquationCorrectSolution correctSolution, final QuadraticEquationResultManipulationType resultManipulationType) {
 		try {			
 			switch (resultManipulationType) {
 				case MINUS_ONE_X_1:
@@ -81,67 +82,67 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 					throw new IllegalArgumentException("Unknown result manipulation type.");
 			}
 		} catch (IllegalArgumentException e) {
-			return correctSolution;
+			return new QuadraticEquationDistractor(correctSolution.x_1(), correctSolution.x_2(), QuadraticEquationResultManipulationType.ZERO_X_2);
 		}
 	}
 	
-	private QuadraticEquationRoots generateDistractorReplacingX_2ByZero(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(correctSolution.x_1(), SymbolicNumberFraction.ZERO);
+	private QuadraticEquationDistractor generateDistractorReplacingX_2ByZero(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(correctSolution.x_1(), SymbolicNumberFraction.ZERO, QuadraticEquationResultManipulationType.ZERO_X_2);
 	}
 	
-	private QuadraticEquationRoots generateDistractorReplacingX_1ByZero(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(SymbolicNumberFraction.ZERO, correctSolution.x_2());
+	private QuadraticEquationDistractor generateDistractorReplacingX_1ByZero(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(SymbolicNumberFraction.ZERO, correctSolution.x_2(), QuadraticEquationResultManipulationType.ZERO_X_1);
 	}
 
-	private QuadraticEquationRoots generateDistractorReversingBothRoots(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorReversingBothRoots(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_1 = correctSolution.x_1().reverse();
 		final var x_2 = correctSolution.x_2().reverse();
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationResultManipulationType.REVERSE_BOTH);
 	}
 
-	private QuadraticEquationRoots generateDistractorReversingX_2(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorReversingX_2(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_2 = correctSolution.x_2().reverse();
-		return QuadraticEquationRoots.createDistractor(correctSolution.x_1(), x_2);
+		return new QuadraticEquationDistractor(correctSolution.x_1(), x_2, QuadraticEquationResultManipulationType.REVRESE_X_2);
 	}
 
-	private QuadraticEquationRoots generateDistractorReversingX_1(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorReversingX_1(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_1 = correctSolution.x_1().reverse();
-		return QuadraticEquationRoots.createDistractor(x_1, correctSolution.x_2());
+		return new QuadraticEquationDistractor(x_1, correctSolution.x_2(), QuadraticEquationResultManipulationType.REVERSE_X_1);
 	}
 
-	private QuadraticEquationRoots generateDistractorReplacingRootsByOneAndMinusOne(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(SymbolicNumberFraction.MINUS_ONE, SymbolicNumberFraction.ONE);
+	private QuadraticEquationDistractor generateDistractorReplacingRootsByOneAndMinusOne(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(SymbolicNumberFraction.MINUS_ONE, SymbolicNumberFraction.ONE, QuadraticEquationResultManipulationType.MINUS_ONE_X_1_ONE_X_2);
 	}
 
-	private QuadraticEquationRoots generateDistractorReplacingX_2ByOne(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(correctSolution.x_1(), SymbolicNumberFraction.ONE);
+	private QuadraticEquationDistractor generateDistractorReplacingX_2ByOne(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(correctSolution.x_1(), SymbolicNumberFraction.ONE, QuadraticEquationResultManipulationType.ONE_X_2);
 	}
 
-	private QuadraticEquationRoots generateDistractorReplacingX_1ByOne(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(SymbolicNumberFraction.ONE, correctSolution.x_2());
+	private QuadraticEquationDistractor generateDistractorReplacingX_1ByOne(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(SymbolicNumberFraction.ONE, correctSolution.x_2(), QuadraticEquationResultManipulationType.ONE_X_1);
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingX_2(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorNegatingX_2(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_2 = correctSolution.x_2().multiplyBy(-1);
-		return QuadraticEquationRoots.createDistractor(correctSolution.x_1(), x_2);
+		return new QuadraticEquationDistractor(correctSolution.x_1(), x_2, QuadraticEquationResultManipulationType.NEGATE_X_2);
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingX_1(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorNegatingX_1(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_1 = correctSolution.x_1().multiplyBy(-1);
-		return QuadraticEquationRoots.createDistractor(x_1, correctSolution.x_2());
+		return new QuadraticEquationDistractor(x_1, correctSolution.x_2(), QuadraticEquationResultManipulationType.NEGATE_X_1);
 	}
 
-	private QuadraticEquationRoots generateDistractorNegatingBothRoots(QuadraticEquationRoots correctSolution) {
+	private QuadraticEquationDistractor generateDistractorNegatingBothRoots(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_1 = correctSolution.x_1().multiplyBy(-1);
 		final var x_2 = correctSolution.x_2().multiplyBy(-1);
-		return QuadraticEquationRoots.createDistractor(x_1, x_2);
+		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationResultManipulationType.NEGATE_BOTH);
 	}
 
-	private QuadraticEquationRoots generateDistractorReplacingX_1ByMinusOne(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(SymbolicNumberFraction.MINUS_ONE, correctSolution.x_2());
+	private QuadraticEquationDistractor generateDistractorReplacingX_1ByMinusOne(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(SymbolicNumberFraction.MINUS_ONE, correctSolution.x_2(), QuadraticEquationResultManipulationType.MINUS_ONE_X_1);
 	}
 
-	private QuadraticEquationRoots generateDistractorReplacingX_2ByMinusOne(QuadraticEquationRoots correctSolution) {
-		return QuadraticEquationRoots.createDistractor(correctSolution.x_1(), SymbolicNumberFraction.MINUS_ONE);
+	private QuadraticEquationDistractor generateDistractorReplacingX_2ByMinusOne(QuadraticEquationCorrectSolution correctSolution) {
+		return new QuadraticEquationDistractor(correctSolution.x_1(), SymbolicNumberFraction.MINUS_ONE, QuadraticEquationResultManipulationType.MINUS_ONE_X_2);
 	}
 }

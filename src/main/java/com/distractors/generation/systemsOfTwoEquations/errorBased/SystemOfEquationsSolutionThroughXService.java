@@ -6,20 +6,21 @@ import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.services.LcmFindingService;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 
 public class SystemOfEquationsSolutionThroughXService {
 
 	final LinearEquationSolutionService linearEquationSolutionService = new LinearEquationSolutionService();
 
-	public SystemOfTwoEquationsSolution solveCorrectly(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsCorrectSolution solveCorrectly(SystemOfTwoEquations equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
 		final var x = this.findX(simpleEquation_1, simpleEquation_2);
 		final var y = this.findY(simpleEquation_1, x);
 
-		return new SystemOfTwoEquationsSolution(x, y);
+		return new SystemOfTwoEquationsCorrectSolution(x, y);
 		
 	}
 
@@ -56,14 +57,14 @@ public class SystemOfEquationsSolutionThroughXService {
 		return newSimpleEquation_1.substract(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
 	}
 
-	public SystemOfTwoEquationsSolution solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
 		final var x = this.findX(simpleEquation_1, simpleEquation_2);
 		final var y = this.findYReplacingY(simpleEquation_1, x);
 
-		return new SystemOfTwoEquationsSolution(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y);
 	}
 
 	private Fraction findYReplacingY(StandardEquationParameters simpleEquation_1, Fraction x) {
@@ -80,14 +81,14 @@ public class SystemOfEquationsSolutionThroughXService {
 		return standardLinearEquation;
 	}
 
-	public SystemOfTwoEquationsSolution solveNegatingFreeCoefficient(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveNegatingFreeCoefficient(SystemOfTwoEquations equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
 		final var x = this.findXNegatingFreeCoefficient(simpleEquation_1, simpleEquation_2);
 		final var y = this.findY(simpleEquation_1, x);
 
-		return new SystemOfTwoEquationsSolution(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y);
 	}
 
 	private Fraction findXNegatingFreeCoefficient(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {
@@ -112,14 +113,14 @@ public class SystemOfEquationsSolutionThroughXService {
 		return new StandardLinearEquationFractionParameters(standardLinearEquation.a(), b);
 	}
 
-	public SystemOfTwoEquationsSolution solveIgnoringFreeCoefficientMultiplication(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveIgnoringFreeCoefficientMultiplication(SystemOfTwoEquations equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
 		final var x = this.findXIgnoringFreeCoefficientMultiplication(simpleEquation_1, simpleEquation_2);
 		final var y = this.findY(simpleEquation_1, x);
 
-		return new SystemOfTwoEquationsSolution(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y);
 	}
 
 	private Fraction findXIgnoringFreeCoefficientMultiplication(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {

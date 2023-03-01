@@ -9,20 +9,20 @@ import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SymbolicNumberBuilder;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationRoots;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 
 public class RandomGenerator {
 	private static final Random RANDOM = new Random();
 
-	public SymbolicNumberFraction generateRandomIntSymbolicNumber(QuadraticEquationRoots correctSolution) {
+	public SymbolicNumberFraction generateRandomIntSymbolicNumber(QuadraticEquationSolution correctSolution) {
 		final var range = this.defineRange(correctSolution);
 		final var intNumber = this.generateRandomInt(range);
 		final var symbolicNumber = new SymbolicNumberBuilder().withInteger(intNumber).build();
 		return new SymbolicNumberFraction(symbolicNumber);
 	}
 
-	public SymbolicNumberFraction generateRandomRootSymbolicNumber(QuadraticEquationRoots correctSolution) {
+	public SymbolicNumberFraction generateRandomRootSymbolicNumber(QuadraticEquationSolution correctSolution) {
 		final var range = this.defineRange(correctSolution);
 		final var beforeTheRoot = this.generateRandomFraction(range);
 		var underTheRoot = this.generateRandomFraction(range);
@@ -34,7 +34,7 @@ public class RandomGenerator {
 		return new SymbolicNumberFraction(symbolicNumber);
 	}
 
-	public SymbolicNumberFraction generateRandomFractionSymbolicNumber(QuadraticEquationRoots correctSolution) {
+	public SymbolicNumberFraction generateRandomFractionSymbolicNumber(QuadraticEquationSolution correctSolution) {
 		final var range = this.defineRange(correctSolution);
 		final var fraction = generateRandomFraction(range);
 		final var symbolicNumber = new SymbolicNumberBuilder().withFractionPart(fraction).build();
@@ -61,7 +61,7 @@ public class RandomGenerator {
 		return range.get(RANDOM.nextInt(size));
 	}
 
-	private List<Integer> defineRange(QuadraticEquationRoots correctSolution) {
+	private List<Integer> defineRange(QuadraticEquationSolution correctSolution) {
 		final var x_1Abs = Math.abs(correctSolution.x_1().toDouble());
 		final var x_2Abs = Math.abs(correctSolution.x_2().toDouble());
 		final var max = (int) Math.max(x_1Abs, x_2Abs);

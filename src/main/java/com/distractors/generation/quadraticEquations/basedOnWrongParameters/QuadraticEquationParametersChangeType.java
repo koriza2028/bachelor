@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum QuadraticEquationParametersChangeType {
+import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+
+public enum QuadraticEquationParametersChangeType implements QuadraticSolutionImpact {
 
 	NEGATE_ONE_PARAMETER,
 	NEGATE_LEFT_SIDE_PARAMETERS,

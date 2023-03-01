@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractors;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 
 public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 
-	public SystemOfTwoEquationsDistractors generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 	
 		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);
@@ -23,7 +23,7 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(systemOfLinearEquations, distractors);
 
-		return new SystemOfTwoEquationsDistractors(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new SystemOfTwoEquationsAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
 	private boolean isDistractorInvalid(SystemOfTwoEquationsSolution possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {

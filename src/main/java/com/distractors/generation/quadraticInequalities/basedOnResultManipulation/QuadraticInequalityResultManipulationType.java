@@ -5,13 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum QuadraticInequalityResultManipulationType {
+import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+
+public enum QuadraticInequalityResultManipulationType implements QuadraticSolutionImpact {
 
 	FORGET_TO_INCLUDE_OR_EXCLUDE_ZEROES,
 	SWITCH_INEQUALITY_SIGNS,
 	EMPTY_SET,
 	R,
-	MAX_TO_MIN,
+	SWITCH_ROOTS,
 	R_WITHOUT_X_1,
 	R_WITHOUT_X_2,
 	X_1,
