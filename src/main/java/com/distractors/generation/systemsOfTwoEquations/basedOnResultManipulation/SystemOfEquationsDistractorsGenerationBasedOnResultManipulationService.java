@@ -7,13 +7,13 @@ import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnsw
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
-import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsSolutionThroughYService;
+import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughYService;
 
 public class SystemOfEquationsDistractorsGenerationBasedOnResultManipulationService {
 
 	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 		
-		final var systemOfEquationsDistractorThroughYService = new SystemOfEquationsSolutionThroughYService();
+		final var systemOfEquationsDistractorThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsDistractorThroughYService.solveCorrectly(systemOfLinearEquations);
 		var distractors = new ArrayList<SystemOfTwoEquationsSolution> ();
 		distractors.add(correctSolution);
@@ -65,25 +65,25 @@ public class SystemOfEquationsDistractorsGenerationBasedOnResultManipulationServ
 		final var x = solution.y();
 		final var y = solution.x();
 
-		return new SystemOfTwoEquationsDistractor(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y, SystemOfEquationsResultManipulationType.SWITCH_X_Y);
 	}
 
 	private SystemOfTwoEquationsDistractor generateDistractorNegatingY(SystemOfTwoEquationsCorrectSolution solution) {
 		final var y = solution.y().multiplyBy(-1);
 
-		return new SystemOfTwoEquationsDistractor(solution.x(), y);
+		return new SystemOfTwoEquationsDistractor(solution.x(), y, SystemOfEquationsResultManipulationType.NEGATE_Y);
 	}
 
 	private SystemOfTwoEquationsDistractor generateDistractorNegatingX(SystemOfTwoEquationsCorrectSolution solution) {
 		final var x = solution.x().multiplyBy(-1);
 
-		return new SystemOfTwoEquationsDistractor(x, solution.y());
+		return new SystemOfTwoEquationsDistractor(x, solution.y(), SystemOfEquationsResultManipulationType.NEGATE_X);
 	}
 
 	private SystemOfTwoEquationsDistractor generateDistractorNegatingBoth(SystemOfTwoEquationsCorrectSolution correctSolution) {
 		final var x = correctSolution.x().multiplyBy(-1);
 		final var y = correctSolution.y().multiplyBy(-1);
 
-		return new SystemOfTwoEquationsDistractor(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y, SystemOfEquationsResultManipulationType.NEGATE_BOTH);
 	}
 }

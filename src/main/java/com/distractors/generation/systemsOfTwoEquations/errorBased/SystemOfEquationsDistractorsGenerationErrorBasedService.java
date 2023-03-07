@@ -11,7 +11,7 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 
 	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 	
-		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsSolutionThroughYService();
+		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);
 
 		var distractors = new ArrayList<SystemOfTwoEquationsSolution> ();
@@ -40,22 +40,34 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 
 	private SystemOfTwoEquationsSolution generateDistractor(SystemOfTwoEquations systemOfLinearEquations) {
 		final var randomError = SystemOfEquationsErrorType.randomError();
-		final var throughX = new SystemOfEquationsSolutionThroughXService();
-		final var throughY = new SystemOfEquationsSolutionThroughYService();
+		final var additiveThroughX = new SystemOfEquationsAdditiveSolutionThroughXService();
+		final var additiveThroughY = new SystemOfEquationsAdditiveSolutionThroughYService();
+		final var substitutionThroughX = new SystemOfEquationsSubstitutionSolutionThroughXService();
+		final var substitutionThroughY = new SystemOfEquationsSubstitutionSolutionThroughYService();
+		final var equalizationThroughX = new SystemOfEquationsEqualizationSolutionThroughXService();
+		final var equalizationThroughY = new SystemOfEquationsEqualizationSolutionThroughYService();
 
 		switch (randomError) {
-			case IGNORE_FREE_COEFFICIENT_MULTIPLICATION_X:
-				return throughX.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
-			case IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y:
-				return throughY.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
-			case NEGATE_FREE_COEFFICIENT_X:
-				return throughX.solveNegatingFreeCoefficient(systemOfLinearEquations);
-			case NEGATE_FREE_COEFFICIENT_Y:
-				return throughY.solveNegatingFreeCoefficient(systemOfLinearEquations);
-			case REPLACE_WRONG_PARAMETER_X:
-				return throughX.solveReplacingWrongParameter(systemOfLinearEquations);
-			case REPLACE_WRONG_PARAMETER_Y:
-				return throughY.solveReplacingWrongParameter(systemOfLinearEquations);
+			case ADDITIVE_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_X:
+				return additiveThroughX.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
+			case ADDITIVE_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y:
+				return additiveThroughY.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
+			case ADDITIVE_REPLACE_WRONG_PARAMETER_X:
+				return additiveThroughX.solveReplacingWrongParameter(systemOfLinearEquations);
+			case ADDITIVE_REPLACE_WRONG_PARAMETER_Y:
+				return additiveThroughY.solveReplacingWrongParameter(systemOfLinearEquations);
+			case EQUALIZATION_REPLACE_WRONG_PARAMETER_X:
+				return equalizationThroughX.solveReplacingWrongParameter(systemOfLinearEquations);
+			case EQUALIZATION_REPLACE_WRONG_PARAMETER_Y:
+				return equalizationThroughY.solveReplacingWrongParameter(systemOfLinearEquations);
+			case SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_X:
+				return substitutionThroughX.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
+			case SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y:
+				return substitutionThroughY.solveIgnoringFreeCoefficientMultiplication(systemOfLinearEquations);
+			case SUBSTITUTION_REPLACE_WRONG_PARAMETER_X:
+				return substitutionThroughX.solveReplacingWrongParameter(systemOfLinearEquations);
+			case SUBSTITUTION_REPLACE_WRONG_PARAMETER_Y:
+				return substitutionThroughY.solveReplacingWrongParameter(systemOfLinearEquations);
 			default:
 				throw new IllegalArgumentException("Unknown solution approach");
 

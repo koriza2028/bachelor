@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum SystemOfEquationsResultManipulationType {
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolutionImpact;
+
+public enum SystemOfEquationsResultManipulationType implements SystemOfTwoEquationsSolutionImpact {
 
 	SWITCH_X_Y,
 	NEGATE_X,

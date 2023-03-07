@@ -7,17 +7,19 @@ import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 import com.distractors.generation.quadraticEquations.random.QuadraticEquationRandomDistractorsGenerationService;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityCorrectSolutionMapper;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractor;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractorMapper;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityNonNumericalSolution;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolution;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolutionMapper;
 import com.distractors.generation.quadraticInequalities.StandardQuadraticInequalityParameters;
 
 public class QuadraticInequalityRandomDistractorsGenerationService {
 
 	private QuadraticEquationRandomDistractorsGenerationService quadraticEquationsDistractorsGenerationService = new QuadraticEquationRandomDistractorsGenerationService();
-	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
+	private QuadraticInequalityCorrectSolutionMapper correctSolutionMapper = new QuadraticInequalityCorrectSolutionMapper();
+	private QuadraticInequalityDistractorMapper distractorMapper = new QuadraticInequalityDistractorMapper();
 
 	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var quadraticEquationParameters = quadraticInequalityParameters.equationParameters();
@@ -26,7 +28,7 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		
 		final var abc = new AbcSolutionService();
 		final var quadraticEquationCorrectSolution = abc.solveCorrectly(standardQuadraticEquationParameters);
-		final var correctSolution = solutionMapper.findQuadraticInequalitySolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
+		final var correctSolution = correctSolutionMapper.findQuadraticInequalityCorrectSolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 
 		var distractors = new ArrayList<QuadraticInequalitySolution> ();
 		distractors.add(correctSolution);
@@ -65,15 +67,15 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 			final QuadraticInequalityNonNumericalSolution randomSolutionType) {
 		switch(randomSolutionType) {
 			case EMPTY_SET:
-				return QuadraticInequalityDistractor.createEmptySetDistractor();
+				return QuadraticInequalityDistractor.createEmptySetDistractor(randomSolutionType);
 			case NORMAL:
 				return this.generateNormalDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 			case ONLY_ZERO:
-				return this.generateOnlyZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
+				return this.generateOnlyZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters, randomSolutionType);
 			case R:
-				return QuadraticInequalityDistractor.createRDistractor();
+				return QuadraticInequalityDistractor.createRDistractor(randomSolutionType);
 			case R_EXCEPT_ZERO:
-				return this.generateRExceptZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters); 
+				return this.generateRExceptZeroDistractor(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters, randomSolutionType); 
 			default:
 				throw new IllegalArgumentException("Unknown solution type.");
 		}
@@ -81,16 +83,16 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 
 	private QuadraticInequalitySolution generateNormalDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var quadraticEquationDistractor = quadraticEquationsDistractorsGenerationService.generateDistractor(quadraticEquationCorrectSolution);
-		return solutionMapper.findQuadraticInequalitySolution(quadraticEquationDistractor, standardQuadraticInequalityParameters);
+		return distractorMapper.findQuadraticInequalityDistractor(quadraticEquationDistractor, standardQuadraticInequalityParameters);
 	}
 
-	private QuadraticInequalitySolution generateOnlyZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateOnlyZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, QuadraticInequalityNonNumericalSolution randomSolutionType) {
 		final var onlyZero = quadraticEquationsDistractorsGenerationService.generateX_1(quadraticEquationCorrectSolution);
-		return QuadraticInequalityDistractor.createOnlyZeroDistractor(onlyZero);
+		return QuadraticInequalityDistractor.createOnlyZeroDistractor(onlyZero, randomSolutionType);
 	}
 
-	private QuadraticInequalitySolution generateRExceptZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
+	private QuadraticInequalitySolution generateRExceptZeroDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, QuadraticInequalityNonNumericalSolution randomSolutionType) {
 		final var exceptedZero = quadraticEquationsDistractorsGenerationService.generateX_1(quadraticEquationCorrectSolution);
-		return QuadraticInequalityDistractor.createRExceptZeroDistractor(exceptedZero);
+		return QuadraticInequalityDistractor.createRExceptZeroDistractor(exceptedZero, randomSolutionType);
 	}
 }

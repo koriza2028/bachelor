@@ -8,9 +8,9 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-    	<div style="width:50%; margin: 10% auto 10% auto;">
+    	<div style="margin: 10% auto 10% auto;">
     
-	        <h:form>
+	        <h:form class="flex justify-content-evenly flex-wrap">
 	            
 	            <p:growl autoUpdate="true"/>
 	            
@@ -52,7 +52,7 @@
 						            </h:panelGrid>
 					            </h:panelGrid>
 			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticEquationsDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
+			                    <h:panelGrid columns="4" class="flex justify-content-between flex-wrap">
 			                    	<p:dataList value="#{quadraticEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert

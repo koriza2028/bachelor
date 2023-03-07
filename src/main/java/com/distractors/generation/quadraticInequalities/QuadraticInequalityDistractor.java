@@ -28,4 +28,8 @@ public record QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolut
 		final var range = new QuadraticInequalityRange(onlyZero, InequalitySign.GREATER);
 		return new QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolution.ONLY_ZERO, range, range, solutionImpact);
 	}
+
+	public String convertToString() {
+		return QuadraticInequalitySolution.super.convertToString() + " (" + solutionImpact + ")";
+	}
 }

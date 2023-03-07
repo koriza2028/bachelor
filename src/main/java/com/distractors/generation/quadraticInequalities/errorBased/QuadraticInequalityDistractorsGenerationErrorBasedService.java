@@ -7,14 +7,16 @@ import com.distractors.generation.quadraticEquations.QuadraticEquationParameters
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationDistractorsGenerationErrorBasedService;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityCorrectSolutionMapper;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractorMapper;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolution;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolutionMapper;
 import com.distractors.generation.quadraticInequalities.StandardQuadraticInequalityParameters;
 
 public class QuadraticInequalityDistractorsGenerationErrorBasedService {
 	private QuadraticEquationDistractorsGenerationErrorBasedService quadraticEquationsDistractorsGenerationService = new QuadraticEquationDistractorsGenerationErrorBasedService();
-	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
+	private QuadraticInequalityCorrectSolutionMapper correctSolutionMapper = new QuadraticInequalityCorrectSolutionMapper();
+	private QuadraticInequalityDistractorMapper distractorMapper = new QuadraticInequalityDistractorMapper();
 
 	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var quadraticEquationParameters = quadraticInequalityParameters.equationParameters();
@@ -23,7 +25,7 @@ public class QuadraticInequalityDistractorsGenerationErrorBasedService {
 		
 		final var abc = new AbcSolutionService();
 		final var quadraticEquationCorrectSolution = abc.solveCorrectly(standardQuadraticEquationParameters);
-		final var correctSolution = solutionMapper.findQuadraticInequalitySolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
+		final var correctSolution = correctSolutionMapper.findQuadraticInequalityCorrectSolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 
 		var distractors = new ArrayList<QuadraticInequalitySolution> ();
 		distractors.add(correctSolution);
@@ -51,6 +53,6 @@ public class QuadraticInequalityDistractorsGenerationErrorBasedService {
 
 	private QuadraticInequalitySolution generateDistractor(QuadraticEquationParameters quadraticEquationParameters, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var quadraticEquationDistractor = quadraticEquationsDistractorsGenerationService.generateDistractor(quadraticEquationParameters);
-		return solutionMapper.findQuadraticInequalitySolution(quadraticEquationDistractor, standardQuadraticInequalityParameters);
+		return distractorMapper.findQuadraticInequalityDistractor(quadraticEquationDistractor, standardQuadraticInequalityParameters);
 	}
 }

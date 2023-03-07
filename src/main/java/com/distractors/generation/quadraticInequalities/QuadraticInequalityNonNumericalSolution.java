@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum QuadraticInequalityNonNumericalSolution {
+import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+
+public enum QuadraticInequalityNonNumericalSolution implements QuadraticSolutionImpact {
 
 	R,
 	R_EXCEPT_ZERO,

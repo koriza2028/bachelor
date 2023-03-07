@@ -9,14 +9,14 @@ import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnsw
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
-import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsSolutionThroughYService;
+import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughYService;
 
 public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 	private RandomGenerator random = new RandomGenerator();
 
 	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 		
-		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsSolutionThroughYService();
+		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);
 		var distractors = new ArrayList<SystemOfTwoEquationsSolution> ();
 		distractors.add(correctSolution);
@@ -45,7 +45,7 @@ public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquationsCorrectSolution solution) {
 		final var x = random.generateRandomFraction(solution);
 		final var y = random.generateRandomFraction(solution);
-		return new SystemOfTwoEquationsDistractor(x, y);
+		return new SystemOfTwoEquationsDistractor(x, y, null);
 	}
 
 }

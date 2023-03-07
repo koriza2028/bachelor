@@ -1,21 +1,10 @@
 package com.distractors.generation.quadraticInequalities;
 
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
-import com.distractors.generation.quadraticEquations.QuadraticEquationAnswers;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
-import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 
 public class QuadraticInequalityCorrectSolutionMapper {
-
-	public QuadraticInequalityAnswers findQuadraticInequalityDistractors(QuadraticEquationAnswers distractors, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
-		final var correctSolution = this.findQuadraticInequalityCorrectSolution(distractors.correctSolution(), standardQuadraticInequalityParameters);
-		final var distractor_1 = this.findQuadraticInequalityDistractor(distractors.distractor_1(), standardQuadraticInequalityParameters);
-		final var distractor_2 = this.findQuadraticInequalityDistractor(distractors.distractor_2(), standardQuadraticInequalityParameters);
-		final var distractor_3 = this.findQuadraticInequalityDistractor(distractors.distractor_3(), standardQuadraticInequalityParameters);
-
-		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
-	}
 
 	public QuadraticInequalityCorrectSolution findQuadraticInequalityCorrectSolution(QuadraticEquationCorrectSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var root_1 = quadraticEquationCorrectSolution.x_1();
@@ -177,5 +166,4 @@ public class QuadraticInequalityCorrectSolutionMapper {
 		final var range_2 = new QuadraticInequalityRange(x_2, InequalitySign.GREATER_OR_EQUALS);
 		return new QuadraticInequalityCorrectSolution(QuadraticInequalityNonNumericalSolution.NORMAL, range_1, range_2);
 	}
-
 }

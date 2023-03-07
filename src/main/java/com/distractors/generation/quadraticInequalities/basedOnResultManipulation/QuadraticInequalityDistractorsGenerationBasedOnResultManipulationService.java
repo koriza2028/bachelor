@@ -7,23 +7,23 @@ import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 import com.distractors.generation.quadraticInequalities.InequalitySign;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityAnswers;
+import com.distractors.generation.quadraticInequalities.QuadraticInequalityCorrectSolutionMapper;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityDistractor;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityNonNumericalSolution;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityParameters;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalityRange;
 import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolution;
-import com.distractors.generation.quadraticInequalities.QuadraticInequalitySolutionMapper;
 
 public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationService {
 	private AbcSolutionService abc = new AbcSolutionService();
-	private QuadraticInequalitySolutionMapper solutionMapper = new QuadraticInequalitySolutionMapper();
+	private QuadraticInequalityCorrectSolutionMapper correctSolutionMapper = new QuadraticInequalityCorrectSolutionMapper();
 
 	public QuadraticInequalityAnswers generateDistractors(QuadraticInequalityParameters quadraticInequalityParameters) {
 		final var standardQuadraticInequalityParameters = quadraticInequalityParameters.toStandard();
 		final var standardQuadraticEquationParameters = standardQuadraticInequalityParameters.equationParameters();
 		
 		final var quadraticEquationCorrectSolution = this.abc.solveCorrectly(standardQuadraticEquationParameters);
-		final var correctSolution = this.solutionMapper.findQuadraticInequalitySolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
+		final var correctSolution = correctSolutionMapper.findQuadraticInequalityCorrectSolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
 
 		var distractors = new ArrayList<QuadraticInequalitySolution> ();
 		distractors.add(correctSolution);

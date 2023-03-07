@@ -7,11 +7,11 @@ import com.distractors.generation.systemsOfTwoEquations.StandardEquationParamete
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
-import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsSolutionThroughXService;
+import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughXService;
 
 public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService {
 
-	final SystemOfEquationsSolutionThroughXService solutionThroughXService = new SystemOfEquationsSolutionThroughXService();
+	final SystemOfEquationsAdditiveSolutionThroughXService solutionThroughXService = new SystemOfEquationsAdditiveSolutionThroughXService();
 
 	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
 		final var correctSolution = solutionThroughXService.solveCorrectly(systemOfLinearEquations);
@@ -75,11 +75,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
-		final var x_1 = simpleEquation_1.coefficientOfY();
+		final var x_1 = simpleEquation_1.coefficientOfX();
 		final var y_1 = simpleEquation_1.coefficientOfX();
 		final var free_1 = simpleEquation_1.freeCoefficient();
 
-		final var x_2 = simpleEquation_2.coefficientOfY();
+		final var x_2 = simpleEquation_2.coefficientOfX();
 		final var y_2 = simpleEquation_2.coefficientOfX();
 		final var free_2 = simpleEquation_2.freeCoefficient();
 
@@ -94,7 +94,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfXAndY_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
-		final var x_2 = simpleEquation_2.coefficientOfY();
+		final var x_2 = simpleEquation_2.coefficientOfX();
 		final var y_2 = simpleEquation_2.coefficientOfX();
 		final var free_2 = simpleEquation_2.freeCoefficient();
 
@@ -108,7 +108,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfXAndY_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 
-		final var x_1 = simpleEquation_1.coefficientOfY();
+		final var x_1 = simpleEquation_1.coefficientOfX();
 		final var y_1 = simpleEquation_1.coefficientOfX();
 		final var free_1 = simpleEquation_1.freeCoefficient();
 
@@ -124,11 +124,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
 		final var x_1 = simpleEquation_1.coefficientOfX();
-		final var y_1 = simpleEquation_2.coefficientOfY();
+		final var y_1 = simpleEquation_2.coefficientOfX();
 		final var free_1 = simpleEquation_1.freeCoefficient();
 
 		final var x_2 = simpleEquation_2.coefficientOfX();
-		final var y_2 = simpleEquation_1.coefficientOfY();
+		final var y_2 = simpleEquation_1.coefficientOfX();
 		final var free_2 = simpleEquation_2.freeCoefficient();
 
 		final var newSimpleEquation_1 = new StandardEquationParameters(x_1, y_1, free_1);
@@ -144,11 +144,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
 		final var x_1 = simpleEquation_2.coefficientOfX();
-		final var y_1 = simpleEquation_1.coefficientOfY();
+		final var y_1 = simpleEquation_1.coefficientOfX();
 		final var free_1 = simpleEquation_1.freeCoefficient();
 
 		final var x_2 = simpleEquation_1.coefficientOfX();
-		final var y_2 = simpleEquation_2.coefficientOfY();
+		final var y_2 = simpleEquation_2.coefficientOfX();
 		final var free_2 = simpleEquation_2.freeCoefficient();
 
 		final var newSimpleEquation_1 = new StandardEquationParameters(x_1, y_1, free_1);
@@ -162,7 +162,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingY_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var coefficientOfX = simpleEquation_2.coefficientOfX();
-		final var negatedCoefficientOfY = simpleEquation_2.coefficientOfY() * -1;
+		final var negatedCoefficientOfY = simpleEquation_2.coefficientOfX() * -1;
 		final var freeCoefficient = simpleEquation_2.freeCoefficient();
 
 		final var newSimpleEquation_2 = new StandardEquationParameters(coefficientOfX, negatedCoefficientOfY, freeCoefficient);
@@ -174,7 +174,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingY_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var coefficientOfX = simpleEquation_1.coefficientOfX();
-		final var negatedCoefficientOfY = simpleEquation_1.coefficientOfY() * -1;
+		final var negatedCoefficientOfY = simpleEquation_1.coefficientOfX() * -1;
 		final var freeCoefficient = simpleEquation_1.freeCoefficient();
 
 		final var newSimpleEquation_1 = new StandardEquationParameters(coefficientOfX, negatedCoefficientOfY, freeCoefficient);
@@ -186,7 +186,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingX_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var negatedCoefficientOfX = simpleEquation_2.coefficientOfX() * -1;
-		final var coefficientOfY = simpleEquation_2.coefficientOfY();
+		final var coefficientOfY = simpleEquation_2.coefficientOfX();
 		final var freeCoefficient = simpleEquation_2.freeCoefficient();
 
 		final var newSimpleEquation_2 = new StandardEquationParameters(negatedCoefficientOfX, coefficientOfY, freeCoefficient);
@@ -198,7 +198,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingX_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var negatedCoefficientOfX = simpleEquation_1.coefficientOfX() * -1;
-		final var coefficientOfY = simpleEquation_1.coefficientOfY();
+		final var coefficientOfY = simpleEquation_1.coefficientOfX();
 		final var freeCoefficient = simpleEquation_1.freeCoefficient();
 
 		final var newSimpleEquation_1 = new StandardEquationParameters(negatedCoefficientOfX, coefficientOfY, freeCoefficient);
@@ -210,7 +210,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingFreeCoefficient_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var coefficientOfX = simpleEquation_2.coefficientOfX();
-		final var coefficientOfY = simpleEquation_2.coefficientOfY();
+		final var coefficientOfY = simpleEquation_2.coefficientOfX();
 		final var negatedFreeCoefficient = simpleEquation_2.freeCoefficient() * -1;
 
 		final var newSimpleEquation_2 = new StandardEquationParameters(coefficientOfX, coefficientOfY, negatedFreeCoefficient);
@@ -222,7 +222,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	private SystemOfTwoEquationsSolution generateNegatingFreeCoefficient_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var coefficientOfX = simpleEquation_1.coefficientOfX();
-		final var coefficientOfY = simpleEquation_1.coefficientOfY();
+		final var coefficientOfY = simpleEquation_1.coefficientOfX();
 		final var negatedFreeCoefficient = simpleEquation_1.freeCoefficient() * -1;
 
 		final var newSimpleEquation_1 = new StandardEquationParameters(coefficientOfX, coefficientOfY, negatedFreeCoefficient);
