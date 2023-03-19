@@ -1,10 +1,12 @@
 package com.distractors.generation.quadraticEquations.basedOnResultManipulation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
 import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
 
 public enum QuadraticEquationResultManipulationType implements QuadraticSolutionImpact {
@@ -20,15 +22,33 @@ public enum QuadraticEquationResultManipulationType implements QuadraticSolution
 	MINUS_ONE_X_2,
 	MINUS_ONE_X_1_ONE_X_2,
 	REVERSE_X_1,
-	REVRESE_X_2,
+	REVERSE_X_2,
 	REVERSE_BOTH;
 
-	private static final List<QuadraticEquationResultManipulationType> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
-	private static final int SIZE = VALUES.size();
 	private static final Random RANDOM = new Random();
 	
-	public static QuadraticEquationResultManipulationType randomManipulationType()  {
-		return VALUES.get(RANDOM.nextInt(SIZE));
+	public static QuadraticEquationResultManipulationType randomManipulationType(QuadraticEquationCorrectSolution correctSolution)  {
+		final var possibleManipulationTypes = new ArrayList<QuadraticEquationResultManipulationType>();
+		possibleManipulationTypes.add(ZERO_X_1);
+		possibleManipulationTypes.add(ZERO_X_2);
+		possibleManipulationTypes.add(ONE_X_1);
+		possibleManipulationTypes.add(ONE_X_2);
+		possibleManipulationTypes.add(MINUS_ONE_X_1);
+		possibleManipulationTypes.add(MINUS_ONE_X_2);
+		possibleManipulationTypes.add(MINUS_ONE_X_1_ONE_X_2);
+
+		if (correctSolution.x_1() != null && correctSolution.x_2() != null) {
+			possibleManipulationTypes.add(NEGATE_X_1);
+			possibleManipulationTypes.add(NEGATE_X_2);
+			possibleManipulationTypes.add(NEGATE_BOTH);
+			possibleManipulationTypes.add(REVERSE_X_1);
+			possibleManipulationTypes.add(REVERSE_X_2);
+			possibleManipulationTypes.add(REVERSE_BOTH);
+
+		}
+
+		final var size = possibleManipulationTypes.size();
+		return possibleManipulationTypes.get(RANDOM.nextInt(size));
 	}
 	
 }

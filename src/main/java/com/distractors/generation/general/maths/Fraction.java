@@ -102,7 +102,7 @@ public class Fraction {
 	}
 
 	public double toDouble() {
-		return this.nominator / this.denominator;
+		return (double) this.nominator / (double) this.denominator;
 	}
 
 	public boolean isInt() {

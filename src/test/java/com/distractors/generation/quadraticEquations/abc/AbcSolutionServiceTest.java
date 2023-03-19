@@ -4,6 +4,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.distractors.generation.general.QuadraticEquationTestParametersGenerator;
+import com.distractors.generation.general.maths.Fraction;
+import com.distractors.generation.general.maths.SymbolicNumberBuilder;
+import com.distractors.generation.general.maths.SymbolicNumberFraction;
+import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
+import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.abc.AbcSolutionService;
 
@@ -17,6 +22,26 @@ public class AbcSolutionServiceTest {
 		// given
 		final var testParameters = this.testParametersGenerator.generateStandardQuadraticEquationParametersForAbc();
 		final var correctSolution = this.testParametersGenerator.generateCorrectSolutionForAbc();
+
+		// when
+		final var abcCorrectSolution = abc.solveCorrectly(testParameters);
+
+		// then
+		Assertions.assertTrue(abcCorrectSolution.equals(correctSolution));
+	}
+
+	@Test
+	void testSolveCorrectlyOther() {
+		// given
+		final var a = new Fraction(3, 8);
+		final var b = new Fraction(-9, 20);
+		final var c = new Fraction(2, 15);
+		final var testParameters = new StandardQuadraticEquationParameters(a, b, c);
+		final var nom = new SymbolicNumberBuilder().withFractionPart(new Fraction(3,2)).build();
+		final var denom = new SymbolicNumberBuilder().withFractionPart(new Fraction(15, 8)).build();
+		final var frac1 = new SymbolicNumberFraction(nom);
+		final var frac2 = new SymbolicNumberFraction(denom);
+		final var correctSolution = new QuadraticEquationCorrectSolution(frac1, frac2);
 
 		// when
 		final var abcCorrectSolution = abc.solveCorrectly(testParameters);

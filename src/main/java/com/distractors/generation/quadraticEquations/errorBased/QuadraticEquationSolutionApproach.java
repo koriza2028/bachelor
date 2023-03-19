@@ -34,9 +34,7 @@ public enum QuadraticEquationSolutionApproach {
 	 * x_1,2 = √(c/a)
 	 * Only possible for equations in form a·x² - c = 0
 	 */
-	ROOT_EXTRACTION,
-	NO_NEGATIVE_SOLUTION_OF_ROOT,
-	IGNORE_RIGHT_SIDE;
+	ROOT_EXTRACTION;
 
 	private static final Random RANDOM = new Random();
 	

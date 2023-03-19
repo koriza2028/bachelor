@@ -44,7 +44,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 	}
 
 	private QuadraticEquationDistractor generateDistractor(QuadraticEquationCorrectSolution correctSolution) {
-		final var randomResultManipulationType = QuadraticEquationResultManipulationType.randomManipulationType();
+		final var randomResultManipulationType = QuadraticEquationResultManipulationType.randomManipulationType(correctSolution);
 
 		return generateDistractorWithResultManipulationType(correctSolution, randomResultManipulationType);
 	}
@@ -72,7 +72,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 					return this.generateDistractorReversingBothRoots(correctSolution);
 				case REVERSE_X_1:
 					return this.generateDistractorReversingX_1(correctSolution);
-				case REVRESE_X_2:
+				case REVERSE_X_2:
 					return this.generateDistractorReversingX_2(correctSolution);
 				case ZERO_X_1:
 					return this.generateDistractorReplacingX_1ByZero(correctSolution);
@@ -102,7 +102,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 
 	private QuadraticEquationDistractor generateDistractorReversingX_2(QuadraticEquationCorrectSolution correctSolution) {
 		final var x_2 = correctSolution.x_2().reverse();
-		return new QuadraticEquationDistractor(correctSolution.x_1(), x_2, QuadraticEquationResultManipulationType.REVRESE_X_2);
+		return new QuadraticEquationDistractor(correctSolution.x_1(), x_2, QuadraticEquationResultManipulationType.REVERSE_X_2);
 	}
 
 	private QuadraticEquationDistractor generateDistractorReversingX_1(QuadraticEquationCorrectSolution correctSolution) {

@@ -41,6 +41,9 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		do {
 			distractor = this.generateDistractor(quadraticEquationParameters);
 		} while (this.isDistractorInvalid(distractor, distractors));
+		if (this.isDistractorInvalid(distractor, distractors)) {
+			return null;
+		}
 		return distractor;
 	}
 

@@ -62,17 +62,19 @@ public class RandomGenerator {
 	}
 
 	private List<Integer> defineRange(QuadraticEquationSolution correctSolution) {
-		final var x_1Abs = Math.abs(correctSolution.x_1().toDouble());
-		final var x_2Abs = Math.abs(correctSolution.x_2().toDouble());
-		final var max = (int) Math.max(x_1Abs, x_2Abs);
-
-		return IntStream.range(-max, max).boxed().collect(Collectors.toUnmodifiableList());
+		if (correctSolution.x_1() != null && correctSolution.x_2() != null) {
+			final var x_1Abs = Math.abs(correctSolution.x_1().toDouble());
+			final var x_2Abs = Math.abs(correctSolution.x_2().toDouble());
+			final var max = (int) Math.round(Math.max(x_1Abs, x_2Abs));
+			return IntStream.range(-max, max).boxed().collect(Collectors.toUnmodifiableList());
+		}
+		return IntStream.range(-10, 10).boxed().collect(Collectors.toUnmodifiableList());
 	}
 
 	private List<Integer> defineRange(SystemOfTwoEquationsSolution correctSolution) {
 		final var xAbs = Math.abs(correctSolution.x().toDouble());
 		final var yAbs = Math.abs(correctSolution.y().toDouble());
-		final var max = (int) Math.max(xAbs, yAbs);
+		final var max = (int) Math.round(Math.max(xAbs, yAbs));
 
 		return IntStream.range(-max, max).boxed().collect(Collectors.toUnmodifiableList());
 	}
