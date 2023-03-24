@@ -101,13 +101,16 @@ public class SquareRoots {
 	}
 
 	public SquareRoots multiplyBy(SquareRoots rootsToMultiplyBy) {
-		var rootsResult = new SquareRoots(this.roots);
-
-		for (final var currentRoot : rootsToMultiplyBy.roots) {
-			rootsResult = rootsResult.multiplyBy(currentRoot);
+		if (!rootsToMultiplyBy.roots.isEmpty()) {
+			var rootsResult = new SquareRoots(this.roots);
+			
+			for (final var currentRoot : rootsToMultiplyBy.roots) {
+				rootsResult = rootsResult.multiplyBy(currentRoot);
+			}
+			
+			return rootsResult;	
 		}
-
-		return rootsResult;
+		return new SquareRoots();
 	}
 
 	public SquareRoots multiplyBy(int number) {

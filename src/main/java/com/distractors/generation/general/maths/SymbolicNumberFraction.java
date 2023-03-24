@@ -25,12 +25,14 @@ public class SymbolicNumberFraction {
 		} else {
 			this.denominator = denominator;
 		}
+		this.simplify();
 	}
 
 	public SymbolicNumberFraction(SymbolicNumber number) {
 		this.nominator = number;
 		final var builder = new SymbolicNumberBuilder();
 		this.denominator = builder.withFractionPart(Fraction.ONE).build();
+		this.simplify();
 	}
 
 	public SymbolicNumberFraction multiplyBy(int number) {
@@ -102,13 +104,13 @@ public class SymbolicNumberFraction {
 	public void simplify() {
 		this.nominator.simplify();
 		this.denominator.simplify();
-		if (this.denominator.toInt() != 0 && 
+		if (this.denominator.toInt() != 0 && this.denominator.toInt() != 1 && 
 				(this.nominator.getInteger() % this.denominator.toInt()) == 0 &&
 				(this.nominator.getRootsPart()
 						.getRoots()
 						.stream()
 						.allMatch(
-								root -> root.getBeforeTheRoot().toInt() % this.denominator.toInt() == 0))) {
+								root -> root.getBeforeTheRoot().toDouble() % this.denominator.toDouble() == 0))) {
 			final var builder = new SymbolicNumberBuilder();
 			final var symbolicNumber = builder.withInteger(this.nominator.getInteger() / this.denominator.toInt())
 											.withFractionPart(this.nominator.getFractionPart())

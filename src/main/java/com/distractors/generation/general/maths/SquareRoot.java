@@ -178,6 +178,10 @@ public class SquareRoot {
 		return Math.sqrt(this.underTheRoot.toDouble()) % 1 == 0 && this.beforeTheRoot.isInt();
 	}
 
+	public boolean isFraction() {
+		return Math.sqrt(this.underTheRoot.toDouble()) % 1 == 0 && !this.beforeTheRoot.isInt();
+	}
+
 	public Fraction toFraction() {
 		return this.beforeTheRoot.multiplyBy((int)Math.sqrt(this.underTheRoot.toDouble()));
 	}

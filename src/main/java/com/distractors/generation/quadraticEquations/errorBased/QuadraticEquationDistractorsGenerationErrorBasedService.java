@@ -32,16 +32,16 @@ public class QuadraticEquationDistractorsGenerationErrorBasedService {
 		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 
-	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
 	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationParameters quadraticEquationParameters, ArrayList<QuadraticEquationSolution> distractors) {
 		QuadraticEquationDistractor distractor;
 		do {
 			distractor = this.generateDistractor(quadraticEquationParameters);
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
+	}
+
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	public QuadraticEquationDistractor generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {

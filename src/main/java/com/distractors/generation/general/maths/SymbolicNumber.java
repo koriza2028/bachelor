@@ -45,29 +45,37 @@ public class SymbolicNumber {
 				.build();
 	}
 
+	public SymbolicNumber multiplyBy(Fraction fraction) {
+		final var rootsPartResult = this.rootsPart.multiplyBy(fraction);
+		final var integerResult = fraction.multiplyBy(integer);
+		final var fractionPartResult = this.fractionPart.multiplyBy(fraction).add(integerResult);
+
+		return new SymbolicNumberBuilder()
+				.withFractionPart(fractionPartResult)
+				.withRoots(rootsPartResult)
+				.build();
+	}
+
 	public SymbolicNumber multiplyBy(SymbolicNumber number) {
 		final var rootsByRootsResult = this.rootsPart.multiplyBy(number.rootsPart);
 		final var rootsByFractionResult = this.rootsPart.multiplyBy(number.fractionPart);
+		final var rootsByIntResult = this.rootsPart.multiplyBy(number.integer);
 		final var integerResult = this.integer * number.getInteger();
 
 
-		final var fractionPartResult = this.fractionPart.multiplyBy(number.fractionPart);
+		final var fractionPartResult = this.fractionPart.multiplyBy(number.integer).add(this.fractionPart.multiplyBy(number.fractionPart));
 
 		return new SymbolicNumberBuilder()
 				.withInteger(integerResult)
 				.withFractionPart(fractionPartResult)
 				.withRoots(rootsByRootsResult)
 				.withRoots(rootsByFractionResult)
+				.withRoots(rootsByIntResult)
 				.build();
 	}
 
-	public SymbolicNumberFraction divideBy(Fraction fraction) throws IllegalArgumentException {
-		final var denominator = new SymbolicNumberBuilder()
-									.withFractionPart(
-											new Fraction(fraction.getNominator(), 1))
-									.build();
-		final var nominator = this.multiplyBy(fraction.getDenominator());
-		return new SymbolicNumberFraction(nominator, denominator);
+	public SymbolicNumber divideBy(Fraction fraction) throws IllegalArgumentException {
+		return this.multiplyBy(fraction.reverse());
 	}
 
 	public SymbolicNumberFraction divideBy(SymbolicNumber number) {
@@ -104,6 +112,10 @@ public class SymbolicNumber {
 			this.integer += root.toInt();
 			this.rootsPart.getRoots().remove(root);
 		}
+		if (root.isFraction()) {
+			this.fractionPart = this.fractionPart.add(root.toFraction());
+			this.rootsPart.getRoots().remove(root);
+		}
 	}
 
 	public boolean isGreaterThanZero() {
@@ -126,10 +138,6 @@ public class SymbolicNumber {
 	}
 
 	private boolean equalsSymbolically(SymbolicNumber other) {
-		if (this.fractionPart == null) {
-			return this.integer == other.getInteger() && other.getFractionPart() == null && this.rootsPart.equals(other.getRootsPart());
-		}
-
 		return this.integer == other.getInteger() && this.fractionPart.equals(other.getFractionPart()) && this.rootsPart.equals(other.getRootsPart());
 	}
 

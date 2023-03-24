@@ -53,7 +53,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnWrongParametersServi
 	}
 
 	private QuadraticInequalitySolution generateDistractor(QuadraticEquationParameters quadraticEquationParameters, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
-		final var randomError = QuadraticEquationParametersChangeType.randomError();
+		final var randomError = QuadraticEquationParametersChangeType.randomError(quadraticEquationParameters);
 		final var quadraticEquationDistractor = quadraticEquationsDistractorsGenerationService.generateDistractorWithChosenParametersChangeType(quadraticEquationParameters, randomError);
 		return distractorMapper.findQuadraticInequalityDistractor(quadraticEquationDistractor, standardQuadraticInequalityParameters);
 	}

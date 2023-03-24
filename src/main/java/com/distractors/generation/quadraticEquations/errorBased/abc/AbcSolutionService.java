@@ -3,6 +3,7 @@ package com.distractors.generation.quadraticEquations.errorBased.abc;
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SquareRoots;
+import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
 import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
@@ -20,8 +21,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		if (discriminant.isGreaterOrEqualsToZero()) {
 			try {
 				final var rootOfDiscriminant = new SquareRoot(discriminant, new Fraction(1, 1));
-				final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-				final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
+				final var x_1 = new SymbolicNumberFraction((b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+				final var x_2 = new SymbolicNumberFraction((b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 				return new QuadraticEquationCorrectSolution(x_1, x_2);
 			} catch (IllegalArgumentException e) {
 				return new QuadraticEquationCorrectSolution(null, null);
@@ -56,8 +57,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 		final var b = equationParameters.b();
 
 		final var rootOfDiscriminant = this.extractRootOfDiscriminantAdditively(equationParameters);
-		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
+		final var x_1 = new SymbolicNumberFraction((b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+		final var x_2 = new SymbolicNumberFraction((b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.EXTRACT_ROOT_ADDITIVELY_ABC);
 	}
 
@@ -67,8 +68,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 		final var discriminant = this.findDiscriminantCorrectly(equationParameters);
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
-		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(c);
-		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(c);
+		final var x_1 = new SymbolicNumberFraction((b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(c));
+		final var x_2 = new SymbolicNumberFraction((b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(c));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.DIVIDE_BY_C);
 	}
 
@@ -78,8 +79,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 		final var discriminant = this.findDiscriminantIncorrectly(equationParameters);
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
-		final var x_1 = (b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		final var x_2 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
+		final var x_1 = new SymbolicNumberFraction((b.multiplyBy(-1).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+		final var x_2 = new SymbolicNumberFraction((b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.EXTRACT_ROOT_ADDITIVELY_ABC);
 	} 
 
@@ -89,8 +90,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 		final var discriminant = this.findDiscriminantCorrectly(equationParameters);
 		final var rootOfDiscriminant = new SquareRoot(discriminant, Fraction.ONE);
-		final var x_1 = (b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		final var x_2 = (b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));;
+		final var x_1 = new SymbolicNumberFraction((b.multiplyBy(-1).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+		final var x_2 = new SymbolicNumberFraction((b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.MOVE_PLUS_MINUS);
 	}
 
@@ -100,8 +101,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 		final var discriminant = this.findDiscriminantCorrectly(equationParameters);
 		final var rootOfDiscriminant = new SquareRoot(discriminant);
-		final var x_1 = (b.add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		final var x_2 = (b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
+		final var x_1 = new SymbolicNumberFraction((b.add(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+		final var x_2 = new SymbolicNumberFraction((b.substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.NO_MINUS_BEFORE_B);
 	}
 
@@ -111,8 +112,8 @@ public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 		final var discriminant = this.findDiscriminantCorrectly(equationParameters);
 		final var rootOfDiscriminant = new SquareRoot(discriminant);
-		final var x_1 = (b.multiplyBy(b).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
-		final var x_2 = (b.multiplyBy(b).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2));
+		final var x_1 = new SymbolicNumberFraction((b.multiplyBy(b).add(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
+		final var x_2 = new SymbolicNumberFraction((b.multiplyBy(b).substract(rootOfDiscriminant)).divideBy(a.multiplyBy(2)));
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.USE_B_QUADRAT);
 	}
 

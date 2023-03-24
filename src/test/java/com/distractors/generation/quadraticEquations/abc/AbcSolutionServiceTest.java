@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import com.distractors.generation.general.QuadraticEquationTestParametersGenerator;
 import com.distractors.generation.general.maths.Fraction;
+import com.distractors.generation.general.maths.SquareRoot;
 import com.distractors.generation.general.maths.SymbolicNumberBuilder;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
@@ -37,14 +38,42 @@ public class AbcSolutionServiceTest {
 		final var b = new Fraction(-9, 20);
 		final var c = new Fraction(2, 15);
 		final var testParameters = new StandardQuadraticEquationParameters(a, b, c);
-		final var nom = new SymbolicNumberBuilder().withFractionPart(new Fraction(3,2)).build();
-		final var denom = new SymbolicNumberBuilder().withFractionPart(new Fraction(15, 8)).build();
+		final var nom = new SymbolicNumberBuilder().withFractionPart(new Fraction(2, 3)).build();
+		final var denom = new SymbolicNumberBuilder().withFractionPart(new Fraction(8, 15)).build();
 		final var frac1 = new SymbolicNumberFraction(nom);
+		frac1.toString();
 		final var frac2 = new SymbolicNumberFraction(denom);
+		frac2.toString();
 		final var correctSolution = new QuadraticEquationCorrectSolution(frac1, frac2);
 
 		// when
 		final var abcCorrectSolution = abc.solveCorrectly(testParameters);
+
+		// then
+		Assertions.assertTrue(abcCorrectSolution.equals(correctSolution));
+	}
+
+	@Test
+	void testSolveCorrectlyOtherOther() {
+		// given
+		final var a = new Fraction(-5, 1);
+		final var b = new Fraction(-31, 1);
+		final var c = new Fraction(8, 1);
+		final var testParameters = new StandardQuadraticEquationParameters(a, b, c);
+		final var root = new SquareRoot(new Fraction(1121, 1), new Fraction(-1, 10));
+		final var minusRoot = root.multiplyBy(-1);
+		final var frac = new Fraction(-31, 10);
+		final var x_1 = new SymbolicNumberBuilder().withFractionPart(frac).withRoot(root).build();
+		final var x_2 = new SymbolicNumberBuilder().withFractionPart(frac).withRoot(minusRoot).build();
+		final var frac1 = new SymbolicNumberFraction(x_1);
+		frac1.toString();
+		final var frac2 = new SymbolicNumberFraction(x_2);
+		frac2.toString();
+		final var correctSolution = new QuadraticEquationCorrectSolution(frac1, frac2);
+
+		// when
+		final var abcCorrectSolution = abc.solveCorrectly(testParameters);
+		frac1.equals(frac2);
 
 		// then
 		Assertions.assertTrue(abcCorrectSolution.equals(correctSolution));

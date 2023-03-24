@@ -57,10 +57,10 @@ public class QuadraticInequalitiesDistractorsBean {
 		final var distractorsGenerator = new QuadraticInequalityDistractorsGenerationBasedOnResultManipulationService();
 		final var solution = distractorsGenerator.generateDistractors(quadraticInequality);
 
-		distractorsBasedOnResultManipulation.add(solution.correctSolution().toString());
-		distractorsBasedOnResultManipulation.add(solution.distractor_1().toString());
-		distractorsBasedOnResultManipulation.add(solution.distractor_2().toString());
-		distractorsBasedOnResultManipulation.add(solution.distractor_3().toString());
+		distractorsBasedOnResultManipulation.add(solution.correctSolution().convertToString());
+		distractorsBasedOnResultManipulation.add(solution.distractor_1().convertToString());
+		distractorsBasedOnResultManipulation.add(solution.distractor_2().convertToString());
+		distractorsBasedOnResultManipulation.add(solution.distractor_3().convertToString());
 		Collections.shuffle(distractorsBasedOnResultManipulation);
 	}
 
@@ -68,10 +68,10 @@ public class QuadraticInequalitiesDistractorsBean {
 		final var distractorsGenerator = new QuadraticInequalityDistractorsGenerationBasedOnWrongParametersService();
 		final var solution = distractorsGenerator.generateDistractors(quadraticInequality);
 		 
-		distractorsBasedOnWrongParameters.add(solution.correctSolution().toString());
-		distractorsBasedOnWrongParameters.add(solution.distractor_1().toString());
-		distractorsBasedOnWrongParameters.add(solution.distractor_2().toString());
-		distractorsBasedOnWrongParameters.add(solution.distractor_3().toString());
+		distractorsBasedOnWrongParameters.add(solution.correctSolution().convertToString());
+		distractorsBasedOnWrongParameters.add(solution.distractor_1().convertToString());
+		distractorsBasedOnWrongParameters.add(solution.distractor_2().convertToString());
+		distractorsBasedOnWrongParameters.add(solution.distractor_3().convertToString());
 		Collections.shuffle(distractorsBasedOnWrongParameters);
 	}
 
@@ -79,10 +79,10 @@ public class QuadraticInequalitiesDistractorsBean {
 		final var distractorsGenerator = new QuadraticInequalityDistractorsGenerationErrorBasedService();
 		final var solution = distractorsGenerator.generateDistractors(quadraticInequality);
 		 
-		distractorsErrorBased.add(solution.correctSolution().toString());
-		distractorsErrorBased.add(solution.distractor_1().toString());
-		distractorsErrorBased.add(solution.distractor_2().toString());
-		distractorsErrorBased.add(solution.distractor_3().toString());
+		distractorsErrorBased.add(solution.correctSolution().convertToString());
+		distractorsErrorBased.add(solution.distractor_1().convertToString());
+		distractorsErrorBased.add(solution.distractor_2().convertToString());
+		distractorsErrorBased.add(solution.distractor_3().convertToString());
 		Collections.shuffle(distractorsErrorBased);
 	}
 
@@ -90,10 +90,10 @@ public class QuadraticInequalitiesDistractorsBean {
 		final var distractorsGenerator = new QuadraticInequalityRandomDistractorsGenerationService();
 		final var solution = distractorsGenerator.generateDistractors(quadraticInequality);
 		 
-		randomDistractors.add(solution.correctSolution().toString());
-		randomDistractors.add(solution.distractor_1().toString());
-		randomDistractors.add(solution.distractor_2().toString());
-		randomDistractors.add(solution.distractor_3().toString());
+		randomDistractors.add(solution.correctSolution().convertToString());
+		randomDistractors.add(solution.distractor_1().convertToString());
+		randomDistractors.add(solution.distractor_2().convertToString());
+		randomDistractors.add(solution.distractor_3().convertToString());
 		Collections.shuffle(distractorsErrorBased);
 	}
 
