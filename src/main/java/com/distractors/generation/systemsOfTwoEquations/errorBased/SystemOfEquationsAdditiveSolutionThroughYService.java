@@ -50,12 +50,12 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 
 		final var lcm = LcmFindingService.lcm(coefficientOfX_1, coefficientOfX_2);
 		final var multiplicator_1 = lcm / coefficientOfX_1;
-		final var multiplicator_2 = lcm / coefficientOfX_2;
+		final var multiplicator_2 = lcm / coefficientOfX_2 * -1;
 		
 		final var newSimpleEquation_1 = simpleEquation_1.multiplyBy(multiplicator_1);
 		final var newSimpleEquation_2 = simpleEquation_2.multiplyBy(multiplicator_2);
 
-		return newSimpleEquation_1.substract(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
+		return newSimpleEquation_1.add(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
 	}
 
 	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
@@ -103,11 +103,11 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 
 		final var lcm = LcmFindingService.lcm(coefficientOfX_1, coefficientOfX_2);
 		final var multiplicator_1 = lcm / coefficientOfX_1;
-		final var multiplicator_2 = lcm / coefficientOfX_2;
+		final var multiplicator_2 = lcm / coefficientOfX_2 * -1;
 		
 		final var newSimpleEquation_1 = simpleEquation_1.multiplyIgnoringFreeCoefficientBy(multiplicator_1);
 		final var newSimpleEquation_2 = simpleEquation_2.multiplyIgnoringFreeCoefficientBy(multiplicator_2);
 
-		return newSimpleEquation_1.substract(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
+		return newSimpleEquation_1.add(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
 	}
 }

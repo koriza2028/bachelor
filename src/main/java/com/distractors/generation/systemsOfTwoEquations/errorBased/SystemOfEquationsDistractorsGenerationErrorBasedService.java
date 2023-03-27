@@ -34,7 +34,7 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 		SystemOfTwoEquationsSolution distractor;
 		do {
 			distractor = this.generateDistractor(systemOfLinearEquations);
-		} while (this.isDistractorInvalid(distractor, null));
+		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
 

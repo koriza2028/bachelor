@@ -32,7 +32,7 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 	private StandardLinearEquationFractionParameters createEquationForY(StandardEquationParameters simpleEquation_1, Fraction x) {
 		final var setX = x.multiplyBy(simpleEquation_1.coefficientOfX());
 		final var freeCoefficientFraction = new Fraction(simpleEquation_1.freeCoefficient(), 1);
-		final var a = new Fraction(simpleEquation_1.coefficientOfX(), 1);
+		final var a = new Fraction(simpleEquation_1.coefficientOfY(), 1);
 		final var b = setX.add(freeCoefficientFraction);
 		final var standardLinearEquation = new StandardLinearEquationFractionParameters(a, b);
 		return standardLinearEquation;
@@ -44,17 +44,17 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForX(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {
-		final var coefficientOfY_1 = simpleEquation_1.coefficientOfX();
-		final var coefficientOfY_2 = simpleEquation_2.coefficientOfX();
+		final var coefficientOfY_1 = simpleEquation_1.coefficientOfY();
+		final var coefficientOfY_2 = simpleEquation_2.coefficientOfY();
 
 		final var lcm = LcmFindingService.lcm(coefficientOfY_1, coefficientOfY_2);
 		final var multiplicator_1 = lcm / coefficientOfY_1;
-		final var multiplicator_2 = lcm / coefficientOfY_2;
+		final var multiplicator_2 = lcm / coefficientOfY_2 * -1;
 		
 		final var newSimpleEquation_1 = simpleEquation_1.multiplyBy(multiplicator_1);
 		final var newSimpleEquation_2 = simpleEquation_2.multiplyBy(multiplicator_2);
 
-		return newSimpleEquation_1.substract(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
+		return newSimpleEquation_1.add(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
 	}
 
 	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
@@ -73,7 +73,7 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForYReplacingY(StandardEquationParameters simpleEquation, Fraction x) {
-		final var setX = x.multiplyBy(simpleEquation.coefficientOfX());
+		final var setX = x.multiplyBy(simpleEquation.coefficientOfY());
 		final var freeCoefficientFraction = new Fraction(simpleEquation.freeCoefficient(), 1);
 		final var a = new Fraction(simpleEquation.coefficientOfX(), 1);
 		final var b = setX.add(freeCoefficientFraction);
@@ -97,16 +97,16 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForXIgnoringFreeCoefficientMultiplication(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {
-		final var coefficientOfY_1 = simpleEquation_1.coefficientOfX();
-		final var coefficientOfY_2 = simpleEquation_2.coefficientOfX();
+		final var coefficientOfY_1 = simpleEquation_1.coefficientOfY();
+		final var coefficientOfY_2 = simpleEquation_2.coefficientOfY();
 
 		final var lcm = LcmFindingService.lcm(coefficientOfY_1, coefficientOfY_2);
 		final var multiplicator_1 = lcm / coefficientOfY_1;
-		final var multiplicator_2 = lcm / coefficientOfY_2;
+		final var multiplicator_2 = lcm / coefficientOfY_2 * -1;
 		
 		final var newSimpleEquation_1 = simpleEquation_1.multiplyIgnoringFreeCoefficientBy(multiplicator_1);
 		final var newSimpleEquation_2 = simpleEquation_2.multiplyIgnoringFreeCoefficientBy(multiplicator_2);
 
-		return newSimpleEquation_1.substract(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
+		return newSimpleEquation_1.add(newSimpleEquation_2).toStandardLinearEquationFractionParameters();
 	}
 }

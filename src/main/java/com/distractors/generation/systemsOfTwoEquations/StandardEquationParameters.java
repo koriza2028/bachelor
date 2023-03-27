@@ -7,7 +7,7 @@ public record StandardEquationParameters(int coefficientOfX, int coefficientOfY,
 
 	public StandardEquationParameters multiplyBy(int multiplicator) {
 		final var newCoefficientOfX = coefficientOfX * multiplicator;
-		final var newCoefficientOfY = coefficientOfX * multiplicator;
+		final var newCoefficientOfY = coefficientOfY * multiplicator;
 		final var newFreeCoefficient = freeCoefficient * multiplicator;
 
 		return new StandardEquationParameters(newCoefficientOfX, newCoefficientOfY, newFreeCoefficient);
@@ -15,15 +15,15 @@ public record StandardEquationParameters(int coefficientOfX, int coefficientOfY,
 
 	public StandardEquationParameters multiplyIgnoringFreeCoefficientBy(int multiplicator) {
 		final var newCoefficientOfX = coefficientOfX * multiplicator;
-		final var newCoefficientOfY = coefficientOfX * multiplicator;
+		final var newCoefficientOfY = coefficientOfY * multiplicator;
 
 		return new StandardEquationParameters(newCoefficientOfX, newCoefficientOfY, freeCoefficient);
 	}
 
-	public StandardEquationParameters substract(StandardEquationParameters linearEquation) {
-		final var newCoefficientOfX = coefficientOfX - linearEquation.coefficientOfX();
-		final var newCoefficientOfY = coefficientOfX - linearEquation.coefficientOfX();
-		final var newFreeCoefficient = freeCoefficient - linearEquation.freeCoefficient();
+	public StandardEquationParameters add(StandardEquationParameters linearEquation) {
+		final var newCoefficientOfX = coefficientOfX + linearEquation.coefficientOfX();
+		final var newCoefficientOfY = coefficientOfY + linearEquation.coefficientOfY();
+		final var newFreeCoefficient = freeCoefficient + linearEquation.freeCoefficient();
 
 		return new StandardEquationParameters(newCoefficientOfX, newCoefficientOfY, newFreeCoefficient);
 	}
@@ -31,9 +31,9 @@ public record StandardEquationParameters(int coefficientOfX, int coefficientOfY,
 	public StandardLinearEquationFractionParameters toStandardLinearEquationFractionParameters() {
 		final var b = new Fraction(freeCoefficient, 1);
 		if (coefficientOfX == 0) {
-			final var a = new Fraction(coefficientOfX, 1);
+			final var a = new Fraction(coefficientOfY, 1);
 			return new StandardLinearEquationFractionParameters(a, b);
-		} else if (coefficientOfX == 0) {
+		} else if (coefficientOfY == 0) {
 			final var a = new Fraction(coefficientOfX, 1);
 			return new StandardLinearEquationFractionParameters(a, b);
 		} else {

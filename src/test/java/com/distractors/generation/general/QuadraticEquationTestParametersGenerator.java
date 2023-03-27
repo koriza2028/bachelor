@@ -110,7 +110,7 @@ public class QuadraticEquationTestParametersGenerator {
 		return new StandardQuadraticEquationParameters(a, b, c);
 	}
 
-	public QuadraticEquationSolution generateCorrectSolutionForExclusion() {
+	public QuadraticEquationCorrectSolution generateCorrectSolutionForExclusion() {
 		final var x_1Nominator = new SymbolicNumberBuilder().withInteger(0).build();
 		final var x_1Denominator = new SymbolicNumberBuilder().withInteger(1).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);

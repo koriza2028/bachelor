@@ -51,7 +51,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughXService {
 	private StandardLinearEquationFractionParameters createEquationForY(StandardEquationParameters simpleEquation_1, Fraction x) {
 		final var setX = x.multiplyBy(simpleEquation_1.coefficientOfX());
 		final var freeCoefficientFraction = new Fraction(simpleEquation_1.freeCoefficient(), 1);
-		final var a = new Fraction(simpleEquation_1.coefficientOfX(), 1);
+		final var a = new Fraction(simpleEquation_1.coefficientOfY(), 1);
 		final var b = setX.add(freeCoefficientFraction);
 		final var standardLinearEquation = new StandardLinearEquationFractionParameters(a, b);
 		return standardLinearEquation;
@@ -69,16 +69,16 @@ public class SystemOfEquationsSubstitutionSolutionThroughXService {
 
 	private StandardLinearEquationFractionParameters expressYThroughX(StandardEquationParameters simpleEquation) {
 		final var aNominator = simpleEquation.coefficientOfX() * -1;
-		final var aDenominator = simpleEquation.coefficientOfX();
+		final var aDenominator = simpleEquation.coefficientOfY();
 		final var bNominator = simpleEquation.freeCoefficient() * -1;
-		final var bDenominator = simpleEquation.coefficientOfX();
+		final var bDenominator = simpleEquation.coefficientOfY();
 		final var a = new Fraction(aNominator, aDenominator);
 		final var b = new Fraction(bNominator, bDenominator);
 		return new StandardLinearEquationFractionParameters(a, b);
 	}
 
 	private StandardLinearEquationFractionParameters substituteY(StandardLinearEquationFractionParameters yExpressedThroughX, StandardEquationParameters simpleEquation) {
-		final var coefficientOfY = simpleEquation.coefficientOfX();
+		final var coefficientOfY = simpleEquation.coefficientOfY();
 		final var coefficientOfX = simpleEquation.coefficientOfX();
 		final var coeffisientOfXAsFraction = new Fraction(coefficientOfX, 1);
 		final var freeCoefficient = simpleEquation.freeCoefficient();
