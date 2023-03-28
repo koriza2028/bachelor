@@ -6,6 +6,8 @@ import java.util.List;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughXService;
 
@@ -14,10 +16,10 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 	final SystemOfEquationsAdditiveSolutionThroughXService solutionThroughXService = new SystemOfEquationsAdditiveSolutionThroughXService();
 
 	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
-		final var correctSolution = solutionThroughXService.solveCorrectly(systemOfLinearEquations);
+		final var correctDistractor = solutionThroughXService.solveCorrectly(systemOfLinearEquations);
 
 		var distractors = new ArrayList<SystemOfTwoEquationsSolution> ();
-		distractors.add(correctSolution);
+		distractors.add(correctDistractor);
 
 		final var distractor_1 = this.generateDifferentDistractor(systemOfLinearEquations, distractors);
 		distractors.add(distractor_1);
@@ -25,30 +27,28 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		distractors.add(distractor_2);
 		final var distractor_3 = this.generateDifferentDistractor(systemOfLinearEquations, distractors);
 
-		return new SystemOfTwoEquationsAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
+		return new SystemOfTwoEquationsAnswers(correctDistractor, distractor_1, distractor_2, distractor_3);
 	}
 
-	private boolean isDistractorInvalid(SystemOfTwoEquationsSolution possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {
+	private boolean isDistractorInvalid(SystemOfTwoEquationsDistractor possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private SystemOfTwoEquationsSolution generateDifferentDistractor(final SystemOfTwoEquations systemOfLinearEquations, List<SystemOfTwoEquationsSolution> distractors) {
-		SystemOfTwoEquationsSolution distractor;
+	private SystemOfTwoEquationsDistractor generateDifferentDistractor(final SystemOfTwoEquations systemOfLinearEquations, List<SystemOfTwoEquationsSolution> distractors) {
+		SystemOfTwoEquationsDistractor distractor;
 		do {
 			distractor = this.generateDistractor(systemOfLinearEquations);
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
 
-	private SystemOfTwoEquationsSolution generateDistractor(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquations systemOfLinearEquations) {
 		final var randomChangeType = SystemOfEquationsParametersChangeType.randomChangeType();
 
 		return generateDistractorWithChosenParameterChangeType(systemOfLinearEquations, randomChangeType);
 	}
 
-	public SystemOfTwoEquationsSolution generateDistractorWithChosenParameterChangeType(
-			SystemOfTwoEquations systemOfLinearEquations,
-			final SystemOfEquationsParametersChangeType randomChangeType) {
+	public SystemOfTwoEquationsDistractor generateDistractorWithChosenParameterChangeType(SystemOfTwoEquations systemOfLinearEquations, final SystemOfEquationsParametersChangeType randomChangeType) {
 		switch (randomChangeType) {
 			case NEGATE_FREE_COEFFICIENT_1:
 				return this.generateNegatingFreeCoefficient_1(systemOfLinearEquations);
@@ -73,11 +73,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 			case SWITCH_X_AND_Y_BOTH:
 				return this.generateSwitchingCoefficientsOfXAndYBoth(systemOfLinearEquations);
 			default:
-				throw new IllegalArgumentException("Unknown solution approach");
+				throw new IllegalArgumentException("Unknown Distractor approach");
 		}
 	}
 
-	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfXAndYBoth(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateSwitchingCoefficientsOfXAndYBoth(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
@@ -94,10 +94,18 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.SWITCH_X_AND_Y_BOTH);
 	}
 
-	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfXAndY_2(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor createDistractorFromSolution(final SystemOfTwoEquationsCorrectSolution solution, SystemOfEquationsParametersChangeType impact) {
+		final var nonNumericalSolution = solution.nonNumericalSolution();
+		final var x = solution.x();
+		final var y = solution.y();
+		return new SystemOfTwoEquationsDistractor(nonNumericalSolution, x, y, impact);
+	}
+
+	private SystemOfTwoEquationsDistractor generateSwitchingCoefficientsOfXAndY_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
 		final var x_2 = simpleEquation_2.coefficientOfX();
@@ -108,10 +116,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(systemOfLinearEquations.equation_1(), newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.SWITCH_X_AND_Y_2);
 	}
 
-	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfXAndY_1(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateSwitchingCoefficientsOfXAndY_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 
 		final var x_1 = simpleEquation_1.coefficientOfX();
@@ -122,10 +131,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, systemOfLinearEquations.equation_2());
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.SWITCH_X_AND_Y_1);
 	}
 
-	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfY(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateSwitchingCoefficientsOfY(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
@@ -142,10 +152,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.SWITCH_COEFFICIENTS_OF_Y);
 	}
 
-	private SystemOfTwoEquationsSolution generateSwitchingCoefficientsOfX(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateSwitchingCoefficientsOfX(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 
@@ -162,10 +173,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.SWITCH_COEFFICIENTS_OF_X);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingY_2(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingY_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var coefficientOfX = simpleEquation_2.coefficientOfX();
 		final var negatedCoefficientOfY = simpleEquation_2.coefficientOfY() * -1;
@@ -174,10 +186,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_2 = new StandardEquationParameters(coefficientOfX, negatedCoefficientOfY, freeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(systemOfLinearEquations.equation_1(), newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_Y_2);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingY_1(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingY_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var coefficientOfX = simpleEquation_1.coefficientOfX();
 		final var negatedCoefficientOfY = simpleEquation_1.coefficientOfY() * -1;
@@ -186,10 +199,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_1 = new StandardEquationParameters(coefficientOfX, negatedCoefficientOfY, freeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, systemOfLinearEquations.equation_2());
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_Y_1);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingX_2(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingX_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var negatedCoefficientOfX = simpleEquation_2.coefficientOfX() * -1;
 		final var coefficientOfY = simpleEquation_2.coefficientOfY();
@@ -198,10 +212,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_2 = new StandardEquationParameters(negatedCoefficientOfX, coefficientOfY, freeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(systemOfLinearEquations.equation_1(), newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_X_2);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingX_1(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingX_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var negatedCoefficientOfX = simpleEquation_1.coefficientOfX() * -1;
 		final var coefficientOfY = simpleEquation_1.coefficientOfY();
@@ -210,10 +225,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_1 = new StandardEquationParameters(negatedCoefficientOfX, coefficientOfY, freeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, systemOfLinearEquations.equation_2());
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_X_1);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingFreeCoefficient_2(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingFreeCoefficient_2(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_2 = systemOfLinearEquations.equation_2();
 		final var coefficientOfX = simpleEquation_2.coefficientOfX();
 		final var coefficientOfY = simpleEquation_2.coefficientOfY();
@@ -222,10 +238,11 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_2 = new StandardEquationParameters(coefficientOfX, coefficientOfY, negatedFreeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(systemOfLinearEquations.equation_1(), newSimpleEquation_2);
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_FREE_COEFFICIENT_2);
 	}
 
-	private SystemOfTwoEquationsSolution generateNegatingFreeCoefficient_1(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsDistractor generateNegatingFreeCoefficient_1(SystemOfTwoEquations systemOfLinearEquations) {
 		final var simpleEquation_1 = systemOfLinearEquations.equation_1();
 		final var coefficientOfX = simpleEquation_1.coefficientOfX();
 		final var coefficientOfY = simpleEquation_1.coefficientOfY();
@@ -234,6 +251,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var newSimpleEquation_1 = new StandardEquationParameters(coefficientOfX, coefficientOfY, negatedFreeCoefficient);
 		final var newSystemOfLinearEquations = new SystemOfTwoEquations(newSimpleEquation_1, systemOfLinearEquations.equation_2());
 
-		return this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		final var solution = this.solutionThroughXService.solveCorrectly(newSystemOfLinearEquations);
+		return createDistractorFromSolution(solution, SystemOfEquationsParametersChangeType.NEGATE_FREE_COEFFICIENT_1);
 	}
 }

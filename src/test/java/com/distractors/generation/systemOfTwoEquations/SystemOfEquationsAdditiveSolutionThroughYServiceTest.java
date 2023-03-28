@@ -7,7 +7,7 @@ import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
-import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughXService;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughYService;
 
 public class SystemOfEquationsAdditiveSolutionThroughYServiceTest {
@@ -21,7 +21,7 @@ public class SystemOfEquationsAdditiveSolutionThroughYServiceTest {
 		final var system = new SystemOfTwoEquations(first, second);
 		final var correctX = new Fraction(2, 1);
 		final var correctY = new Fraction(5, 1);
-		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(correctX, correctY);
+		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.NORMAL, correctX, correctY);
 		final var solution = service.solveCorrectly(system);
 		Assertions.assertTrue(correctSolution.equals(solution));
 	}
@@ -31,9 +31,17 @@ public class SystemOfEquationsAdditiveSolutionThroughYServiceTest {
 		final var first = new StandardEquationParameters(-4, -4, 0);
 		final var second = new StandardEquationParameters(4, 4, 0);
 		final var system = new SystemOfTwoEquations(first, second);
-		final var correctX = new Fraction(2, 1);
-		final var correctY = new Fraction(5, 1);
-		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(correctX, correctY);
+		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
+		final var solution = service.solveCorrectly(system);
+		Assertions.assertTrue(correctSolution.equals(solution));
+	}
+
+	@Test
+	void test3() {
+		final var first = new StandardEquationParameters(1, -1, -6);
+		final var second = new StandardEquationParameters(-2, 2, -1);
+		final var system = new SystemOfTwoEquations(first, second);
+		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
 		final var solution = service.solveCorrectly(system);
 		Assertions.assertTrue(correctSolution.equals(solution));
 	}

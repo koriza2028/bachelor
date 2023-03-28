@@ -57,7 +57,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughXService {
 		
 		if (aForX == 0 && bForX == 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
-		} else if (aForX == 0 && bForX == 0) {
+		} else if (aForX == 0 && bForX != 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
 		} else {
 			final var x = linearEquationSolutionService.solve(standardLinearEquationForX);
@@ -73,7 +73,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughXService {
 		
 		if (aForX == 0 && bForX == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.SUBSTITUTION_REPLACE_WRONG_PARAMETER_X);
-		} else if (aForX == 0 && bForX == 0) {
+		} else if (aForX == 0 && bForX != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.SUBSTITUTION_REPLACE_WRONG_PARAMETER_X);
 		} else {
 			final var x = linearEquationSolutionService.solve(standardLinearEquationForX);
@@ -91,7 +91,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughXService {
 
 		if (aForX == 0 && bForX == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_X);
-		} else if (aForX == 0 && bForX == 0) {
+		} else if (aForX == 0 && bForX != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_X);
 		} else {
 			final var x = linearEquationSolutionService.solve(standardLinearEquationForX);

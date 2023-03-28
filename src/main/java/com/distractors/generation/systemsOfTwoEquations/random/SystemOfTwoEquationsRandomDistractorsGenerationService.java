@@ -8,6 +8,7 @@ import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsAdditiveSolutionThroughYService;
 
@@ -45,7 +46,7 @@ public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquationsCorrectSolution solution) {
 		final var x = random.generateRandomFraction(solution);
 		final var y = random.generateRandomFraction(solution);
-		return new SystemOfTwoEquationsDistractor(x, y, null);
+		return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.NORMAL, x, y, null);
 	}
 
 }

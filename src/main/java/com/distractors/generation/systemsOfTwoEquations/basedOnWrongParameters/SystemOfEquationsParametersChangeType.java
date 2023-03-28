@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum SystemOfEquationsParametersChangeType {
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolutionImpact;
+
+public enum SystemOfEquationsParametersChangeType implements SystemOfTwoEquationsSolutionImpact {
 
 	SWITCH_COEFFICIENTS_OF_X,
 	SWITCH_COEFFICIENTS_OF_Y,

@@ -76,7 +76,7 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -92,7 +92,7 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 		
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.ADDITIVE_REPLACE_WRONG_PARAMETER_Y);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.ADDITIVE_REPLACE_WRONG_PARAMETER_Y);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -108,7 +108,7 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 		
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.ADDITIVE_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.ADDITIVE_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -129,7 +129,7 @@ public class SystemOfEquationsAdditiveSolutionThroughYService {
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForX(StandardEquationParameters simpleEquation_1, Fraction y) {
-		final var setY = y.multiplyBy(simpleEquation_1.coefficientOfX());
+		final var setY = y.multiplyBy(simpleEquation_1.coefficientOfY());
 		final var freeCoefficientFraction = new Fraction(simpleEquation_1.freeCoefficient(), 1);
 		final var a = new Fraction(simpleEquation_1.coefficientOfX(), 1);
 		final var b = setY.add(freeCoefficientFraction);

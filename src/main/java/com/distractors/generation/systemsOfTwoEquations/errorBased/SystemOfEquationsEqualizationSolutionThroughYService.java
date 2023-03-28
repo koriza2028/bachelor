@@ -47,7 +47,7 @@ public class SystemOfEquationsEqualizationSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -63,7 +63,7 @@ public class SystemOfEquationsEqualizationSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_Y);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_Y);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);

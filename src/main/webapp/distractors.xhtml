@@ -120,7 +120,7 @@
 						            </h:panelGrid>
 					            </h:panelGrid>
 			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{quadraticInequalitiesDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
+			                    <h:panelGrid columns="4" class="flex justify-content-between flex-wrap">
 			                    	<p:dataList value="#{quadraticInequalitiesDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert
@@ -169,7 +169,7 @@
 					                <h:outputText value=" = 0"/>
 					            </h:panelGrid>
 			                    <p:commandButton value="Distraktoren generieren" ajax="false" action="#{systemOfTwoEquationsDistractorsBean.generateDistractors}"/>
-			                    <h:panelGrid columns="4" class="flex align-content-between justify-content-between" style="width: 1000px">
+			                    <h:panelGrid columns="4" class="flex justify-content-between flex-wrap">
 			                    	<p:dataList value="#{systemOfTwoEquationsDistractorsBean.distractorsErrorBased}" var="distractor" type="ordered">
 								        <f:facet name="header">
 								            Fehlerbasiert

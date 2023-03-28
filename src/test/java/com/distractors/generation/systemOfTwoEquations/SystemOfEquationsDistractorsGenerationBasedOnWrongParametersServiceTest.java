@@ -7,6 +7,7 @@ import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
 import com.distractors.generation.systemsOfTwoEquations.basedOnWrongParameters.SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService;
 import com.distractors.generation.systemsOfTwoEquations.basedOnWrongParameters.SystemOfEquationsParametersChangeType;
 
@@ -20,7 +21,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var system = new SystemOfTwoEquations(first, second);
 		final var correctX = new Fraction(2, 1);
 		final var correctY = new Fraction(5, 1);
-		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(correctX, correctY);
+		final var correctSolution = new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.NORMAL, correctX, correctY);
 		final var solution = service.generateDistractorWithChosenParameterChangeType(system, SystemOfEquationsParametersChangeType.SWITCH_X_AND_Y_BOTH);
 		Assertions.assertTrue(correctSolution.equals(solution));
 	}

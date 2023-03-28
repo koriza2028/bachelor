@@ -126,8 +126,6 @@ public class Fraction {
 	}
 
 	private boolean equalsSymbolically(Fraction other) {
-		final var hui = this.nominator == other.getNominator();
-		final var ugdcgd = this.denominator == this.getDenominator();
 		return (this.nominator == other.nominator) && (this.denominator == other.nominator);
 	}
 

@@ -57,7 +57,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -73,7 +73,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.SUBSTITUTION_REPLACE_WRONG_PARAMETER_Y);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.SUBSTITUTION_REPLACE_WRONG_PARAMETER_Y);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
@@ -91,7 +91,7 @@ public class SystemOfEquationsSubstitutionSolutionThroughYService {
 
 		if (aForY == 0 && bForY == 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null,SystemOfEquationsErrorType.SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y);
-		} else if (aForY == 0 && bForY == 0) {
+		} else if (aForY == 0 && bForY != 0) {
 			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.SUBSTITUTION_IGNORE_FREE_COEFFICIENT_MULTIPLICATION_Y);
 		} else {
 			final var y = linearEquationSolutionService.solve(standardLinearEquationForY);
