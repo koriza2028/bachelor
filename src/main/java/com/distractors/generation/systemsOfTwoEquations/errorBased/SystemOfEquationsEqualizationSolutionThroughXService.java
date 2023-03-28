@@ -7,6 +7,7 @@ import com.distractors.generation.systemsOfTwoEquations.StandardEquationParamete
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
 
 public class SystemOfEquationsEqualizationSolutionThroughXService {
 
@@ -16,35 +17,72 @@ public class SystemOfEquationsEqualizationSolutionThroughXService {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
-		final var x = this.findXCorrectly(simpleEquation_1, simpleEquation_2);
-		final var y = this.findY(simpleEquation_1, x);
+		final var standardLinearEquationForX = this.createEquationForX(simpleEquation_1, simpleEquation_2);
 
-		return new SystemOfTwoEquationsCorrectSolution(x, y);	
+		return findSystemOfEquationsCorrectSolution(simpleEquation_1, standardLinearEquationForX);
 	}
 
 	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
-		final var x = this.findXCorrectly(simpleEquation_1, simpleEquation_2);
-		final var y = this.findYReplacingY(simpleEquation_1, x);
+		final var standardLinearEquationForX = this.createEquationForX(simpleEquation_1, simpleEquation_2);
 
-		return new SystemOfTwoEquationsDistractor(x, y, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_X);
-	}
-
-	private Fraction findXCorrectly(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {
-		final var standardLinearEquation = this.createEquationForX(simpleEquation_1, simpleEquation_2);
-
-		return linearEquationSolutionService.solve(standardLinearEquation);
+		return findSystemOfEquationsSolutionReplacingWrongParameter(simpleEquation_1, standardLinearEquationForX);
 	}
 	
 	private StandardLinearEquationFractionParameters createEquationForX(StandardEquationParameters simpleEquation_1, StandardEquationParameters simpleEquation_2) {
 		final var yExpressedThroughX_1 = this.expressYThroughX(simpleEquation_1);
 		final var yExpressedThroughX_2 = this.expressYThroughX(simpleEquation_2);
-
+		
 		final var a = yExpressedThroughX_1.a().substract(yExpressedThroughX_2.a());
 		final var b = yExpressedThroughX_1.b().substract(yExpressedThroughX_2.b());
-
+		
+		return new StandardLinearEquationFractionParameters(a, b);
+	}
+	
+	private SystemOfTwoEquationsCorrectSolution findSystemOfEquationsCorrectSolution(final StandardEquationParameters simpleEquation_1, final StandardLinearEquationFractionParameters standardLinearEquationForX) {
+		double aForX = standardLinearEquationForX.a().toDouble();
+		double bForX = standardLinearEquationForX.b().toDouble();
+		
+		if (aForX == 0 && bForX == 0) {
+			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.R, null, null);
+		} else if (aForX == 0 && bForX == 0) {
+			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null);
+		} else {
+			final var x = linearEquationSolutionService.solve(standardLinearEquationForX);
+			final var y = this.findY(simpleEquation_1, x);
+			
+			return new SystemOfTwoEquationsCorrectSolution(SystemOfTwoEquationsNonNumericalSolution.NORMAL, x, y);
+		}
+	}
+	
+	private SystemOfTwoEquationsDistractor findSystemOfEquationsSolutionReplacingWrongParameter(
+			final StandardEquationParameters simpleEquation_1,
+			final StandardLinearEquationFractionParameters standardLinearEquationForX) {
+		double aForX = standardLinearEquationForX.a().toDouble();
+		double bForX = standardLinearEquationForX.b().toDouble();
+		
+		if (aForX == 0 && bForX == 0) {
+			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.R, null, null, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_X);
+		} else if (aForX == 0 && bForX == 0) {
+			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.EMPTY_SET, null, null, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_X);
+		} else {
+			final var x = linearEquationSolutionService.solve(standardLinearEquationForX);
+			final var y = this.findYReplacingY(simpleEquation_1, x);
+			
+			return new SystemOfTwoEquationsDistractor(SystemOfTwoEquationsNonNumericalSolution.NORMAL, x, y, SystemOfEquationsErrorType.EQUALIZATION_REPLACE_WRONG_PARAMETER_X);
+		}
+	}
+	
+	private StandardLinearEquationFractionParameters expressYThroughX(StandardEquationParameters simpleEquation) {
+		final var aNominator = simpleEquation.coefficientOfY() * -1;
+		final var aDenominator = simpleEquation.coefficientOfX();
+		final var bNominator = simpleEquation.freeCoefficient() * -1;
+		final var bDenominator = simpleEquation.coefficientOfX();
+		final var a = new Fraction(aNominator, aDenominator);
+		final var b = new Fraction(bNominator, bDenominator);
+		
 		return new StandardLinearEquationFractionParameters(a, b);
 	}
 
@@ -52,6 +90,12 @@ public class SystemOfEquationsEqualizationSolutionThroughXService {
 		final var standardLinearEquation_1 = createEquationForY(simpleEquation_1, x);
 
 		return linearEquationSolutionService.solve(standardLinearEquation_1);
+	}
+	
+	private Fraction findYReplacingY(StandardEquationParameters simpleEquation_1, Fraction x) {
+		final var standardLinearEquation = createEquationForYReplacingY(simpleEquation_1, x);
+		
+		return linearEquationSolutionService.solve(standardLinearEquation);
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForY(StandardEquationParameters simpleEquation_1, Fraction x) {
@@ -61,23 +105,6 @@ public class SystemOfEquationsEqualizationSolutionThroughXService {
 		final var b = setX.add(freeCoefficientFraction);
 
 		return new StandardLinearEquationFractionParameters(a, b);
-	}
-
-	private StandardLinearEquationFractionParameters expressYThroughX(StandardEquationParameters simpleEquation) {
-		final var aNominator = simpleEquation.coefficientOfY() * -1;
-		final var aDenominator = simpleEquation.coefficientOfX();
-		final var bNominator = simpleEquation.freeCoefficient() * -1;
-		final var bDenominator = simpleEquation.coefficientOfX();
-		final var a = new Fraction(aNominator, aDenominator);
-		final var b = new Fraction(bNominator, bDenominator);
-
-		return new StandardLinearEquationFractionParameters(a, b);
-	}
-
-	private Fraction findYReplacingY(StandardEquationParameters simpleEquation_1, Fraction x) {
-		final var standardLinearEquation = createEquationForYReplacingY(simpleEquation_1, x);
-
-		return linearEquationSolutionService.solve(standardLinearEquation);
 	}
 
 	private StandardLinearEquationFractionParameters createEquationForYReplacingY(StandardEquationParameters simpleEquation, Fraction x) {
