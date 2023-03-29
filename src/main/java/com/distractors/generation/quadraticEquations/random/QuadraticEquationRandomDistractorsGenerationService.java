@@ -32,11 +32,7 @@ public class QuadraticEquationRandomDistractorsGenerationService {
 
 		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationCorrectSolution correctSolution, ArrayList<QuadraticEquationSolution> distractors) {
 		QuadraticEquationDistractor distractor;
 		do {
@@ -44,11 +40,15 @@ public class QuadraticEquationRandomDistractorsGenerationService {
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	public QuadraticEquationDistractor generateDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution) {
 		final var x_1 = this.generateX_1(quadraticEquationCorrectSolution);
 		final var x_2 = this.generateX_2(quadraticEquationCorrectSolution);
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationResultManipulationType.MINUS_ONE_X_1);
+	}
+
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	public SymbolicNumberFraction generateX_1(QuadraticEquationSolution quadraticEquationCorrectSolution) {

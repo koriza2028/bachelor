@@ -31,7 +31,7 @@ public class QuadraticEquationSolutionServiceFactory {
 			case ROOT_EXTRACTION:
 				return this.rootExtraction;
 			default:
-				throw new IllegalArgumentException("Unknown error type");
+				throw new IllegalArgumentException("Unknown solution approach.");
 		}
  	}
 }

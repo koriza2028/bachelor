@@ -39,11 +39,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnWrongParametersServi
 
 		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticInequalitySolution generateDifferentDistractor(QuadraticEquationParameters quadraticEquationParameters, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, ArrayList<QuadraticInequalitySolution> distractors) {
 		QuadraticInequalitySolution distractor;
 		do {
@@ -52,8 +48,12 @@ public class QuadraticInequalityDistractorsGenerationBasedOnWrongParametersServi
 		return distractor;
 	}
 
+	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
+	}
+
 	private QuadraticInequalitySolution generateDistractor(QuadraticEquationParameters quadraticEquationParameters, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
-		final var randomError = QuadraticEquationParametersChangeType.randomError(quadraticEquationParameters);
+		final var randomError = QuadraticEquationParametersChangeType.randomParametersChangeType(quadraticEquationParameters);
 		final var quadraticEquationDistractor = quadraticEquationsDistractorsGenerationService.generateDistractorWithChosenParametersChangeType(quadraticEquationParameters, randomError);
 		return distractorMapper.findQuadraticInequalityDistractor(quadraticEquationDistractor, standardQuadraticInequalityParameters);
 	}

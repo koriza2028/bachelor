@@ -2,7 +2,7 @@ package com.distractors.generation.quadraticEquations.errorBased.extraction;
 
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
-import com.distractors.generation.general.maths.SymbolicNumberBuilder;
+import com.distractors.generation.general.maths.SymbolicNumber;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
 import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
@@ -29,8 +29,8 @@ public class RootExtractionSolutionService implements QuadraticEquationSolutionS
 			final var x_1Root = new SquareRoot(c.multiplyBy(-1).divideBy(a), Fraction.ONE);
 			final var x_2Root = new SquareRoot(c.multiplyBy(-1).divideBy(a), Fraction.ONE).multiplyBy(-1);
 
-			final var x_1 = new SymbolicNumberFraction(new SymbolicNumberBuilder().withRoot(x_1Root).build());
-			final var x_2 = new SymbolicNumberFraction(new SymbolicNumberBuilder().withRoot(x_2Root).build());
+			final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withRoot(x_1Root).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withRoot(x_2Root).build());
 
 			return new QuadraticEquationCorrectSolution(x_1, x_2);
 		} else {
@@ -47,8 +47,8 @@ public class RootExtractionSolutionService implements QuadraticEquationSolutionS
 			final var x_1Root = new SquareRoot(c.multiplyBy(-1).substract(a), Fraction.ONE);
 			final var x_2Root = new SquareRoot(c.multiplyBy(-1).substract(a), Fraction.ONE).multiplyBy(-1);
 
-			final var x_1 = new SymbolicNumberFraction(new SymbolicNumberBuilder().withRoot(x_1Root).build());
-			final var x_2 = new SymbolicNumberFraction(new SymbolicNumberBuilder().withRoot(x_2Root).build());
+			final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withRoot(x_1Root).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withRoot(x_2Root).build());
 
 			return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.SOLVE_ADDITIVELY_INSTEAD_OF_MULTIPLICATIVELY);
 		} else {

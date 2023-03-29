@@ -1,11 +1,30 @@
 package com.distractors.generation.general.maths;
 
+/**
+ * Represents a number symbolically imitating calculation by a human
+ * Example 2 + 1/3 + √2 - √3
+ */
 public class SymbolicNumber {
 
 	private SquareRoots rootsPart;
 	private Fraction fractionPart;
 	private int integer;
 
+	public static final SymbolicNumber ZERO = new SymbolicNumber.SymbolicNumberBuilder()
+			.withInteger(0)
+			.build();
+
+	public static final SymbolicNumber ONE = new SymbolicNumber.SymbolicNumberBuilder()
+			.withInteger(1)
+			.build();
+
+	public static final SymbolicNumber MINUS_ONE = new SymbolicNumber.SymbolicNumberBuilder()
+			.withInteger(-1)
+			.build();
+
+	/**
+	 * The symbolic number is simplified automatically by {@link #simplify()} method
+	 */
 	SymbolicNumber(SymbolicNumberBuilder symbolicNumberBuilder) {
 		this.rootsPart = symbolicNumberBuilder.getRootsPart();
 		this.fractionPart = symbolicNumberBuilder.getFractionPart();
@@ -24,7 +43,7 @@ public class SymbolicNumber {
 	}
 
 	public SymbolicNumber substract(SymbolicNumber number) {
-		final var rootsPartResult = this.rootsPart.substract(number.rootsPart);
+		final var rootsPartResult = this.rootsPart.subtract(number.rootsPart);
 		final var fractionPartResult = this.fractionPart.substract(number.fractionPart);
 
 		return new SymbolicNumberBuilder()
@@ -82,18 +101,9 @@ public class SymbolicNumber {
 		return new SymbolicNumberFraction(this, number);
 	}
 
-	public boolean isInt() {
-		return this.toDouble() % 1 == 0;
-	}
-
-	public double toDouble() {
-		return this.integer + this.fractionPart.toDouble() + this.rootsPart.toDouble();
-	}
-
-	public int toInt() {
-		return (int) this.toDouble();
-	}
-
+	/**
+	 * Performs all possible mathematical operations symbolically
+	 */
 	public void simplify() {
 		if (this.fractionPart.isInt()) {
 			this.integer += fractionPart.toInt();
@@ -107,6 +117,9 @@ public class SymbolicNumber {
 				.forEach(this::filterRoots);
 	}
 
+	/**
+	 * Checks if a root can be presented in form of an integer or a fraction, and transforms the symbolic number if so
+	 */
 	private void filterRoots(SquareRoot root) {
 		if (root.isInt()) {
 			this.integer += root.toInt();
@@ -116,6 +129,18 @@ public class SymbolicNumber {
 			this.fractionPart = this.fractionPart.add(root.toFraction());
 			this.rootsPart.getRoots().remove(root);
 		}
+	}
+	
+	public boolean isInt() {
+		return this.toDouble() % 1 == 0;
+	}
+	
+	public double toDouble() {
+		return this.integer + this.fractionPart.toDouble() + this.rootsPart.toDouble();
+	}
+	
+	public int toInt() {
+		return (int) this.toDouble();
 	}
 
 	public boolean isGreaterThanZero() {
@@ -133,6 +158,7 @@ public class SymbolicNumber {
 	public int getInteger() {
 		return integer;
 	}
+
 	public boolean equals(SymbolicNumber other) {
 		return this.equalsNumerically(other) || this.equalsSymbolically(other);
 	}
@@ -145,26 +171,7 @@ public class SymbolicNumber {
 		return this.toDouble() == other.toDouble();
 	}
 
-	public void print() {
-		if (this.isInt()) {
-			if (this.toInt() != 0)
-			System.out.print(this.toInt());
-		} else {
-			if (this.integer != 0) {
-				System.out.print(this.integer);
-			}
-			if (this.fractionPart.toDouble() != 0) {
-				System.out.print(" + ");
-				this.fractionPart.print();
-			}
-			if (this.rootsPart.toDouble() != 0) {
-				System.out.print(" + ");
-				this.rootsPart.print();
-			}
-		}
-	}
-
-	public String toString() {
+	public String convertToString() {
 		final var stringBuilder = new StringBuilder();
 		if (this.isInt() && this.toInt() != 0) {
 			stringBuilder.append(this.toInt());
@@ -186,5 +193,51 @@ public class SymbolicNumber {
 			}
 		}
 		return stringBuilder.toString();
+	}
+
+	public static class SymbolicNumberBuilder {
+		private SquareRoots rootsPart = new SquareRoots();
+		private Fraction fractionPart = Fraction.ZERO;
+		private int integer = 0;
+		
+		public SymbolicNumberBuilder() {
+		}
+		
+		public SymbolicNumberBuilder withFractionPart(Fraction fractionPart) {
+			this.fractionPart = fractionPart;
+			return this;
+		}
+		
+		public SymbolicNumberBuilder withRoots(SquareRoots roots) {
+			this.rootsPart = this.rootsPart.add(roots);
+			return this;
+		}
+		
+		public SymbolicNumberBuilder withRoot(SquareRoot root) {
+			this.rootsPart = this.rootsPart.add(root);
+			return this;
+		}
+		
+		public SymbolicNumberBuilder withInteger(int integer) {
+			this.integer = integer;
+			return this;
+		}
+		
+		public SymbolicNumber build() {
+			return new SymbolicNumber(this);
+		}
+		
+		public SquareRoots getRootsPart() {
+			return rootsPart;
+		}
+		
+		public Fraction getFractionPart() {
+			return fractionPart;
+		}
+		
+		public int getInteger() {
+			return integer;
+		}
+		
 	}
 }

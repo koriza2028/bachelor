@@ -3,7 +3,7 @@ package com.distractors.generation.quadraticEquations.errorBased.exclusion;
 import com.distractors.generation.general.linearEquations.LinearEquationSolutionService;
 import com.distractors.generation.general.linearEquations.StandardLinearEquationFractionParameters;
 import com.distractors.generation.general.maths.Fraction;
-import com.distractors.generation.general.maths.SymbolicNumberBuilder;
+import com.distractors.generation.general.maths.SymbolicNumber;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
 import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
@@ -27,13 +27,11 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 
 		if (c.toDouble() == 0) {
 			final var x_1Fraction = Fraction.ZERO;
-			final var builder_1 = new SymbolicNumberBuilder();
-			final var x_1 = new SymbolicNumberFraction(builder_1.withFractionPart(x_1Fraction).build());
+			final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_1Fraction).build());
 
 			final var simpleEquationForX_2 = new StandardLinearEquationFractionParameters(a, b);
 			final var x_2Fraction = this.simpleEquationSolutionService.solve(simpleEquationForX_2);
-			final var builder_2 = new SymbolicNumberBuilder();
-			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_2Fraction).build());
 
 			return new QuadraticEquationCorrectSolution(x_1, x_2);
 		} else {
@@ -62,13 +60,11 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 
 		if (c.toDouble() != 0) {
 			final var x_1Fraction = Fraction.ZERO;
-			final var builder_1 = new SymbolicNumberBuilder();
-			final var x_1 = new SymbolicNumberFraction(builder_1.withFractionPart(x_1Fraction).build());
+			final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_1Fraction).build());
 
 			final var simpleEquationForX_2 = new StandardLinearEquationFractionParameters(a, b);
 			final var x_2Fraction = this.simpleEquationSolutionService.solve(simpleEquationForX_2);
-			final var builder_2 = new SymbolicNumberBuilder();
-			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_2Fraction).build());
 
 			return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.IGNORE_C_NOT_ZERO);
 		} else {
@@ -86,8 +82,7 @@ public class ExclusionSolutionService implements QuadraticEquationSolutionServic
 
 			final var simpleEquationForX_2 = new StandardLinearEquationFractionParameters(a, b);
 			final var x_2Fraction = this.simpleEquationSolutionService.solveAdditivelyInsteadOfMultiplicatively(simpleEquationForX_2);
-			final var builder_2 = new SymbolicNumberBuilder();
-			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_2Fraction).build());
 
 			return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.WRONG_SIMPLE_EQUATION_SOLUTION);
 		} else {

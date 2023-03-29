@@ -1,38 +1,44 @@
 package com.distractors.generation.general.maths;
 
+/**
+ * Represents a number symbolically imitating calculation by a human
+ * Example (2 + 1/3 + √2 - √3)/(1/3 + √2)
+ */
 public class SymbolicNumberFraction {
 
 	private SymbolicNumber nominator;
 	private SymbolicNumber denominator;
 
-	public static final SymbolicNumberFraction ZERO = new SymbolicNumberFraction(
-			new SymbolicNumberBuilder()
-			.withInteger(0)
-			.build());
-	public static final SymbolicNumberFraction ONE = new SymbolicNumberFraction(
-			new SymbolicNumberBuilder()
-			.withInteger(1)
-			.build());
-	public static final SymbolicNumberFraction MINUS_ONE = new SymbolicNumberFraction(
-			new SymbolicNumberBuilder()
-			.withInteger(-1)
-			.build());
+	public static final SymbolicNumberFraction ZERO = new SymbolicNumberFraction(SymbolicNumber.ZERO);
+	public static final SymbolicNumberFraction ONE = new SymbolicNumberFraction(SymbolicNumber.ONE);
+	public static final SymbolicNumberFraction MINUS_ONE = new SymbolicNumberFraction(SymbolicNumber.MINUS_ONE);
 
+	/**
+	 * Creates a symbolic fraction for denominator != 1
+	 * The symbolic number fraction is simplified automatically by {@link #simplify()} method
+	 */
 	public SymbolicNumberFraction(SymbolicNumber nominator, SymbolicNumber denominator) {
 		this.nominator = nominator;
-		if (denominator.toDouble() == 0) {
-			throw new IllegalArgumentException("Denominator cannot be equal to 0.");
-		} else {
-			this.denominator = denominator;
-		}
+		this.denominator = checkDenominatorEqualsZero(denominator);
 		this.simplify();
 	}
 
+	/**
+	 * Creates a symbolic fraction for denominator = 1
+	 * The symbolic number fraction is simplified automatically by {@link #simplify()} method
+	 */
 	public SymbolicNumberFraction(SymbolicNumber number) {
 		this.nominator = number;
-		final var builder = new SymbolicNumberBuilder();
-		this.denominator = builder.withFractionPart(Fraction.ONE).build();
+		this.denominator = SymbolicNumber.ONE;
 		this.simplify();
+	}
+	
+	private SymbolicNumber checkDenominatorEqualsZero(SymbolicNumber denominator) {
+		if (denominator.toDouble() == 0) {
+			throw new IllegalArgumentException("Denominator cannot be equal to 0.");
+		} else {
+			return denominator;
+		}
 	}
 
 	public SymbolicNumberFraction multiplyBy(int number) {
@@ -82,25 +88,9 @@ public class SymbolicNumberFraction {
 		return other != null && this.toDouble() == other.toDouble();
 	}
 
-	public void print() {
-		if (this.isInt()) {
-			System.out.println();
-			System.out.print(this.toInt());
-			System.out.println();
-		} else if (this.denominator.toDouble() != 1) {
-			System.out.println();
-			this.nominator.print();
-			System.out.println();
-			System.out.println("------");
-			this.denominator.print();
-			System.out.println();
-		} else {
-			System.out.println();
-			this.nominator.print();
-			System.out.println();
-		}
-	}
-
+	/**
+	 * Performs all possible mathematical operations symbolically
+	 */
 	public void simplify() {
 		this.nominator.simplify();
 		this.denominator.simplify();
@@ -111,19 +101,19 @@ public class SymbolicNumberFraction {
 						.stream()
 						.allMatch(
 								root -> root.getBeforeTheRoot().toDouble() % this.denominator.toDouble() == 0))) {
-			final var builder = new SymbolicNumberBuilder();
-			final var symbolicNumber = builder.withInteger(this.nominator.getInteger() / this.denominator.toInt())
-											.withFractionPart(this.nominator.getFractionPart())
-											.withRoots(this.nominator.getRootsPart().multiplyBy(new Fraction(1, this.denominator.toInt())))
-											.build();
+			final var symbolicNumber = new SymbolicNumber.SymbolicNumberBuilder()
+									.withInteger(this.nominator.getInteger() / this.denominator.toInt())
+									.withFractionPart(this.nominator.getFractionPart())
+									.withRoots(this.nominator.getRootsPart().multiplyBy(new Fraction(1, this.denominator.toInt())))
+									.build();
 			this.nominator = symbolicNumber;
-			this.denominator = new SymbolicNumberBuilder()
+			this.denominator = new SymbolicNumber.SymbolicNumberBuilder()
 									.withInteger(1)
 									.build();
 		}
 	}
 
-	public String toString() {
+	public String convertToString() {
 		this.simplify();
 		final var stringBuilder = new StringBuilder();
 		if (this.isInt()) {

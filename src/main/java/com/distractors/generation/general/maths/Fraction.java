@@ -13,18 +13,24 @@ public class Fraction {
 	public static Fraction THREE = new Fraction(3, 1);
 	public static Fraction FOUR = new Fraction(4, 1);
 	public static Fraction FIVE = new Fraction(5, 1);
+	public static Fraction MINUS_ONE = new Fraction(-1, 1);
 
 	public Fraction(int nominator, int denominator) {
 		this.nominator = nominator;
-		if (denominator == 0) {
-			throw new IllegalArgumentException("Denominator cannot be equal to 0.");
-		} else {
-			this.denominator = denominator;
-		}
+		this.denominator = checkDenominatorEqualsToZero(denominator);
 		this.reduce();
 	}
 
+	private int checkDenominatorEqualsToZero(int denominator) {
+		if (denominator == 0) {
+			throw new IllegalArgumentException("Denominator cannot be equal to 0.");
+		} else {
+			return denominator;
+		}
+	}
+
 	public Fraction add(Fraction number) {
+		// 1/3 + 2/5 = 5*1/5*3 + 3*2/3*5 = (5+6)/15 = 11/15 
 		final var resultNominator = this.nominator * number.denominator + number.nominator * this.denominator;
 		final var resultDenominator = this.denominator * number.denominator;
 		final var resultFraction = new Fraction(resultNominator, resultDenominator);
@@ -33,18 +39,19 @@ public class Fraction {
 	}
 
 	public SymbolicNumber add(SquareRoot root) {
-		final var result = new SymbolicNumberBuilder().withFractionPart(this).withRoot(root).build();
+		final var result = new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(this).withRoot(root).build();
 		result.simplify();
 		return result;
 	}
 
 	public SymbolicNumber add(SquareRoots roots) {
-		final var result = new SymbolicNumberBuilder().withFractionPart(this).withRoots(roots).build();
+		final var result = new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(this).withRoots(roots).build();
 		result.simplify();
 		return result;
 	}
 
 	public Fraction substract(Fraction number) {
+		// 1/3 - 2/5 = 5*1/5*3 - 3*2/3*5 = (5-6)/15 = -1/15 
 		final var resultNominator = this.nominator * number.denominator - number.nominator * this.denominator;
 		final var resultDenominator = this.denominator * number.denominator;
 		final var resultFraction = new Fraction(resultNominator, resultDenominator);
@@ -53,13 +60,13 @@ public class Fraction {
 	}
 
 	public SymbolicNumber substract(SquareRoot root) {
-		final var result = new SymbolicNumberBuilder().withFractionPart(this).withRoot(root.multiplyBy(-1)).build();
+		final var result = new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(this).withRoot(root.multiplyBy(-1)).build();
 		result.simplify();
 		return result;
 	}
 
 	public SymbolicNumber substract(SquareRoots roots) {
-		final var result = new SymbolicNumberBuilder().withFractionPart(this).withRoots(roots.multiplyBy(-1)).build();
+		final var result = new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(this).withRoots(roots.multiplyBy(-1)).build();
 		result.simplify();
 		return result;
 	}
@@ -87,10 +94,23 @@ public class Fraction {
 		return resultFraction;
 	}
 
+	/**
+	 * Example 8/6 = 4/3
+	 */
 	public void reduce() {
 		final var gcd = GcdFindingService.gcd(nominator, denominator);
 		this.nominator = this.nominator / gcd;
 		this.denominator = this.denominator / gcd;
+	}
+
+	/**
+	 * @return a reversed fraction
+	 * Example 2/3 -> 3/2
+	 */
+	public Fraction reverse() {
+		final var reverseNominator = this.denominator;
+		final var reverseDenominator = this.nominator;
+		return new Fraction(reverseNominator, reverseDenominator);
 	}
 
 	public boolean isGreaterOrEqualsToZero() {
@@ -133,15 +153,7 @@ public class Fraction {
 		return this.toDouble() == other.toDouble();
 	}
 
-	public void print() {
-		if (this.denominator != 1 || this.denominator != -1) {
-			System.out.print(this.nominator + "/" + this.denominator + " ");
-		} else {
-			System.out.print(this.toInt());
-		}
-	}
-
-	public String toString() {
+	public String convertToString() {
 		final var stringBuilder = new StringBuilder();
 		if (this.denominator != 1 && this.denominator != -1) {
 			stringBuilder.append(this.nominator);
@@ -153,9 +165,4 @@ public class Fraction {
 		return stringBuilder.toString();
 	}
 
-	public Fraction reverse() {
-		final var reverseNominator = this.denominator;
-		final var reverseDenominator = this.nominator;
-		return new Fraction(reverseNominator, reverseDenominator);
-	}
 }

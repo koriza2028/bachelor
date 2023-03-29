@@ -2,6 +2,7 @@ package com.distractors.generation.quadraticEquations.errorBased.pq;
 
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
+import com.distractors.generation.general.maths.SquareRoots;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
 import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
@@ -29,8 +30,7 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 	}
 
 	@Override
-	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters,
-			final QuadraticEquationErrorType randomError) {
+	public QuadraticEquationDistractor solveWithChosenError(StandardQuadraticEquationParameters equationParameters, final QuadraticEquationErrorType randomError) {
 		switch (randomError) {
 			case IGNORE_NORMAL_FORM:
 				return this.solveIgnoringNormalForm(equationParameters);
@@ -52,8 +52,15 @@ public class PqSolutionService implements QuadraticEquationSolutionService {
 
 		final var pDividedByTwo = p.divideBy(Fraction.TWO);
 		final var pDividedByTwoQuadrat = pDividedByTwo.multiplyBy(pDividedByTwo);
-		final var x_1Number = pDividedByTwo.multiplyBy(-1).add(new SquareRoot(pDividedByTwoQuadrat).substract(new SquareRoot(q)));
-		final var x_2Number = pDividedByTwo.multiplyBy(-1).substract(new SquareRoot(pDividedByTwoQuadrat).substract(new SquareRoot(q)));
+
+		final var squareRootOfPDividedByTwoQuadrat = new SquareRoot(pDividedByTwoQuadrat);
+		final var squareRootOfQ = new SquareRoot(q);
+
+		final var squareRootOfPDividedByTwoQuadratAsRoots = new SquareRoots(squareRootOfPDividedByTwoQuadrat);
+		final var squareRootOfQAsRoots = new SquareRoots(squareRootOfQ);
+
+		final var x_1Number = pDividedByTwo.multiplyBy(-1).add(squareRootOfPDividedByTwoQuadratAsRoots.subtract(squareRootOfQAsRoots));
+		final var x_2Number = pDividedByTwo.multiplyBy(-1).substract(squareRootOfPDividedByTwoQuadratAsRoots.subtract(squareRootOfQAsRoots));
 	
 		final var x_1 = new SymbolicNumberFraction(x_1Number);
 		final var x_2 = new SymbolicNumberFraction(x_2Number);

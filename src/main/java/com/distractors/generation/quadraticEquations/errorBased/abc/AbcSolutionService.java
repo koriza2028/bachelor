@@ -10,6 +10,9 @@ import com.distractors.generation.quadraticEquations.StandardQuadraticEquationPa
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
 
+/**
+ * x_1,2 = (-b +/- √(b² - 4·a·c))/(2·a)
+ */
 public class AbcSolutionService implements QuadraticEquationSolutionService {
 
 	@Override

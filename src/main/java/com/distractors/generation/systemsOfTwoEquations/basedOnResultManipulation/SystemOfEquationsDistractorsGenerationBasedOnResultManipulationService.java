@@ -28,11 +28,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnResultManipulationServ
 
 		return new SystemOfTwoEquationsAnswers(correctSolution, distractor_1, distractor_2, distractor_3);	
 	}
-
-	private boolean isDistractorInvalid(SystemOfTwoEquationsDistractor possibleDistractor, ArrayList<SystemOfTwoEquationsSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private SystemOfTwoEquationsDistractor generateDifferentDistractor(final SystemOfTwoEquationsCorrectSolution correctSolution, ArrayList<SystemOfTwoEquationsSolution> distractors) {
 		SystemOfTwoEquationsDistractor distractor;
 		do {
@@ -40,11 +36,15 @@ public class SystemOfEquationsDistractorsGenerationBasedOnResultManipulationServ
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquationsCorrectSolution correctSolution) {
 		final var randomManipulation = SystemOfEquationsResultManipulationType.randomManipulation(correctSolution);
-
+		
 		return generateDistractorWithChosenManipulationType(correctSolution, randomManipulation);
+	}
+
+	private boolean isDistractorInvalid(SystemOfTwoEquationsDistractor possibleDistractor, ArrayList<SystemOfTwoEquationsSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	private SystemOfTwoEquationsDistractor generateDistractorWithChosenManipulationType(SystemOfTwoEquationsCorrectSolution correctSolution, final SystemOfEquationsResultManipulationType chosenManipulation) {

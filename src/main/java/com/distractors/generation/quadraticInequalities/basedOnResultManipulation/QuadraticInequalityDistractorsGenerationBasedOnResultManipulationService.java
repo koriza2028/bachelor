@@ -36,11 +36,7 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 
 		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);	
 	}
-
-	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticInequalitySolution generateDifferentDistractor(final QuadraticInequalitySolution correctSolution, List<QuadraticInequalitySolution> distractors) {
 		QuadraticInequalitySolution distractor;
 		do {
@@ -48,11 +44,15 @@ public class QuadraticInequalityDistractorsGenerationBasedOnResultManipulationSe
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	private QuadraticInequalitySolution generateDistractor(QuadraticInequalitySolution correctSolution) {
 		final var randomManipulationType = QuadraticInequalityResultManipulationType.randomError();
-
+		
 		return generateDistractorWithChosenManipulation(correctSolution, randomManipulationType);
+	}
+
+	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	public QuadraticInequalitySolution generateDistractorWithChosenManipulation(QuadraticInequalitySolution correctSolution, final QuadraticInequalityResultManipulationType randomManipulationType) {

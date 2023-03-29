@@ -30,11 +30,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 
 		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationParameters quadraticEquationParameters, ArrayList<QuadraticEquationSolution> distractors) {
 		QuadraticEquationDistractor distractor;
 		do {
@@ -45,15 +41,17 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		}
 		return distractor;
 	}
-
+	
 	private QuadraticEquationDistractor generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {
-		final var randomError = QuadraticEquationParametersChangeType.randomError(quadraticEquationParameters);
+		final var randomError = QuadraticEquationParametersChangeType.randomParametersChangeType(quadraticEquationParameters);
 		return generateDistractorWithChosenParametersChangeType(quadraticEquationParameters, randomError);
 	}
 
-	public QuadraticEquationDistractor generateDistractorWithChosenParametersChangeType(
-			QuadraticEquationParameters quadraticEquationParameters,
-			final QuadraticEquationParametersChangeType chosenParametersChangeType) {
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
+	}
+
+	public QuadraticEquationDistractor generateDistractorWithChosenParametersChangeType(QuadraticEquationParameters quadraticEquationParameters, final QuadraticEquationParametersChangeType chosenParametersChangeType) {
 		switch (chosenParametersChangeType) {
 		case IGNORE_LEFT_A:
 			return this.generateDistractorIgnoringLeftA(quadraticEquationParameters);

@@ -5,7 +5,7 @@ import java.util.AbstractMap.SimpleEntry;
 import com.distractors.generation.general.services.PrimeFactorFindingService;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 public class SquareRoot {
 
@@ -15,26 +15,26 @@ public class SquareRoot {
 	private Fraction beforeTheRoot;
 
 	public SquareRoot(Fraction underTheRoot, Fraction beforeTheRoot) {
-		if (underTheRoot.isGreaterOrEqualsToZero()) {
-			this.underTheRoot = underTheRoot;
-		} else {
-			throw new IllegalArgumentException("The under the root expression cannot be smaller than 0.");
-		}
+		this.underTheRoot = checkUnderTheRootIsGreaterOrEqualsToZero(underTheRoot);
 		this.beforeTheRoot = beforeTheRoot;
 		this.simplify();
 	}
-
+	
 	public SquareRoot(Fraction underTheRoot) {
-		if (underTheRoot.isGreaterOrEqualsToZero()) {
-			this.underTheRoot = underTheRoot;
-		} else {
-			throw new IllegalArgumentException("The under the root expression cannot be smaller than 0.");
-		}
+		this.underTheRoot = checkUnderTheRootIsGreaterOrEqualsToZero(underTheRoot);
 		this.beforeTheRoot = Fraction.ONE;
 		this.simplify();
 	}
 
-	public SquareRoot add(SquareRoot root) {
+	private Fraction checkUnderTheRootIsGreaterOrEqualsToZero(Fraction underTheRoot) {
+		if (underTheRoot.isGreaterOrEqualsToZero()) {
+			return underTheRoot;
+		} else {
+			throw new IllegalArgumentException("The under the root expression cannot be smaller than 0.");
+		}
+	}
+
+	protected SquareRoot add(SquareRoot root) {
 		if (this.isTheSameUnderTheRootExpression(root)) {
 			final var beforeTheRootResult = this.beforeTheRoot.add(root.getBeforeTheRoot());
 			return new SquareRoot(this.underTheRoot, beforeTheRootResult);
@@ -44,11 +44,10 @@ public class SquareRoot {
 	}
 
 	public SymbolicNumber add(Fraction fraction) {
-		final var builder = new SymbolicNumberBuilder();
-		return builder.withFractionPart(fraction).withRoot(this).build();
+		return new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(fraction).withRoot(this).build();
 	}
 
-	public SquareRoot substract(SquareRoot root) {
+	protected SquareRoot substract(SquareRoot root) {
 		if (this.isTheSameUnderTheRootExpression(root)) {
 			final var beforeTheRootResult = this.beforeTheRoot.substract(root.getBeforeTheRoot());
 			return new SquareRoot(this.underTheRoot, beforeTheRootResult);
@@ -60,8 +59,7 @@ public class SquareRoot {
 	public SymbolicNumber substract(Fraction fraction) {
 		final var minusOneFraction = new Fraction(-1, 1);
 		final var negativeFraction = fraction.multiplyBy(minusOneFraction);
-		final var builder = new SymbolicNumberBuilder();
-		return builder.withFractionPart(negativeFraction).withRoot(this).build();
+		return new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(negativeFraction).withRoot(this).build();
 	}
 
 	public SquareRoot multiplyBy(SquareRoot root) {
@@ -109,7 +107,7 @@ public class SquareRoot {
 	/**
 	 * This method extracts the part roots.
 	 * The part roots for nominator and denominator are found separately.
-	 * Example: √8 = √(2*2*2) = √(2³) = 2√2
+	 * Example: √(8/3) = √(2*2*2)/√3 = √(2³)/√3 = 2√2/√3 = 2√(2/3)
 	 */
 	public void simplify() {
 		if (!this.underTheRoot.equals(Fraction.ZERO)) { 
@@ -131,47 +129,60 @@ public class SquareRoot {
 		// the number under the root should be built over again
 		var underTheRootNominator = 1;
 
-		final var nominatorBefore = this.underTheRoot.getNominator();		
-		final var rootsOfNominator = primeFactorFindingService.getPrimeFactorsWithPower(nominatorBefore);
-		final var primesIterator = rootsOfNominator.keySet().iterator();
+		final var underTheRootNominatorBefore = this.underTheRoot.getNominator();		
+		final var primeFactorsOfNominator = primeFactorFindingService.getPrimeFactorsWithPower(underTheRootNominatorBefore);
+		final var primesIterator = primeFactorsOfNominator.entrySet().iterator();
 
-		return this.extractPrimes(beforeTheRootNominator, underTheRootNominator, rootsOfNominator, primesIterator);
+		return this.extractPrimes(beforeTheRootNominator, underTheRootNominator, primesIterator);
 	}
 
 	private SimpleEntry<Integer, Integer> simplifyDenominator() {
+		// the number before the root should be increased by the extracted primes
 		var beforeTheRootDenominator = this.beforeTheRoot.getDenominator();
+
+		// the number under the root should be built over again
 		var underTheRootDenominator = 1;
 
 		final var underTheRootDenominatorBefore = this.underTheRoot.getDenominator();
-		final var rootsOfDenominator = primeFactorFindingService.getPrimeFactorsWithPower(underTheRootDenominatorBefore);
-		final var primesIterator = rootsOfDenominator.keySet().iterator();
+		final var primeFactorsOfDenominator = primeFactorFindingService.getPrimeFactorsWithPower(underTheRootDenominatorBefore);
+		final var primesIterator = primeFactorsOfDenominator.entrySet().iterator();
 
-		return this.extractPrimes(beforeTheRootDenominator, underTheRootDenominator, rootsOfDenominator, primesIterator);
+		return this.extractPrimes(beforeTheRootDenominator, underTheRootDenominator, primesIterator);
 	}
 
-	private SimpleEntry<Integer, Integer> extractPrimes(int beforeTheRootNumber, int underTheRootNumber, LinkedHashMap<Integer, Integer> rootsOfNumber, Iterator<Integer> primesIterator) {
+	/**
+	 * @return number before the root multiplied by extracted primes and number under the root after prime extraction
+	 */
+	private SimpleEntry<Integer, Integer> extractPrimes(int beforeTheRootNumber, int underTheRootNumber, Iterator<Entry<Integer, Integer>> primesIterator) {
+
+		final var primeWithPower = primesIterator.next();
+		final var power = primeWithPower.getValue();
+		final var prime = primeWithPower.getKey();
+
+		if (power == 1) {
+			// Example √2 -> √2
+			underTheRootNumber *= prime;
+		} else if (power % 2 == 0) {
+			// Example √(2^4) -> 2^2
+			final var powerOfThePrimeBeforeTheRoot = power / 2;
+			beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
+		} else {
+			// Example √(2^5) -> 2^2√2
+			underTheRootNumber *= prime;
+			final var powerOfThePrimeBeforeTheRoot = power / 2;
+			beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
+		}
 
 		if (primesIterator.hasNext()) {
-			final var prime = primesIterator.next();
-			final var power = rootsOfNumber.get(prime);
-			
-			if (power == 1) {
-				underTheRootNumber *= prime;
-			} else if (power % 2 == 0) {
-				final var powerOfThePrimeBeforeTheRoot = power / 2;
-				beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
-			} else {
-				underTheRootNumber *= prime;
-				final var powerOfThePrimeBeforeTheRoot = power / 2;
-				beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
-			}
-
-			return this.extractPrimes(beforeTheRootNumber, underTheRootNumber, rootsOfNumber, primesIterator);
-
+			return this.extractPrimes(beforeTheRootNumber, underTheRootNumber, primesIterator);
 		} else {
 			return new SimpleEntry<Integer, Integer> (beforeTheRootNumber, underTheRootNumber);
 		}
 	
+	}
+
+	public boolean isTheSameUnderTheRootExpression(SquareRoot root) {
+		return root != null && this.underTheRoot.equals(root.underTheRoot);
 	}
 
 	public boolean isInt() {
@@ -190,10 +201,6 @@ public class SquareRoot {
 		return this.toFraction().toInt();
 	}
 
-	public boolean isTheSameUnderTheRootExpression(SquareRoot root) {
-		return root != null && this.underTheRoot.equals(root.underTheRoot);
-	}
-
 	public double toDouble() {
 		return Math.sqrt(this.underTheRoot.toDouble()) * this.beforeTheRoot.toDouble();
 	}
@@ -201,58 +208,40 @@ public class SquareRoot {
 	public Fraction getUnderTheRoot() {
 		return underTheRoot;
 	}
-
+	
 	public Fraction getBeforeTheRoot() {
 		return beforeTheRoot;
 	}
-
+	
 	public boolean equals(SquareRoot other) {
 		return this.equalsSymbolically(other) || this.equalsNumerically(other);
 	}
-
+	
 	private boolean equalsNumerically(SquareRoot other) {
 		return this.toDouble() == other.toDouble();
 	}
-
+	
 	private boolean equalsSymbolically(SquareRoot other) {
 		return this.underTheRoot.equals(other.getUnderTheRoot()) && this.beforeTheRoot.equals(other.getBeforeTheRoot());
 	}
 
-	public void print() {
-		if (this.toDouble() != 0) {
-			if (this.beforeTheRoot.toDouble() != 1 || this.beforeTheRoot.toDouble() != -1) {
-				this.beforeTheRoot.print();
-				System.out.print("\\/(");
-				this.underTheRoot.print();
-				System.out.print(")");
-			} else {
-				if (this.beforeTheRoot.toDouble() != -1) {
-					System.out.print("-");
-				}
-				System.out.print("\\/(");
-				this.underTheRoot.print();
-				System.out.print(")");
-			}
-		}
-	}
-
-	public String toString() {
+	public String convertToString() {
 		final var stringBuilder = new StringBuilder();
 		if (this.toDouble() != 0) {
-			if (this.beforeTheRoot.toDouble() != 1 || this.beforeTheRoot.toDouble() != -1) {
-				stringBuilder.append(this.beforeTheRoot.toString());
+			
+			if (this.beforeTheRoot.toDouble() != 1 && this.beforeTheRoot.toDouble() != -1) {
+				stringBuilder.append(this.beforeTheRoot.convertToString());
+			} else if (this.beforeTheRoot.toDouble() == -1) {
+				stringBuilder.append("-");
+			} 
+				
+			if (this.underTheRoot.toDouble() != 1) {
 				stringBuilder.append("√(");
-				stringBuilder.append(this.underTheRoot.toString());
-				stringBuilder.append(")");
-			} else {
-				if (this.beforeTheRoot.toDouble() != -1) {
-					stringBuilder.append("-");
-				}
-				stringBuilder.append("√(");
-				stringBuilder.append(this.underTheRoot.toString());
+				stringBuilder.append(this.underTheRoot.convertToString());
 				stringBuilder.append(")");
 			}
 		}
+
 		return stringBuilder.toString();
 	}
 }

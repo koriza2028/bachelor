@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
-import com.distractors.generation.general.maths.SymbolicNumberBuilder;
+import com.distractors.generation.general.maths.SymbolicNumber;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
@@ -18,7 +18,7 @@ public class RandomGenerator {
 	public SymbolicNumberFraction generateRandomIntSymbolicNumber(QuadraticEquationSolution correctSolution) {
 		final var range = this.defineRange(correctSolution);
 		final var intNumber = this.generateRandomInt(range);
-		final var symbolicNumber = new SymbolicNumberBuilder().withInteger(intNumber).build();
+		final var symbolicNumber = new SymbolicNumber.SymbolicNumberBuilder().withInteger(intNumber).build();
 		return new SymbolicNumberFraction(symbolicNumber);
 	}
 
@@ -30,14 +30,14 @@ public class RandomGenerator {
 			underTheRoot = this.generateRandomFraction(range);
 		} while (underTheRoot.isSmallerThanZero());
 		final var root = new SquareRoot(underTheRoot, beforeTheRoot);
-		final var symbolicNumber = new SymbolicNumberBuilder().withRoot(root).build();
+		final var symbolicNumber = new SymbolicNumber.SymbolicNumberBuilder().withRoot(root).build();
 		return new SymbolicNumberFraction(symbolicNumber);
 	}
 
 	public SymbolicNumberFraction generateRandomFractionSymbolicNumber(QuadraticEquationSolution correctSolution) {
 		final var range = this.defineRange(correctSolution);
 		final var fraction = generateRandomFraction(range);
-		final var symbolicNumber = new SymbolicNumberBuilder().withFractionPart(fraction).build();
+		final var symbolicNumber = new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(fraction).build();
 		return new SymbolicNumberFraction(symbolicNumber);
 	}
 
@@ -67,11 +67,11 @@ public class RandomGenerator {
 			final var x_2Abs = Math.abs(correctSolution.x_2().toDouble());
 			final var max = (int) Math.round(Math.max(x_1Abs, x_2Abs));
 			if (max == 0) {
-				return IntStream.range(-10, 10).boxed().collect(Collectors.toUnmodifiableList());
+				return generateDefaultRange();
 			}
 			return IntStream.range(-max, max).boxed().collect(Collectors.toUnmodifiableList());
 		}
-		return IntStream.range(-10, 10).boxed().collect(Collectors.toUnmodifiableList());
+		return generateDefaultRange();
 	}
 
 	private List<Integer> defineRange(SystemOfTwoEquationsSolution correctSolution) {
@@ -80,10 +80,14 @@ public class RandomGenerator {
 			final var yAbs = Math.abs(correctSolution.y().toDouble());
 			final var max = (int) Math.round(Math.max(xAbs, yAbs));
 			if (max == 0) {
-				return IntStream.range(-10, 10).boxed().collect(Collectors.toUnmodifiableList());
+				return generateDefaultRange();
 			}
 			return IntStream.range(-max, max).boxed().collect(Collectors.toUnmodifiableList());
 		}
+		return generateDefaultRange();
+	}
+	
+	private List<Integer> generateDefaultRange() {
 		return IntStream.range(-10, 10).boxed().collect(Collectors.toUnmodifiableList());
 	}
 }

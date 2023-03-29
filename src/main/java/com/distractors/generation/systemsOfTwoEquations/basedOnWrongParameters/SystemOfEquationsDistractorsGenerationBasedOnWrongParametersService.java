@@ -29,11 +29,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 
 		return new SystemOfTwoEquationsAnswers(correctDistractor, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(SystemOfTwoEquationsDistractor possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private SystemOfTwoEquationsDistractor generateDifferentDistractor(final SystemOfTwoEquations systemOfLinearEquations, List<SystemOfTwoEquationsSolution> distractors) {
 		SystemOfTwoEquationsDistractor distractor;
 		do {
@@ -41,11 +37,15 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	private SystemOfTwoEquationsDistractor generateDistractor(SystemOfTwoEquations systemOfLinearEquations) {
 		final var randomChangeType = SystemOfEquationsParametersChangeType.randomChangeType();
-
+		
 		return generateDistractorWithChosenParameterChangeType(systemOfLinearEquations, randomChangeType);
+	}
+
+	private boolean isDistractorInvalid(SystemOfTwoEquationsDistractor possibleDistractor, List<SystemOfTwoEquationsSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	public SystemOfTwoEquationsDistractor generateDistractorWithChosenParameterChangeType(SystemOfTwoEquations systemOfLinearEquations, final SystemOfEquationsParametersChangeType randomChangeType) {

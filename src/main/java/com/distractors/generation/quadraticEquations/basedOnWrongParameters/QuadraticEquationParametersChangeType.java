@@ -40,7 +40,7 @@ public enum QuadraticEquationParametersChangeType implements QuadraticSolutionIm
 
 	private static final Random RANDOM = new Random();
 	
-	public static QuadraticEquationParametersChangeType randomError(QuadraticEquationParameters quadraticEquationParameters) {
+	public static QuadraticEquationParametersChangeType randomParametersChangeType(QuadraticEquationParameters quadraticEquationParameters) {
 		final var left = quadraticEquationParameters.leftSide();
 		final var right = quadraticEquationParameters.rightSide();
 		final var leftA = left.a().toDouble();

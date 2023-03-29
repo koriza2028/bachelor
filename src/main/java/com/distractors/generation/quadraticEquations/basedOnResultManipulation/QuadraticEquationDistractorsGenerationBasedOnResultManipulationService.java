@@ -30,11 +30,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 
 		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationCorrectSolution correctSolution, ArrayList<QuadraticEquationSolution> distractors) {
 		QuadraticEquationDistractor distractor;
 		do {
@@ -42,11 +38,15 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	private QuadraticEquationDistractor generateDistractor(QuadraticEquationCorrectSolution correctSolution) {
 		final var randomResultManipulationType = QuadraticEquationResultManipulationType.randomManipulationType(correctSolution);
-
+		
 		return generateDistractorWithResultManipulationType(correctSolution, randomResultManipulationType);
+	}
+
+	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
 	public QuadraticEquationDistractor generateDistractorWithResultManipulationType(QuadraticEquationCorrectSolution correctSolution, final QuadraticEquationResultManipulationType resultManipulationType) {

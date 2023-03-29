@@ -7,7 +7,7 @@ import com.distractors.generation.general.linearEquations.StandardLinearEquation
 import com.distractors.generation.general.linearEquations.StandardLinearEquationSquareRootParameters;
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.maths.SquareRoot;
-import com.distractors.generation.general.maths.SymbolicNumberBuilder;
+import com.distractors.generation.general.maths.SymbolicNumber;
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.general.services.GcdFindingService;
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
@@ -16,6 +16,11 @@ import com.distractors.generation.quadraticEquations.StandardQuadraticEquationPa
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationErrorType;
 import com.distractors.generation.quadraticEquations.errorBased.QuadraticEquationSolutionService;
 
+/**
+ * x² + (a + b)·x + a·b -> (x + a)·(x + b) = 0
+ * x_1 = -a
+ * x_2 = -b
+ */
 public class FactoringSolutionService implements QuadraticEquationSolutionService {
 	
 	private FactorFindingService factorFindingService = new FactorFindingService();
@@ -54,10 +59,8 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 			Fraction x_1Fraction = this.simpleEquationSolutionService.solve(firstSimpleEquationParameters);
 			Fraction x_2Fraction = this.simpleEquationSolutionService.solve(secondSimpleEquationParameters);
 
-			final var builder_1 = new SymbolicNumberBuilder();
-			final var builder_2 = new SymbolicNumberBuilder();
-			final var x_1 = new SymbolicNumberFraction(builder_1.withFractionPart(x_1Fraction).build());
-			final var x_2 = new SymbolicNumberFraction(builder_2.withFractionPart(x_2Fraction).build());
+			final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_1Fraction).build());
+			final var x_2 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withFractionPart(x_2Fraction).build());
 
 			return new QuadraticEquationCorrectSolution(x_1, x_2);
 		} else {
@@ -70,8 +73,7 @@ public class FactoringSolutionService implements QuadraticEquationSolutionServic
 		final var simpleEquationParameter = this.factorToASimpleEquation(equationParameters);
 
 		final var x_1SquareRoot = this.simpleEquationSolutionService.solve(simpleEquationParameter);
-		final var builder = new SymbolicNumberBuilder();
-		final var x_1 = new SymbolicNumberFraction(builder.withRoot(x_1SquareRoot).build());
+		final var x_1 = new SymbolicNumberFraction(new SymbolicNumber.SymbolicNumberBuilder().withRoot(x_1SquareRoot).build());
 		final var x_2 = x_1;
 
 		return new QuadraticEquationDistractor(x_1, x_2, QuadraticEquationErrorType.FACTORING_A_SUM_OF_SQUARE);

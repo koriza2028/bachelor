@@ -39,53 +39,54 @@ public class QuadraticEquationDistractorsGenerationErrorBasedService {
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
+	
+	public QuadraticEquationDistractor generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {
+		final var randomErrorType = QuadraticEquationErrorType.randomErrorType(quadraticEquationParameters);
+		
+		return generateDistractorWithChosenErrorType(quadraticEquationParameters, randomErrorType);
+	}
 
 	private boolean isDistractorInvalid(QuadraticEquationDistractor possibleDistractor, ArrayList<QuadraticEquationSolution> distractors) {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	public QuadraticEquationDistractor generateDistractor(QuadraticEquationParameters quadraticEquationParameters) {
+	private QuadraticEquationDistractor generateDistractorWithChosenErrorType(QuadraticEquationParameters quadraticEquationParameters,
+			final QuadraticEquationErrorType randomErrorType) {
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
-		final var rightSideA = quadraticEquationParameters.rightSide().a();
-		final var rightSideB = quadraticEquationParameters.rightSide().b();
-
-		final var randomErrorType = QuadraticEquationErrorType.randomErrorType(quadraticEquationParameters);
 
 		switch (randomErrorType) {
-		case DIVIDE_DISCRIMINANT_BY_TWO:
-		case EXTRACT_ROOT_ADDITIVELY_ABC:
-		case EXTRACT_ROOT_ADDITIVELY_PQ:
-		case FACTORING_A_SUM_OF_SQUARE:
-		case IGNORE_C_NOT_ZERO:
-		case IGNORE_NORMAL_FORM:
-		case MOVE_PLUS_MINUS:
-		case NO_MINUS_BEFORE_B:
-		case SOLVE_ADDITIVELY_INSTEAD_OF_MULTIPLICATIVELY:
-		case USE_B_QUADRAT:
-		case WRONG_SIMPLE_EQUATION_SOLUTION:
-		case DIVIDE_BY_C:
-			return this.solveStandardQuadraticEquationIncorrectlyUsingChosenApproach(standardQuadraticEquationParameters, randomErrorType);
-		case IGNORE_RIGHT_SIDE:
-			if (rightSideA.toDouble() != 0 && rightSideB.toDouble() != 0) {
+			case DIVIDE_DISCRIMINANT_BY_TWO:
+			case EXTRACT_ROOT_ADDITIVELY_ABC:
+			case EXTRACT_ROOT_ADDITIVELY_PQ:
+			case FACTORING_A_SUM_OF_SQUARE:
+			case IGNORE_C_NOT_ZERO:
+			case IGNORE_NORMAL_FORM:
+			case MOVE_PLUS_MINUS:
+			case NO_MINUS_BEFORE_B:
+			case SOLVE_ADDITIVELY_INSTEAD_OF_MULTIPLICATIVELY:
+			case USE_B_QUADRAT:
+			case WRONG_SIMPLE_EQUATION_SOLUTION:
+			case DIVIDE_BY_C:
+				return this.solveStandardQuadraticEquationIncorrectlyUsingChosenApproach(standardQuadraticEquationParameters, randomErrorType);
+			case IGNORE_RIGHT_SIDE:
 				return this.generateDistractorIgnoringRightSide(quadraticEquationParameters);
-			}
-		case NO_NEGATIVE_SOLUTION_OF_ROOT:
-			return this.generateNoNegativeSolutionDistractor(quadraticEquationParameters);
-		default:
-			throw new IllegalArgumentException("Unknown approach.");
+			case NO_NEGATIVE_SOLUTION_OF_ROOT:
+				return this.generateNoNegativeSolutionDistractor(quadraticEquationParameters);
+			default:
+				throw new IllegalArgumentException("Unknown approach.");
 		}
 	}
 
 	private QuadraticEquationDistractor generateDistractorIgnoringRightSide(QuadraticEquationParameters quadraticEquationParameters) {
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandardIgnoringRightSide();
-		final var solution = this.solutionServiceFactory.getService(QuadraticEquationSolutionApproach.ABC).solveCorrectly(standardQuadraticEquationParameters);
+		final var solution = abc.solveCorrectly(standardQuadraticEquationParameters);
 		return new QuadraticEquationDistractor(solution.x_1(), solution.x_2(), QuadraticEquationErrorType.IGNORE_RIGHT_SIDE);
 	}
 
 	private QuadraticEquationDistractor generateNoNegativeSolutionDistractor(QuadraticEquationParameters quadraticEquationParameters) {
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 
-		final var correctRoots = this.solutionServiceFactory.getService(QuadraticEquationSolutionApproach.ABC).solveCorrectly(standardQuadraticEquationParameters);
+		final var correctRoots = abc.solveCorrectly(standardQuadraticEquationParameters);
 		final var x_1 = correctRoots.x_1();
 		final SymbolicNumberFraction x_2 = null;
 
@@ -97,7 +98,8 @@ public class QuadraticEquationDistractorsGenerationErrorBasedService {
 			return this.solutionServiceFactory.getService(errorType.approach).solveWithChosenError(equationParameters, errorType);
 		} catch (IllegalArgumentException e) {
 			final var correctSolution = abc.solveCorrectly(equationParameters);
-			return new QuadraticEquationDistractor(correctSolution.x_1(), correctSolution.x_2(),QuadraticEquationErrorType.NO_NEGATIVE_SOLUTION_OF_ROOT);
+			// return the correct solution as distractor so that the program continues searching for distractors
+			return new QuadraticEquationDistractor(correctSolution.x_1(), correctSolution.x_2(), QuadraticEquationErrorType.NO_NEGATIVE_SOLUTION_OF_ROOT);
 		}
 	}
 }

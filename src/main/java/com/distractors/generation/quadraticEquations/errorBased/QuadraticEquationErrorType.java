@@ -35,7 +35,6 @@ public enum QuadraticEquationErrorType implements QuadraticSolutionImpact {
 	 * x_1,2 = (-b +/- √(b²) - √(4·a·c))/(2·a)
 	 */
 	EXTRACT_ROOT_ADDITIVELY_ABC(QuadraticEquationSolutionApproach.ABC),
-	
 	 
 	IGNORE_C_NOT_ZERO(QuadraticEquationSolutionApproach.EXCLUSION),
 	WRONG_SIMPLE_EQUATION_SOLUTION(QuadraticEquationSolutionApproach.EXCLUSION),

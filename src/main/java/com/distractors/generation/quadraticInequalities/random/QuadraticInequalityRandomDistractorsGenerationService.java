@@ -41,11 +41,7 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 
 		return new QuadraticInequalityAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
-
-	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
-		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
-	}
-
+	
 	private QuadraticInequalitySolution generateDifferentDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, ArrayList<QuadraticInequalitySolution> distractors) {
 		QuadraticInequalitySolution distractor;
 		do {
@@ -53,18 +49,18 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		} while (this.isDistractorInvalid(distractor, distractors));
 		return distractor;
 	}
-
+	
 	private QuadraticInequalitySolution generateDistractor(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters) {
 		final var randomSolutionType = QuadraticInequalityNonNumericalSolution.randomType();
 
-		return generateDistractorWithChosenSolutionType(quadraticEquationCorrectSolution,
-				standardQuadraticInequalityParameters, randomSolutionType);
+		return generateDistractorWithChosenSolutionType(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters, randomSolutionType);
 	}
 
-	private QuadraticInequalitySolution generateDistractorWithChosenSolutionType(
-			QuadraticEquationSolution quadraticEquationCorrectSolution,
-			StandardQuadraticInequalityParameters standardQuadraticInequalityParameters,
-			final QuadraticInequalityNonNumericalSolution randomSolutionType) {
+	private boolean isDistractorInvalid(QuadraticInequalitySolution possibleDistractor, List<QuadraticInequalitySolution> distractors) {
+		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
+	}
+
+	private QuadraticInequalitySolution generateDistractorWithChosenSolutionType(QuadraticEquationSolution quadraticEquationCorrectSolution, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, final QuadraticInequalityNonNumericalSolution randomSolutionType) {
 		switch(randomSolutionType) {
 			case EMPTY_SET:
 				return QuadraticInequalityDistractor.createEmptySetDistractor(randomSolutionType);
