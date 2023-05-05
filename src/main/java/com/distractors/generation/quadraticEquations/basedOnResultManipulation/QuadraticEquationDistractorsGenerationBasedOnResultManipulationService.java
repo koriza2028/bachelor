@@ -31,7 +31,9 @@ public class QuadraticEquationDistractorsGenerationBasedOnResultManipulationServ
 		return new QuadraticEquationAnswers(correctSolution, distractor_1, distractor_2, distractor_3);
 	}
 	
-	private QuadraticEquationDistractor generateDifferentDistractor(final QuadraticEquationCorrectSolution correctSolution, ArrayList<QuadraticEquationSolution> distractors) {
+	private QuadraticEquationDistractor generateDifferentDistractor(
+			final QuadraticEquationCorrectSolution correctSolution,
+			ArrayList<QuadraticEquationSolution> distractors) {
 		QuadraticEquationDistractor distractor;
 		do {
 			distractor = this.generateDistractor(correctSolution);

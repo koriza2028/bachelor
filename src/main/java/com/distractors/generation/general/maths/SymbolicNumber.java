@@ -183,13 +183,13 @@ public class SymbolicNumber {
 				if (this.integer != 0) {
 					stringBuilder.append("+");
 				} 
-				stringBuilder.append(this.fractionPart.toString());
+				stringBuilder.append(this.fractionPart.convertToString());
 			} 
 			if (this.rootsPart.toDouble() != 0) {
 				if (this.integer != 0 || this.fractionPart.toDouble() != 0) {
 					stringBuilder.append("+");
 				} 
-				stringBuilder.append(this.rootsPart.toString());
+				stringBuilder.append(this.rootsPart.convertToString());
 			}
 		}
 		return stringBuilder.toString();

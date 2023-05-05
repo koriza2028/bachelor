@@ -16,7 +16,7 @@ public class SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService
 		final var expected = SystemOfEquationsTestParametersCreator.createSystemOfEquationsCorrectSolution_1();
 
 		// when
-		final var actual = service.generateDistractorWithChosenParameterChangeType(system, SystemOfEquationsParametersChangeType.SWITCH_X_AND_Y_BOTH);
+		final var actual = service.generateDistractorWithChosenParameterChangeType(system, SystemOfEquationsParametersChangeType.SWAP_X_AND_Y_BOTH);
 
 		// then
 		Assertions.assertTrue(expected.equals(actual));

@@ -37,15 +37,15 @@ public interface QuadraticEquationSolution {
 		final var stringBuilder = new StringBuilder();
 		if ((x_1() != null) && (x_2() != null) && (x_1().equals(x_2()))) {
 			stringBuilder.append("x₁, x₂= ");
-			stringBuilder.append(x_1().toString());
+			stringBuilder.append(x_1().convertToString());
 		} else {
 			if (x_1() != null) {
 				stringBuilder.append("x₁= ");
-				stringBuilder.append(x_1().toString());
+				stringBuilder.append(x_1().convertToString());
 			}
 			if (x_2() != null) {
 				stringBuilder.append("; x₂= ");
-				stringBuilder.append(x_2().toString());
+				stringBuilder.append(x_2().convertToString());
 			}
 			if (x_1() == null && x_2() == null) {
 				stringBuilder.append("Φ");

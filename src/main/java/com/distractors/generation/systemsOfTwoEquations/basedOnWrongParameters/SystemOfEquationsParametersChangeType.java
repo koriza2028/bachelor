@@ -9,11 +9,11 @@ import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolu
 
 public enum SystemOfEquationsParametersChangeType implements SystemOfTwoEquationsSolutionImpact {
 
-	SWITCH_COEFFICIENTS_OF_X,
-	SWITCH_COEFFICIENTS_OF_Y,
-	SWITCH_X_AND_Y_1,
-	SWITCH_X_AND_Y_2,
-	SWITCH_X_AND_Y_BOTH,
+	SWAP_COEFFICIENTS_OF_X,
+	SWAP_COEFFICIENTS_OF_Y,
+	SWAP_X_AND_Y_1,
+	SWAP_X_AND_Y_2,
+	SWAP_X_AND_Y_BOTH,
 	NEGATE_X_1,
 	NEGATE_X_2,
 	NEGATE_Y_1,

@@ -3,13 +3,13 @@ package com.distractors.generation.systemsOfTwoEquations.errorBased;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsSolution;
 
 public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 
-	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquationsParameters systemOfLinearEquations) {
 	
 		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);
@@ -30,7 +30,7 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 		return possibleDistractor == null || distractors.stream().anyMatch(distractor -> distractor.equals(possibleDistractor));
 	}
 
-	private SystemOfTwoEquationsSolution generateDifferentDistractor(final SystemOfTwoEquations systemOfLinearEquations, List<SystemOfTwoEquationsSolution> distractors) {
+	private SystemOfTwoEquationsSolution generateDifferentDistractor(final SystemOfTwoEquationsParameters systemOfLinearEquations, List<SystemOfTwoEquationsSolution> distractors) {
 		SystemOfTwoEquationsSolution distractor;
 		do {
 			distractor = this.generateDistractor(systemOfLinearEquations);
@@ -38,7 +38,7 @@ public class SystemOfEquationsDistractorsGenerationErrorBasedService {
 		return distractor;
 	}
 
-	private SystemOfTwoEquationsSolution generateDistractor(SystemOfTwoEquations systemOfLinearEquations) {
+	private SystemOfTwoEquationsSolution generateDistractor(SystemOfTwoEquationsParameters systemOfLinearEquations) {
 		final var randomError = SystemOfEquationsErrorType.randomError();
 		final var additiveThroughX = new SystemOfEquationsAdditiveSolutionThroughXService();
 		final var additiveThroughY = new SystemOfEquationsAdditiveSolutionThroughYService();

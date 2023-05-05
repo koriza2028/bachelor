@@ -89,23 +89,23 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 			return this.generateDistractorReversingRightB(quadraticEquationParameters);
 		case REVERSE_RIGHT_C:
 			return this.generateDistractorReversingRightC(quadraticEquationParameters);
-		case SWITCH_A:
+		case SWAP_A:
 			return this.generateDistractorSwitchingA(quadraticEquationParameters);
-		case SWITCH_B:
+		case SWAP_B:
 			return this.generateDistractorSwitchingB(quadraticEquationParameters);
-		case SWITCH_C:
+		case SWAP_C:
 			return this.generateDistractorSwitchingC(quadraticEquationParameters);
-		case SWITCH_LEFT_A_B:
+		case SWAP_LEFT_A_B:
 			return this.generateDistractorSwitchingLeftAB(quadraticEquationParameters);
-		case SWITCH_LEFT_A_C:
+		case SWAP_LEFT_A_C:
 			return this.generateDistractorSwitchingLeftAC(quadraticEquationParameters);
-		case SWITCH_LEFT_B_C:
+		case SWAP_LEFT_B_C:
 			return this.generateDistractorSwitchingLeftBC(quadraticEquationParameters);
-		case SWITCH_RIGHT_A_B:
+		case SWAP_RIGHT_A_B:
 			return this.generateDistractorSwitchingRightAB(quadraticEquationParameters);
-		case SWITCH_RIGHT_A_C:
+		case SWAP_RIGHT_A_C:
 			return this.generateDistractorSwitchingRightAC(quadraticEquationParameters);
-		case SWITCH_RIGHT_B_C:
+		case SWAP_RIGHT_B_C:
 			return this.generateDistractorSwitchingRightBC(quadraticEquationParameters);
 		case NEGATE_LEFT_SIDE_PARAMETERS:
 			return this.generateDistractorNegatingLeftSideParameters(quadraticEquationParameters);
@@ -123,7 +123,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var rightC = rightSide.c();
 		final var newRightSide = new QuadraticEquationRightSideParameters(rightSide.a(), rightC, rightB);
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(leftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_A, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_A, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingRightAC(QuadraticEquationParameters quadraticEquationParameters) {
@@ -133,7 +133,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var rightC = rightSide.c();
 		final var newRightSide = new QuadraticEquationRightSideParameters(rightC, rightSide.b(), rightA);
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(leftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_RIGHT_A_C, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_RIGHT_A_C, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingRightAB(QuadraticEquationParameters quadraticEquationParameters) {
@@ -143,7 +143,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var rightB = rightSide.b();
 		final var newRightSide = new QuadraticEquationRightSideParameters(rightB, rightA, rightSide.c());
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(leftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_RIGHT_A_B, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_RIGHT_A_B, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingLeftBC(QuadraticEquationParameters quadraticEquationParameters) {
@@ -153,7 +153,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var leftC = leftSide.c();
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(leftSide.a(), leftC, leftB);
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, rightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_LEFT_B_C, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_LEFT_B_C, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingLeftAC(QuadraticEquationParameters quadraticEquationParameters) {
@@ -163,7 +163,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var leftC = leftSide.c();
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(leftC, leftSide.b(), leftA);
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, rightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_LEFT_A_C, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_LEFT_A_C, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingLeftAB(QuadraticEquationParameters quadraticEquationParameters) {
@@ -173,7 +173,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var leftB = leftSide.b();
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(leftB, leftA, leftSide.c());
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, rightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_LEFT_A_B, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_LEFT_A_B, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingC(QuadraticEquationParameters quadraticEquationParameters) {
@@ -184,7 +184,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(leftSide.a(), leftSide.b(), rightC);
 		final var newRightSide = new QuadraticEquationRightSideParameters(rightSide.a(), rightSide.b(), leftC);
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_C, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_C, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingB(QuadraticEquationParameters quadraticEquationParameters) {
@@ -195,7 +195,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(leftSide.a(), rightB, leftSide.c());
 		final var newRightSide = new QuadraticEquationRightSideParameters(rightSide.a(), leftB, rightSide.c());
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_B, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_B, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorSwitchingA(QuadraticEquationParameters quadraticEquationParameters) {
@@ -206,7 +206,7 @@ public class QuadraticEquationDistractorsGenerationBasedOnWrongParametersService
 		final var newLeftSide = new QuadraticEquationLeftSideParameters(rightA, leftSide.b(), leftSide.c());
 		final var newRightSide = new QuadraticEquationRightSideParameters(leftA, rightSide.b(), rightSide.c());
 		final var newQuadraticEquationParameters = new QuadraticEquationParameters(newLeftSide, newRightSide);
-		return solveCorrectly(QuadraticEquationParametersChangeType.SWITCH_A, newQuadraticEquationParameters);
+		return solveCorrectly(QuadraticEquationParametersChangeType.SWAP_A, newQuadraticEquationParameters);
 	}
 
 	private QuadraticEquationDistractor generateDistractorReversingLeftA(QuadraticEquationParameters quadraticEquationParameters) {

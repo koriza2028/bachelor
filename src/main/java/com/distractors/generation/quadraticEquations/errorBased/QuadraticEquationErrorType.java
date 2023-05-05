@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.distractors.generation.quadraticEquations.QuadraticEquationParameters;
-import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolutionImpact;
 
-public enum QuadraticEquationErrorType implements QuadraticSolutionImpact {
+public enum QuadraticEquationErrorType implements QuadraticEquationSolutionImpact {
 
 	NO_NEGATIVE_SOLUTION_OF_ROOT(QuadraticEquationSolutionApproach.ABC),
 	IGNORE_RIGHT_SIDE(QuadraticEquationSolutionApproach.ABC),

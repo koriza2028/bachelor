@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.distractors.generation.quadraticEquations.QuadraticEquationParameters;
-import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolutionImpact;
 
-public enum QuadraticEquationParametersChangeType implements QuadraticSolutionImpact {
+public enum QuadraticEquationParametersChangeType implements QuadraticEquationSolutionImpact {
 
 	NEGATE_LEFT_A,
 	NEGATE_LEFT_B,
@@ -28,15 +28,15 @@ public enum QuadraticEquationParametersChangeType implements QuadraticSolutionIm
 	REVERSE_RIGHT_C,
 	NEGATE_LEFT_SIDE_PARAMETERS,
 	NEGATE_RIGHT_SIDE_PARAMETERS,
-	SWITCH_A,
-	SWITCH_B,
-	SWITCH_C,
-	SWITCH_LEFT_A_B,
-	SWITCH_LEFT_A_C,
-	SWITCH_LEFT_B_C,
-	SWITCH_RIGHT_A_B,
-	SWITCH_RIGHT_A_C,
-	SWITCH_RIGHT_B_C;
+	SWAP_A,
+	SWAP_B,
+	SWAP_C,
+	SWAP_LEFT_A_B,
+	SWAP_LEFT_A_C,
+	SWAP_LEFT_B_C,
+	SWAP_RIGHT_A_B,
+	SWAP_RIGHT_A_C,
+	SWAP_RIGHT_B_C;
 
 	private static final Random RANDOM = new Random();
 	
@@ -51,7 +51,7 @@ public enum QuadraticEquationParametersChangeType implements QuadraticSolutionIm
 		final var rightC = right.c().toDouble();
 
 		final var possibleChangeTypes = new ArrayList<QuadraticEquationParametersChangeType>();
-		possibleChangeTypes.add(SWITCH_A);
+		possibleChangeTypes.add(SWAP_A);
 
 		if (leftA != 0) {
 			possibleChangeTypes.add(IGNORE_LEFT_A);
@@ -90,31 +90,31 @@ public enum QuadraticEquationParametersChangeType implements QuadraticSolutionIm
 		}
 
 		if (leftB != 0 && rightB != 0) {
-			possibleChangeTypes.add(SWITCH_B);
+			possibleChangeTypes.add(SWAP_B);
 		}
 
 		if (leftC != 0 && rightC != 0) {
-			possibleChangeTypes.add(SWITCH_C);
+			possibleChangeTypes.add(SWAP_C);
 		}
 
 		if (leftB != 0 && rightA != 0) {
-			possibleChangeTypes.add(SWITCH_LEFT_A_B);
+			possibleChangeTypes.add(SWAP_LEFT_A_B);
 		}
 
 		if (leftC != 0 && rightA != 0) {
-			possibleChangeTypes.add(SWITCH_LEFT_A_C);
+			possibleChangeTypes.add(SWAP_LEFT_A_C);
 		}
 
 		if (rightB != 0 && leftA != 0) {
-			possibleChangeTypes.add(SWITCH_RIGHT_A_B);
+			possibleChangeTypes.add(SWAP_RIGHT_A_B);
 		}
 
 		if (rightC != 0 && leftA != 0) {
-			possibleChangeTypes.add(SWITCH_RIGHT_A_C);
+			possibleChangeTypes.add(SWAP_RIGHT_A_C);
 		}
 
-		possibleChangeTypes.add(SWITCH_LEFT_B_C);
-		possibleChangeTypes.add(SWITCH_LEFT_B_C);
+		possibleChangeTypes.add(SWAP_LEFT_B_C);
+		possibleChangeTypes.add(SWAP_LEFT_B_C);
 
 		final var size = possibleChangeTypes.size();
 		return possibleChangeTypes.get(RANDOM.nextInt(size));

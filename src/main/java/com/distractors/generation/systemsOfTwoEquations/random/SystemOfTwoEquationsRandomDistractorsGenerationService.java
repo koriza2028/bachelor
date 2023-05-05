@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.distractors.generation.general.services.RandomGenerator;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
@@ -15,7 +15,7 @@ import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquat
 public class SystemOfTwoEquationsRandomDistractorsGenerationService {
 	private RandomGenerator random = new RandomGenerator();
 
-	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquationsParameters systemOfLinearEquations) {
 		
 		final var systemOfEquationsSolutionThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsSolutionThroughYService.solveCorrectly(systemOfLinearEquations);

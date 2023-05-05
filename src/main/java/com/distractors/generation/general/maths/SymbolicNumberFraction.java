@@ -19,7 +19,7 @@ public class SymbolicNumberFraction {
 	 */
 	public SymbolicNumberFraction(SymbolicNumber nominator, SymbolicNumber denominator) {
 		this.nominator = nominator;
-		this.denominator = checkDenominatorEqualsZero(denominator);
+		this.denominator = checkDenominatorNotEqualsToZero(denominator);
 		this.simplify();
 	}
 
@@ -33,7 +33,7 @@ public class SymbolicNumberFraction {
 		this.simplify();
 	}
 	
-	private SymbolicNumber checkDenominatorEqualsZero(SymbolicNumber denominator) {
+	private SymbolicNumber checkDenominatorNotEqualsToZero(SymbolicNumber denominator) {
 		if (denominator.toDouble() == 0) {
 			throw new IllegalArgumentException("Denominator cannot be equal to 0.");
 		} else {
@@ -120,13 +120,13 @@ public class SymbolicNumberFraction {
 			stringBuilder.append(this.toInt());
 		} else if (this.nominator.isInt() && this.denominator.isInt()) {
 			final var fraction = new Fraction(this.nominator.toInt(), this.denominator.toInt());
-			stringBuilder.append(fraction.toString());
+			stringBuilder.append(fraction.convertToString());
 		} else if (this.denominator.toDouble() != 1 && this.denominator.toDouble() != -1) {
-			stringBuilder.append("(" + this.nominator.toString() + ")");
+			stringBuilder.append("(" + this.nominator.convertToString() + ")");
 			stringBuilder.append("/");
-			stringBuilder.append("(" + this.denominator.toString() + ")");
+			stringBuilder.append("(" + this.denominator.convertToString() + ")");
 		} else {
-			stringBuilder.append(this.nominator.multiplyBy(this.denominator).toString());
+			stringBuilder.append(this.nominator.multiplyBy(this.denominator).convertToString());
 		}
 		return stringBuilder.toString();
 	}

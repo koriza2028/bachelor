@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.basedOnResultManipulation.SystemOfEquationsDistractorsGenerationBasedOnResultManipulationService;
 import com.distractors.generation.systemsOfTwoEquations.basedOnWrongParameters.SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService;
 import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquationsDistractorsGenerationErrorBasedService;
@@ -34,14 +34,14 @@ public class SystemOfTwoEquationsDistractorsBean {
 	public void generateDistractors() {
 		final var equation_1 = this.generateEquation_1();
 		final var equation_2 = this.generateEquation_2();
-		final var systemOfEquations = new SystemOfTwoEquations(equation_1, equation_2);
+		final var systemOfEquations = new SystemOfTwoEquationsParameters(equation_1, equation_2);
 		this.collectDistractorsErrorBased(systemOfEquations);
 		this.collectDistractorsBasedOnWrongParameters(systemOfEquations);
 		this.collectDistractorsBasedOnResultManipulation(systemOfEquations);
 		this.collectRandomDistractors(systemOfEquations);
 	}
 
-	private void collectDistractorsBasedOnResultManipulation(SystemOfTwoEquations SystemOfEquations) {
+	private void collectDistractorsBasedOnResultManipulation(SystemOfTwoEquationsParameters SystemOfEquations) {
 		final var distractorsGenerator = new SystemOfEquationsDistractorsGenerationBasedOnResultManipulationService();
 		final var solution = distractorsGenerator.generateDistractors(SystemOfEquations);
 
@@ -52,7 +52,7 @@ public class SystemOfTwoEquationsDistractorsBean {
 		Collections.shuffle(distractorsBasedOnResultManipulation);
 	}
 
-	private void collectDistractorsBasedOnWrongParameters(SystemOfTwoEquations systemOfEquations) {
+	private void collectDistractorsBasedOnWrongParameters(SystemOfTwoEquationsParameters systemOfEquations) {
 		final var distractorsGenerator = new SystemOfEquationsDistractorsGenerationBasedOnWrongParametersService();
 		final var solution = distractorsGenerator.generateDistractors(systemOfEquations);
 		 
@@ -63,7 +63,7 @@ public class SystemOfTwoEquationsDistractorsBean {
 		Collections.shuffle(distractorsBasedOnWrongParameters);
 	}
 
-	private void collectDistractorsErrorBased(SystemOfTwoEquations systemOfEquations) {
+	private void collectDistractorsErrorBased(SystemOfTwoEquationsParameters systemOfEquations) {
 		final var distractorsGenerator = new SystemOfEquationsDistractorsGenerationErrorBasedService();
 		final var solution = distractorsGenerator.generateDistractors(systemOfEquations);
 		 
@@ -74,7 +74,7 @@ public class SystemOfTwoEquationsDistractorsBean {
 		Collections.shuffle(distractorsErrorBased);
 	}
 
-	private void collectRandomDistractors(SystemOfTwoEquations systemOfEquations) {
+	private void collectRandomDistractors(SystemOfTwoEquationsParameters systemOfEquations) {
 		final var distractorsGenerator = new SystemOfTwoEquationsRandomDistractorsGenerationService();
 		final var solution = distractorsGenerator.generateDistractors(systemOfEquations);
 		 

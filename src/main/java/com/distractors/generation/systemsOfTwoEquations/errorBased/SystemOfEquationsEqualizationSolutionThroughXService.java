@@ -4,7 +4,7 @@ import com.distractors.generation.general.linearEquations.LinearEquationSolution
 import com.distractors.generation.general.linearEquations.StandardLinearEquationFractionParameters;
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
@@ -13,7 +13,7 @@ public class SystemOfEquationsEqualizationSolutionThroughXService {
 
 	final LinearEquationSolutionService linearEquationSolutionService = new LinearEquationSolutionService();
 
-	public SystemOfTwoEquationsCorrectSolution solveCorrectly(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsCorrectSolution solveCorrectly(SystemOfTwoEquationsParameters equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
@@ -22,7 +22,7 @@ public class SystemOfEquationsEqualizationSolutionThroughXService {
 		return findSystemOfEquationsCorrectSolution(simpleEquation_1, standardLinearEquationForX);
 	}
 
-	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquationsParameters equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 

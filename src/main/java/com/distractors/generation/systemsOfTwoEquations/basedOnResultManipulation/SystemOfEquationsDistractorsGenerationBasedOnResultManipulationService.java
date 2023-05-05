@@ -3,7 +3,7 @@ package com.distractors.generation.systemsOfTwoEquations.basedOnResultManipulati
 import java.util.ArrayList;
 
 import com.distractors.generation.general.maths.Fraction;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsAnswers;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
@@ -13,7 +13,7 @@ import com.distractors.generation.systemsOfTwoEquations.errorBased.SystemOfEquat
 
 public class SystemOfEquationsDistractorsGenerationBasedOnResultManipulationService {
 
-	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquations systemOfLinearEquations) {
+	public SystemOfTwoEquationsAnswers generateDistractors(SystemOfTwoEquationsParameters systemOfLinearEquations) {
 		
 		final var systemOfEquationsDistractorThroughYService = new SystemOfEquationsAdditiveSolutionThroughYService();
 		final var correctSolution = systemOfEquationsDistractorThroughYService.solveCorrectly(systemOfLinearEquations);

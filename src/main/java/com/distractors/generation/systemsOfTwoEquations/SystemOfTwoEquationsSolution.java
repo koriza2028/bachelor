@@ -39,10 +39,10 @@ public interface SystemOfTwoEquationsSolution {
 				break;
 			default:
 				if (x() != null) {
-					stringBuilder.append("x = " + x().toString());
+					stringBuilder.append("x = " + x().convertToString());
 				}
 				if (y() != null) {
-					stringBuilder.append("y = " + y().toString());
+					stringBuilder.append("y = " + y().convertToString());
 				}
 				break;
 		}

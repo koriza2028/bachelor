@@ -25,7 +25,7 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		final var quadraticEquationParameters = quadraticInequalityParameters.equationParameters();
 		final var standardQuadraticEquationParameters = quadraticEquationParameters.toStandard();
 		final var standardQuadraticInequalityParameters = quadraticInequalityParameters.toStandard();
-		
+
 		final var abc = new AbcSolutionService();
 		final var quadraticEquationCorrectSolution = abc.solveCorrectly(standardQuadraticEquationParameters);
 		final var correctSolution = correctSolutionMapper.findQuadraticInequalityCorrectSolution(quadraticEquationCorrectSolution, standardQuadraticInequalityParameters);
@@ -91,4 +91,5 @@ public class QuadraticInequalityRandomDistractorsGenerationService {
 		final var exceptedZero = quadraticEquationsDistractorsGenerationService.generateX_1(quadraticEquationCorrectSolution);
 		return QuadraticInequalityDistractor.createRExceptZeroDistractor(exceptedZero, randomSolutionType);
 	}
+
 }

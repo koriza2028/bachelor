@@ -1,4 +1,4 @@
-package com.distractors.generation.general.services;
+package com.distractors.generation.general.maths;
 
 import java.util.LinkedHashMap;
 

@@ -39,22 +39,22 @@ public class SquareRoots {
 	 * 			(√3 + √2) + √5 = √3 + √2 + √5
 	 */
 	public SquareRoots add(SquareRoot rootToAdd) {
-		var rootsResult = new SquareRoots();
+		final var rootsResult = new SquareRoots();
 
 		for (final var currentRoot : roots) {
 
 			if (currentRoot.isTheSameUnderTheRootExpression(rootToAdd)) {
 				final var sameRootsSum = currentRoot.add(rootToAdd);
-				rootsResult = rootsResult.add(sameRootsSum);
-				rootToAdd = null;
+				rootsResult.roots.add(sameRootsSum);
+				rootToAdd = SquareRoot.ZERO;
 			} else {
-				rootsResult = rootsResult.add(currentRoot);
+				rootsResult.roots.add(currentRoot);
 			}
 
 		}
 		
-		if (rootToAdd != null && rootToAdd.toDouble() != 0) {
-			rootsResult = rootsResult.add(rootToAdd);
+		if (rootToAdd.toDouble() != 0) {
+			rootsResult.roots.add(rootToAdd);
 		}
 		
 		return rootsResult;
@@ -87,16 +87,16 @@ public class SquareRoots {
 
 			if (currentRoot.isTheSameUnderTheRootExpression(rootToSubstract)) {
 				final var sameRoots = currentRoot.substract(rootToSubstract);
-				rootsResult = rootsResult.add(sameRoots);
-				rootToSubstract = null;
+				rootsResult.roots.add(sameRoots);
+				rootToSubstract = SquareRoot.ZERO;
 			} else {
-				rootsResult = rootsResult.add(currentRoot);
+				rootsResult.roots.add(currentRoot);
 			}
 
 		}
 		
-		if (rootToSubstract != null) {
-			rootsResult.add(rootToSubstract.multiplyBy(-1));
+		if (rootToSubstract.toDouble() != 0) {
+			rootsResult.roots.add(rootToSubstract.multiplyBy(-1));
 		}
 		
 		return rootsResult;
@@ -107,8 +107,9 @@ public class SquareRoots {
 	 * Example: (√3 + √2) * (√3 + √2) = 5 + √6
 	 */
 	public SquareRoots multiplyBy(SquareRoots rootsToMultiplyBy) {
+		var rootsResult = new SquareRoots(this.roots);
+
 		if (rootsToMultiplyBy.areNotEmpty()) {
-			var rootsResult = new SquareRoots(this.roots);
 			
 			for (final var currentRoot : rootsToMultiplyBy.roots) {
 				rootsResult = rootsResult.multiplyBy(currentRoot);
@@ -124,11 +125,11 @@ public class SquareRoots {
 	 * Example: (√3 + √2) * √2 = √6 + 2
 	 */
 	public SquareRoots multiplyBy(SquareRoot rootToMultiplyBy) {
-		var rootsResult = new SquareRoots();
+		final var rootsResult = new SquareRoots();
 
 		for (final var currentRoot : roots) {
 			final var rootResult = currentRoot.multiplyBy(rootToMultiplyBy);
-			rootsResult = rootsResult.add(rootResult);
+			rootsResult.roots.add(rootResult);
 		}
 
 		return rootsResult;
@@ -139,11 +140,11 @@ public class SquareRoots {
 	 * Example: (√3 + √2) * 1/2 = (√3)/2 + (√2)/2
 	 */
 	public SquareRoots multiplyBy(Fraction fraction) {
-		var rootsResult = new SquareRoots();
+		final var rootsResult = new SquareRoots();
 
 		for (final var currentRoot : roots) {
 			final var rootResult = currentRoot.multiplyBy(fraction);
-			rootsResult = rootsResult.add(rootResult);
+			rootsResult.roots.add(rootResult);
 		}
 
 		return rootsResult;
@@ -154,11 +155,11 @@ public class SquareRoots {
 	 * Example: (√3 + √2) * 2 = 2√3 + 2√2
 	 */
 	public SquareRoots multiplyBy(int number) {
-		var rootsResult = new SquareRoots();
+		final var rootsResult = new SquareRoots();
 
 		for (final var currentRoot : roots) {
 			final var rootResult = currentRoot.multiplyBy(number);
-			rootsResult = rootsResult.add(rootResult);
+			rootsResult.roots.add(rootResult);
 		}
 
 		return rootsResult;
@@ -169,14 +170,14 @@ public class SquareRoots {
 	 * Example: (√3 + √2) / √2 = √(3/2) + 1
 	 */
 	public SquareRoots divideBy(SquareRoot rootToDivideBy) {
-		final var rootsResult = new HashSet<SquareRoot>();
+		final var rootsResult = new SquareRoots();
 
 		for (final var currentRoot : roots) {
 			final var rootResult = currentRoot.divideBy(rootToDivideBy);
-			rootsResult.add(rootResult);
+			rootsResult.roots.add(rootResult);
 		}
 
-		return new SquareRoots(rootsResult);
+		return rootsResult;
 	}
 
 	/**

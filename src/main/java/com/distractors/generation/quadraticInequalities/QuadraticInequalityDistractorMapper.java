@@ -2,7 +2,7 @@ package com.distractors.generation.quadraticInequalities;
 
 import com.distractors.generation.general.maths.SymbolicNumberFraction;
 import com.distractors.generation.quadraticEquations.QuadraticEquationDistractor;
-import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolutionImpact;
 import com.distractors.generation.quadraticEquations.StandardQuadraticEquationParameters;
 
 public class QuadraticInequalityDistractorMapper {
@@ -94,7 +94,7 @@ public class QuadraticInequalityDistractorMapper {
 		}
 	}
 
-	private QuadraticInequalityDistractor findQuadraticInequalityDistractorForSingleRoot(SymbolicNumberFraction root, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, QuadraticSolutionImpact impact) {
+	private QuadraticInequalityDistractor findQuadraticInequalityDistractorForSingleRoot(SymbolicNumberFraction root, StandardQuadraticInequalityParameters standardQuadraticInequalityParameters, QuadraticEquationSolutionImpact impact) {
 		final var rootAsDouble = root.toDouble();
 	
 		final var standardQuadraticEquationParameters = standardQuadraticInequalityParameters.equationParameters();
@@ -142,28 +142,28 @@ public class QuadraticInequalityDistractorMapper {
 	}
 
 	private QuadraticInequalityDistractor generateOutsideExclusiveRootsResult(final SymbolicNumberFraction x_1,
-			final SymbolicNumberFraction x_2, QuadraticSolutionImpact impact) {
+			final SymbolicNumberFraction x_2, QuadraticEquationSolutionImpact impact) {
 		final var range_1 = new QuadraticInequalityRange(x_1, InequalitySign.LESS);
 		final var range_2 = new QuadraticInequalityRange(x_2, InequalitySign.GREATER);
 		return new QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolution.NORMAL, range_1, range_2, impact);
 	}
 
 	private QuadraticInequalityDistractor generateBetweenExclusiveRootsResult(final SymbolicNumberFraction x_1,
-			final SymbolicNumberFraction x_2, QuadraticSolutionImpact impact) {
+			final SymbolicNumberFraction x_2, QuadraticEquationSolutionImpact impact) {
 		final var range_1 = new QuadraticInequalityRange(x_1, InequalitySign.GREATER);
 		final var range_2 = new QuadraticInequalityRange(x_2, InequalitySign.LESS);
 		return new QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolution.NORMAL, range_1, range_2, impact);
 	}
 
 	private QuadraticInequalityDistractor generateBetweenInclusiveRootsResult(final SymbolicNumberFraction x_1,
-			final SymbolicNumberFraction x_2, QuadraticSolutionImpact impact) {
+			final SymbolicNumberFraction x_2, QuadraticEquationSolutionImpact impact) {
 		final var range_1 = new QuadraticInequalityRange(x_1, InequalitySign.GREATER_OR_EQUALS);
 		final var range_2 = new QuadraticInequalityRange(x_2, InequalitySign.LESS_OR_EQUALS);
 		return new QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolution.NORMAL, range_1, range_2, impact);
 	}
 
 	private QuadraticInequalityDistractor generateOutsideInclusiveRootsResult(final SymbolicNumberFraction x_1,
-			final SymbolicNumberFraction x_2, QuadraticSolutionImpact impact) {
+			final SymbolicNumberFraction x_2, QuadraticEquationSolutionImpact impact) {
 		final var range_1 = new QuadraticInequalityRange(x_1, InequalitySign.LESS_OR_EQUALS);
 		final var range_2 = new QuadraticInequalityRange(x_2, InequalitySign.GREATER_OR_EQUALS);
 		return new QuadraticInequalityDistractor(QuadraticInequalityNonNumericalSolution.NORMAL, range_1, range_2, impact);

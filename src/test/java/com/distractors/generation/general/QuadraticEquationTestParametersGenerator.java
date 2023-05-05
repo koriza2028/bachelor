@@ -18,11 +18,11 @@ public class QuadraticEquationTestParametersGenerator {
 	}
 
 	public QuadraticEquationSolution generateCorrectSolutionForAbc() {
-		final var x_1Nominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(-4).build();
+		final var x_1Nominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(-2).build();
 		final var x_1Denominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(2).build();
 		final var x_1 = new SymbolicNumberFraction(x_1Nominator, x_1Denominator);
 
-		final var x_2Nominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(-10).build();
+		final var x_2Nominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(10).build();
 		final var x_2Denominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(2).build();
 		final var x_2 = new SymbolicNumberFraction(x_2Nominator, x_2Denominator);
 		

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.distractors.generation.quadraticEquations.QuadraticEquationCorrectSolution;
-import com.distractors.generation.quadraticEquations.QuadraticSolutionImpact;
+import com.distractors.generation.quadraticEquations.QuadraticEquationSolutionImpact;
 
-public enum QuadraticEquationResultManipulationType implements QuadraticSolutionImpact {
+public enum QuadraticEquationResultManipulationType implements QuadraticEquationSolutionImpact {
 
 	NEGATE_X_1,
 	NEGATE_X_2,

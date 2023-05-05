@@ -5,7 +5,7 @@ import com.distractors.generation.general.linearEquations.StandardLinearEquation
 import com.distractors.generation.general.maths.Fraction;
 import com.distractors.generation.general.services.LcmFindingService;
 import com.distractors.generation.systemsOfTwoEquations.StandardEquationParameters;
-import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquations;
+import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsParameters;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsCorrectSolution;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsDistractor;
 import com.distractors.generation.systemsOfTwoEquations.SystemOfTwoEquationsNonNumericalSolution;
@@ -14,7 +14,7 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 
 	final LinearEquationSolutionService linearEquationSolutionService = new LinearEquationSolutionService();
 
-	public SystemOfTwoEquationsCorrectSolution solveCorrectly(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsCorrectSolution solveCorrectly(SystemOfTwoEquationsParameters equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 
@@ -23,7 +23,7 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 		return findSystemOfEquationsCorrectSolution(simpleEquation_1, standardLinearEquationForX);
 	}
 	
-	public SystemOfTwoEquationsDistractor solveIgnoringFreeCoefficientMultiplication(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveIgnoringFreeCoefficientMultiplication(SystemOfTwoEquationsParameters equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 		
@@ -33,7 +33,7 @@ public class SystemOfEquationsAdditiveSolutionThroughXService {
 				standardLinearEquationForX);
 	}
 	
-	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquations equationParameters) {
+	public SystemOfTwoEquationsDistractor solveReplacingWrongParameter(SystemOfTwoEquationsParameters equationParameters) {
 		final var simpleEquation_1 = equationParameters.equation_1();
 		final var simpleEquation_2 = equationParameters.equation_2();
 		

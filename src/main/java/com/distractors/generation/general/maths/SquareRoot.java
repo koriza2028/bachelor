@@ -1,13 +1,12 @@
 package com.distractors.generation.general.maths;
 
 import java.util.AbstractMap.SimpleEntry;
-
-import com.distractors.generation.general.services.PrimeFactorFindingService;
-
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class SquareRoot {
+
+	public static final SquareRoot ZERO = new SquareRoot(Fraction.ZERO);
 
 	private PrimeFactorFindingService primeFactorFindingService = new PrimeFactorFindingService();
 	
@@ -155,25 +154,25 @@ public class SquareRoot {
 	 */
 	private SimpleEntry<Integer, Integer> extractPrimes(int beforeTheRootNumber, int underTheRootNumber, Iterator<Entry<Integer, Integer>> primesIterator) {
 
-		final var primeWithPower = primesIterator.next();
-		final var power = primeWithPower.getValue();
-		final var prime = primeWithPower.getKey();
-
-		if (power == 1) {
-			// Example √2 -> √2
-			underTheRootNumber *= prime;
-		} else if (power % 2 == 0) {
-			// Example √(2^4) -> 2^2
-			final var powerOfThePrimeBeforeTheRoot = power / 2;
-			beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
-		} else {
-			// Example √(2^5) -> 2^2√2
-			underTheRootNumber *= prime;
-			final var powerOfThePrimeBeforeTheRoot = power / 2;
-			beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
-		}
-
 		if (primesIterator.hasNext()) {
+			final var primeWithPower = primesIterator.next();
+			final var power = primeWithPower.getValue();
+			final var prime = primeWithPower.getKey();
+	
+			if (power == 1) {
+				// Example √2 -> √2
+				underTheRootNumber *= prime;
+			} else if (power % 2 == 0) {
+				// Example √(2^4) -> 2^2
+				final var powerOfThePrimeBeforeTheRoot = power / 2;
+				beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
+			} else {
+				// Example √(2^5) -> 2^2√2
+				underTheRootNumber *= prime;
+				final var powerOfThePrimeBeforeTheRoot = power / 2;
+				beforeTheRootNumber *= Math.pow(prime, powerOfThePrimeBeforeTheRoot);
+			}
+
 			return this.extractPrimes(beforeTheRootNumber, underTheRootNumber, primesIterator);
 		} else {
 			return new SimpleEntry<Integer, Integer> (beforeTheRootNumber, underTheRootNumber);

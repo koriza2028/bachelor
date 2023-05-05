@@ -60,10 +60,10 @@ public class SymbolicNumberFractionTest {
 		// given
 		final var nominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(8).withRoot(new SquareRoot(Fraction.FIVE, Fraction.TWO)).build();
 		final var denominator = new SymbolicNumber.SymbolicNumberBuilder().withInteger(2).build();
-		final var expected = "4+1√(5)";
+		final var expected = "4+√(5)";
 
 		// when
-		final var actual = new SymbolicNumberFraction(nominator, denominator).toString();
+		final var actual = new SymbolicNumberFraction(nominator, denominator).convertToString();
 
 		// then
 		Assertions.assertTrue(expected.equals(actual));
